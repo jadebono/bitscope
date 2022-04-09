@@ -9,8 +9,11 @@ export default function Subscribe() {
 
   const nameRef = useRef("");
   const emailRef = useRef("");
+  const emailUnsubscribeRef = useRef("");
 
-  function handleChange(evt) {
+  function handleUnsubscribe(evt) {}
+
+  function handleSubscription(evt) {
     const { name, value } = evt.target;
     setSubscriber((prevSubscriber) => {
       return {
@@ -22,9 +25,13 @@ export default function Subscribe() {
 
   return (
     <React.Fragment>
-      <div className="border-2 border-blue-900 rounded-lg shadow-lg bg-blue-100 w-1/3 mx-auto">
-        <form className="flex flex-col mx-auto my-5">
-          <div className="mx-4 mb-5">
+      {/* Subscribe facility */}
+      <div className="mx-4 mt-4 border-2 border-blue-900 rounded-lg shadow-lg bg-blue-100 sm:mx-4">
+        <form className="flex flex-col my-5">
+          <div className="mx-4 mb-4 text-center font-bold text-amber-600">
+            Not a subscriber? Subscribe to our newsletter
+          </div>
+          <div className="mx-4 mb-5 sm:mx-auto">
             <label className="text-blue-900 font-bold" htmlFor="name">
               Name:
             </label>
@@ -34,11 +41,11 @@ export default function Subscribe() {
               name="name"
               type="text"
               value={nameRef.current.value}
-              onChange={handleChange}
+              onChange={handleSubscription}
             />
           </div>
 
-          <div className="mx-4 ">
+          <div className="mx-4 sm:mx-auto">
             <label className="text-blue-900 font-bold" htmlFor="email">
               Email:
             </label>
@@ -48,7 +55,7 @@ export default function Subscribe() {
               name="email"
               type="email"
               value={emailRef.current.value}
-              onChange={handleChange}
+              onChange={handleSubscription}
             />
           </div>
           <button
@@ -56,6 +63,34 @@ export default function Subscribe() {
             onClick={console.log(nameRef)}
           >
             Subscribe
+          </button>
+        </form>
+      </div>
+      {/* UnSubscribe facility */}
+      <div className="mx-4 mt-4 border-2 border-blue-900 rounded-lg shadow-lg bg-blue-100 sm:mx-4">
+        <form className="flex flex-col my-5">
+          <div className="mx-4 mb-4 text-center font-bold text-amber-600">
+            Unsubscribe
+          </div>
+
+          <div className="mx-4 sm:mx-auto">
+            <label className="text-blue-900 font-bold" htmlFor="email">
+              Email:
+            </label>
+            <input
+              className="border-2 border-blue-200 rounded-md ml-5"
+              ref={emailUnsubscribeRef}
+              name="email"
+              type="email"
+              value={emailUnsubscribeRef.current.value}
+              onChange={handleUnsubscribe}
+            />
+          </div>
+          <button
+            className=" mt-5 w-28   mx-auto border-2 border-blue-900 bg-blue-900 text-white rounded-md hover:shadow-2xl hover:text-blue-900 hover:bg-white transition east-out duration-500"
+            onClick={console.log(emailUnsubscribeRef)}
+          >
+            Unsubscribe
           </button>
         </form>
       </div>

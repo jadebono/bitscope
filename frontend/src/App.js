@@ -14,7 +14,7 @@ export default function App() {
           Rethinking the World in the Age of Tech
         </h4>
       </div>
-      {/* <Subscribe /> */}
+      <Subscribe />
     </React.Fragment>
   );
 }

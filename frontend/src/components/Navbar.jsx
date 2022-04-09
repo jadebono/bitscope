@@ -69,28 +69,28 @@ export default function Navbar() {
               <div className="hidden md:flex items-center space-x-1">
                 <a
                   href={LOCAL_HOST}
-                  className="p-2 text-white rounded hover:bg-amber-600 font-semibold transition duration-300"
+                  className="p-2 text-white rounded hover:bg-amber-600 font-semibold transition duration-300 cursor-pointer"
                 >
                   Home
                 </a>
                 <a
                   href={LOCAL_HOST}
                   className="p-2 text-white rounded hover:bg-amber-600
-                  font-semibold transition duration-300"
+                  font-semibold transition duration-300 cursor-pointer"
                 >
                   Services
                 </a>
                 <a
                   href={LOCAL_HOST}
                   className="p-2 text-white rounded hover:bg-amber-600
-                  font-semibold transition duration-300"
+                  font-semibold transition duration-300 cursor-pointer"
                 >
                   About
                 </a>
                 <a
                   href={LOCAL_HOST}
                   className="p-2 text-white rounded hover:bg-amber-600
-                  font-semibold transition duration-300"
+                  font-semibold transition duration-300 cursor-pointer"
                 >
                   Contact Us
                 </a>
@@ -101,14 +101,14 @@ export default function Navbar() {
               <a
                 href={LOCAL_HOST}
                 className="p-2 font-medium text-white rounded hover:bg-amber-600
-                transition duration-300"
+                transition duration-300 cursor-pointer"
               >
                 Register
               </a>
               <a
                 href={LOCAL_HOST}
                 className="p-2 font-medium text-white border-2 border-white
-                rounded-full hover:bg-amber-600 transition duration-300"
+                rounded-full hover:bg-amber-600 transition duration-300 cursor-pointer"
               >
                 <svg
                   className="w-6 h-6 "
@@ -136,7 +136,7 @@ export default function Navbar() {
                   <a
                     href={LOCAL_HOST}
                     className="block text-sm px-2 py-2 font-medium text-white
-                    rounded hover:bg-amber-600 transition duration-300"
+                    rounded hover:bg-amber-600 transition duration-300 cursor-pointer"
                   >
                     Home
                   </a>
@@ -145,7 +145,7 @@ export default function Navbar() {
                   <a
                     href={LOCAL_HOST}
                     className="block text-sm px-2 py-2 font-medium text-white
-                    rounded hover:bg-amber-600 transition duration-300"
+                    rounded hover:bg-amber-600 transition duration-300 cursor-pointer"
                   >
                     {" "}
                     Services
@@ -155,7 +155,7 @@ export default function Navbar() {
                   <a
                     href={LOCAL_HOST}
                     className="block text-sm px-2 py-2 font-medium text-white
-                    rounded hover:bg-amber-600 transition duration-300"
+                    rounded hover:bg-amber-600 transition duration-300 cursor-pointer"
                   >
                     {" "}
                     About
@@ -165,7 +165,7 @@ export default function Navbar() {
                   <a
                     href={LOCAL_HOST}
                     className="block text-sm px-2 py-2 font-medium text-white
-                    rounded hover:bg-amber-600 transition duration-300"
+                    rounded hover:bg-amber-600 transition duration-300 cursor-pointer"
                   >
                     Contact Us
                   </a>
@@ -174,7 +174,7 @@ export default function Navbar() {
                   <a
                     href={LOCAL_HOST}
                     className="block text-sm px-2 py-2 font-medium text-white
-                    rounded hover:bg-amber-600 transition duration-300"
+                    rounded hover:bg-amber-600 transition duration-300 cursor-pointer"
                   >
                     Register
                   </a>
@@ -183,7 +183,7 @@ export default function Navbar() {
                   <a
                     href={LOCAL_HOST}
                     className="block p-2 mb-2 font-medium text-white rounded
-                    hover:bg-amber-600 transition duration-300"
+                    hover:bg-amber-600 transition duration-300 cursor-pointer"
                   >
                     <svg
                       className="w-6 h-6 "
