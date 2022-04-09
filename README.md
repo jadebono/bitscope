@@ -55,12 +55,12 @@ You don't have to ever use `eject`. The curated feature set is suitable for smal
 
 ### `dependencies`
 
-1. "@testing-library/jest-dom": "^5.16.2",
-1. "@testing-library/react": "^12.1.3",
+1. "@testing-library/jest-dom": "^5.16.4",
+1. "@testing-library/react": "^12.1.4",
 1. "@testing-library/user-event": "^13.5.0",
-1. "axios": "^0.26.0",
-1. "react": "^17.0.2",
-1. "react-dom": "^17.0.2",
+1. "axios": "^0.26.1",
+1. "react": "^18.0.0",
+1. "react-dom": "^18.0.0",
 1. "react-scripts": "5.0.0",
 1. "web-vitals": "^2.1.4"
 

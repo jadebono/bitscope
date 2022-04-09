@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import { subscribeUser } from "../requests";
 
 export default function Subscribe() {
   const [subscriber, setSubscriber] = useState({
@@ -7,11 +8,12 @@ export default function Subscribe() {
     email: "",
   });
 
-  const nameRef = useRef("");
-  const emailRef = useRef("");
-  const emailUnsubscribeRef = useRef("");
+  const [email, setEmail] = useState("");
 
-  function handleUnsubscribe(evt) {}
+  const nameRef = useRef();
+  const surnameRef = useRef();
+  const emailRef = useRef();
+  const emailUnsubscribeRef = useRef();
 
   function handleSubscription(evt) {
     const { name, value } = evt.target;
@@ -23,44 +25,72 @@ export default function Subscribe() {
     });
   }
 
+  function submitSubscriber(evt) {
+    subscribeUser(subscriber);
+  }
+
+  function handleUnsubscribe(evt) {
+    const { value } = evt.target;
+    setEmail((prevEmail) => value);
+  }
+
+  function submitUnsubscribe(evt) {
+    console.log(email);
+  }
+
   return (
     <React.Fragment>
       {/* Subscribe facility */}
       <div className="mx-4 mt-4 border-2 border-blue-900 rounded-lg shadow-lg bg-blue-100 sm:mx-4">
         <form className="flex flex-col my-5">
-          <div className="mx-4 mb-4 text-center font-bold text-amber-600">
+          <div className="mb-4 text-center font-bold text-amber-600">
             Not a subscriber? Subscribe to our newsletter
           </div>
-          <div className="mx-4 mb-5 sm:mx-auto">
+          <div className="mb-5 ml-2 sm:mx-auto">
             <label className="text-blue-900 font-bold" htmlFor="name">
               Name:
             </label>
             <input
-              className="border-2 border-blue-200 rounded-md ml-4"
+              className="border-2 border-blue-200 rounded-md ml-10"
               ref={nameRef}
               name="name"
               type="text"
-              value={nameRef.current.value}
+              required
+              value={subscriber.name || ""}
               onChange={handleSubscription}
             />
           </div>
-
-          <div className="mx-4 sm:mx-auto">
+          <div className="mb-5 ml-2 sm:mx-auto">
+            <label className="text-blue-900 font-bold" htmlFor="surname">
+              Surname:
+            </label>
+            <input
+              className="border-2 border-blue-200 rounded-md ml-4"
+              ref={surnameRef}
+              name="surname"
+              type="text"
+              required
+              value={subscriber.surname || ""}
+              onChange={handleSubscription}
+            />
+          </div>
+          <div className=" ml-2 sm:mx-auto">
             <label className="text-blue-900 font-bold" htmlFor="email">
               Email:
             </label>
             <input
-              className="border-2 border-blue-200 rounded-md ml-5"
+              className="border-2 border-blue-200 rounded-md ml-11"
               ref={emailRef}
               name="email"
               type="email"
-              value={emailRef.current.value}
+              required
+              value={subscriber.email || ""}
               onChange={handleSubscription}
             />
           </div>
           <button
             className=" mt-5 w-24  mx-auto border-2 border-blue-900 bg-blue-900 text-white rounded-md hover:shadow-2xl hover:text-blue-900 hover:bg-white transition east-out duration-500"
-            onClick={console.log(nameRef)}
+            onClick={submitSubscriber}
           >
             Subscribe
           </button>
@@ -82,13 +112,14 @@ export default function Subscribe() {
               ref={emailUnsubscribeRef}
               name="email"
               type="email"
-              value={emailUnsubscribeRef.current.value}
+              required
+              value={email || ""} // see if you need state for this
               onChange={handleUnsubscribe}
             />
           </div>
           <button
             className=" mt-5 w-28   mx-auto border-2 border-blue-900 bg-blue-900 text-white rounded-md hover:shadow-2xl hover:text-blue-900 hover:bg-white transition east-out duration-500"
-            onClick={console.log(emailUnsubscribeRef)}
+            onClick={submitUnsubscribe}
           >
             Unsubscribe
           </button>
