@@ -44,7 +44,7 @@ export async function CloseMDB() {
     .catch((error) => console.log(error));
 }
 
-// function to add document to collection
+// function to add document to a collection
 export async function SaveToDB(col, data) {
   try {
     await db.collection(col).insertOne(data);
@@ -53,7 +53,7 @@ export async function SaveToDB(col, data) {
   }
 }
 
-// function to retrieve document
+// function to retrieve document from a collection
 export async function LoadFromDB(col, item) {
   try {
     return await db.collection(col).find(item).toArray();
@@ -62,10 +62,19 @@ export async function LoadFromDB(col, item) {
   }
 }
 
-// function to update document in collection
+// function to update document in a collection
 export async function updateDB(col, filter, data) {
   try {
     await db.collection(col).updateOne(filter, { $set: data });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+// function to delete a document in a collection
+export async function deleteFromDB(col, item) {
+  try {
+    await db.collection(col).deleteOne(item);
   } catch (error) {
     console.log(error);
   }

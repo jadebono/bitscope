@@ -4,11 +4,19 @@ const SERVER = "http://localhost:4000";
 
 // Requests to the /newsletter routes
 
-// async function to post user and email to /newsletter/subscribe route
+// async function to post a user and email to the /newsletter/subscribe route
 export async function subscribeUser(subscriber) {
-  console.log(subscriber);
   await axios
     .post(`${SERVER}/newsletter/subscribe`, subscriber)
-    .then((res) => console.log(res))
+    .then((res) => alert(res.data))
+    .catch((err) => console.log(err));
+}
+
+// async function to post an email to the /newsletter/unsubscribe route
+export async function unsubscribeUser(email) {
+  console.log(email);
+  await axios
+    .post(`${SERVER}/newsletter/unsubscribe`, email)
+    .then((res) => console.log(res.data))
     .catch((err) => console.log(err));
 }

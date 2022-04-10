@@ -30,6 +30,8 @@ current todos
 // todo add encryption functions to encrypt and decrypt all user data
 // todo add facility to test whether subscriber's email is already in db 
 // todo encrypt user's name and surname in the db too
-todo add unsubscribe route
+// todo add unsubscribe route
+todo add frontend notification to un/successful un/subscription
 todo create a separate app to write emails and send them to the addresses stored in db
+todo deploy frontend as a mobile app
 */

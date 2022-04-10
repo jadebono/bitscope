@@ -1,19 +1,50 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export default function Navbar() {
   const { LOCAL_HOST } = process.env;
-  const [burger, setBurger] = useState("hidden");
+  const [burger, setBurger] = useState({
+    burger: "",
+    menu: "",
+  });
+
+  useEffect(() => {
+    function handleResize() {
+      // track when screensize exceeds 768px or falls under it
+      const md = window.innerWidth;
+      // when screensize is >= 768, close the hidden menu (if it is open)
+      md >= 768
+        ? setBurger((prevBurger) => {
+            return { burger: "hidden", menu: "hidden" };
+          })
+        : setBurger((prevBurger) => {
+            return { burger: "", menu: "hidden" };
+          });
+    }
+    // set resize listener
+    // this will create n event bindings of handleResize which can seriously affect
+    // performance if you resize the screen often enough forcing excessive rerendering
+    window.addEventListener("resize", handleResize);
+
+    // clean up function to remove the event listener once it is used
+    return () => {
+      // remove resize listener
+      window.removeEventListener("resize", handleResize);
+    };
+  });
 
   function revealMenu() {
     setBurger((prevState) => {
-      return prevState === "hidden" ? "" : "hidden";
+      return {
+        burger: prevState.burger === "hidden" ? "" : "hidden",
+        menu: prevState.menu === "hidden" ? "" : "hidden",
+      };
     });
   }
 
   const mobileBurger = (
     <div className="md:hidden flex items-center">
       <button
-        className="outline-none mobile-menu-button hover:bg-amber-600 transition duration-300"
+        className="outline-none mobile-menu-button hover:bg-orange-700 transition duration-300"
         onClick={revealMenu}
       >
         <svg
@@ -37,7 +68,7 @@ export default function Navbar() {
   return (
     <React.Fragment>
       {/* Navbar goes here  text-white temporary*/}
-      <nav className="bg-blue-900 shadow-lg text-white">
+      <nav className="bg-indigo-900 shadow-lg text-white">
         <div className="px-4 py-4">
           <div className="flex mx-4 justify-between space-x-7">
             <div className="flex">
@@ -69,27 +100,27 @@ export default function Navbar() {
               <div className="hidden md:flex items-center space-x-1">
                 <a
                   href={LOCAL_HOST}
-                  className="p-2 text-white rounded hover:bg-amber-600 font-semibold transition duration-300 cursor-pointer"
+                  className="p-2 text-white rounded hover:bg-orange-700 font-semibold transition duration-300 cursor-pointer"
                 >
                   Home
                 </a>
                 <a
                   href={LOCAL_HOST}
-                  className="p-2 text-white rounded hover:bg-amber-600
+                  className="p-2 text-white rounded hover:bg-orange-700
                   font-semibold transition duration-300 cursor-pointer"
                 >
                   Services
                 </a>
                 <a
                   href={LOCAL_HOST}
-                  className="p-2 text-white rounded hover:bg-amber-600
+                  className="p-2 text-white rounded hover:bg-orange-700
                   font-semibold transition duration-300 cursor-pointer"
                 >
                   About
                 </a>
                 <a
                   href={LOCAL_HOST}
-                  className="p-2 text-white rounded hover:bg-amber-600
+                  className="p-2 text-white rounded hover:bg-orange-700
                   font-semibold transition duration-300 cursor-pointer"
                 >
                   Contact Us
@@ -100,7 +131,7 @@ export default function Navbar() {
             <div className="hidden md:flex justify-end items-center  space-x-3 ">
               <a
                 href={LOCAL_HOST}
-                className="p-2 font-medium text-white rounded hover:bg-amber-600
+                className="p-2 font-medium text-white rounded hover:bg-orange-700
                 transition duration-300 cursor-pointer"
               >
                 Register
@@ -108,7 +139,7 @@ export default function Navbar() {
               <a
                 href={LOCAL_HOST}
                 className="p-2 font-medium text-white border-2 border-white
-                rounded-full hover:bg-amber-600 transition duration-300 cursor-pointer"
+                rounded-full hover:bg-orange-700 transition duration-300 cursor-pointer"
               >
                 <svg
                   className="w-6 h-6 "
@@ -124,10 +155,10 @@ export default function Navbar() {
                 </svg>
               </a>
             </div>
-            {/* generate the mobile menu button if burger state is hidden */}
-            {burger === "hidden" && mobileBurger}
+            {/* generate the mobile menu button if burger state is false */}
+            {burger.burger === "" && mobileBurger}
             {/* Mobile menu */}
-            <div className={`${burger} mobile-menu md:hidden`}>
+            <div className={`${burger.menu} mobile-menu md:hidden`}>
               <ul className="">
                 {/* !if screen is resized when the menu is open it remains open. Will this be a problem? */}
                 <li className="flex justify-end py-2">{mobileBurger}</li>
@@ -136,7 +167,7 @@ export default function Navbar() {
                   <a
                     href={LOCAL_HOST}
                     className="block text-sm px-2 py-2 font-medium text-white
-                    rounded hover:bg-amber-600 transition duration-300 cursor-pointer"
+                    rounded hover:bg-orange-700 transition duration-300 cursor-pointer"
                   >
                     Home
                   </a>
@@ -145,9 +176,8 @@ export default function Navbar() {
                   <a
                     href={LOCAL_HOST}
                     className="block text-sm px-2 py-2 font-medium text-white
-                    rounded hover:bg-amber-600 transition duration-300 cursor-pointer"
+                    rounded hover:bg-orange-700 transition duration-300 cursor-pointer"
                   >
-                    {" "}
                     Services
                   </a>
                 </li>
@@ -155,9 +185,8 @@ export default function Navbar() {
                   <a
                     href={LOCAL_HOST}
                     className="block text-sm px-2 py-2 font-medium text-white
-                    rounded hover:bg-amber-600 transition duration-300 cursor-pointer"
+                    rounded hover:bg-orange-700 transition duration-300 cursor-pointer"
                   >
-                    {" "}
                     About
                   </a>
                 </li>
@@ -165,7 +194,7 @@ export default function Navbar() {
                   <a
                     href={LOCAL_HOST}
                     className="block text-sm px-2 py-2 font-medium text-white
-                    rounded hover:bg-amber-600 transition duration-300 cursor-pointer"
+                    rounded hover:bg-orange-700 transition duration-300 cursor-pointer"
                   >
                     Contact Us
                   </a>
@@ -174,7 +203,7 @@ export default function Navbar() {
                   <a
                     href={LOCAL_HOST}
                     className="block text-sm px-2 py-2 font-medium text-white
-                    rounded hover:bg-amber-600 transition duration-300 cursor-pointer"
+                    rounded hover:bg-orange-700 transition duration-300 cursor-pointer"
                   >
                     Register
                   </a>
@@ -183,7 +212,7 @@ export default function Navbar() {
                   <a
                     href={LOCAL_HOST}
                     className="block p-2 mb-2 font-medium text-white rounded
-                    hover:bg-amber-600 transition duration-300 cursor-pointer"
+                    hover:bg-orange-700 transition duration-300 cursor-pointer"
                   >
                     <svg
                       className="w-6 h-6 "

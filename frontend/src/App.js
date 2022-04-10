@@ -8,10 +8,10 @@ export default function App() {
       <Navbar />
       <div className="">
         <h1 className="ml-4 mt-4 text-3xl text-blue-500 font-bold">
-          Logonomikos
+          Polykranos
         </h1>
         <h4 className="ml-4 text-blue-900 font-bold">
-          Rethinking the World in the Age of Tech
+          Multidisciplinarity in an Overspecialised World
         </h4>
       </div>
       <Subscribe />

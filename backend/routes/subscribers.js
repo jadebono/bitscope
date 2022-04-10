@@ -7,7 +7,7 @@ import express from "express";
 import { encipher, decipher } from "../encryption.js";
 import * as fs from "fs";
 import HashString from "../mongoConnect.js";
-import { incLog, LoadFromDB, SaveToDB } from "../mongoConnect.js";
+import { deleteFromDB, LoadFromDB, SaveToDB } from "../mongoConnect.js";
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
 import { ObjectId } from "mongodb";
@@ -59,10 +59,20 @@ subscribersRouter.route("/subscribe").post(async (req, res) => {
 });
 
 // post route to delete a user from the newsletter
-
 subscribersRouter.route("/unsubscribe").post(async (req, res) => {
   const { email } = req.body;
-  // encrypt email using jwt
-  const token = encryptEmail(email);
-  // check whether a user's email already exists in the collection
+  const encipheredEmail = encipher(email);
+  // Check to make sure submitted email is already there
+  const testEmail = await testData("email", encipheredEmail);
+  // if email exists delete user's record
+  if (testEmail) {
+    // delete record
+    await deleteFromDB("subscribers", { email: encipheredEmail }).then(() => {
+      res.send("Email successfully unsubscribed");
+      console.log("Email successfully unsubscribed");
+    });
+  } else {
+    res.send("That email is not subscribed!");
+    console.log("That email is not subscribed!");
+  }
 });
