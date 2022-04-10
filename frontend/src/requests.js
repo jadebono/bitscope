@@ -9,6 +9,6 @@ export async function subscribeUser(subscriber) {
   console.log(subscriber);
   await axios
     .post(`${SERVER}/newsletter/subscribe`, subscriber)
-    .then((res) => console.log(res.data))
+    .then((res) => console.log(res))
     .catch((err) => console.log(err));
 }
