@@ -1,3 +1,30 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Notification styles start here */
+.notification_wrapper {
+  @apply relative top-2 right-2 w-80;
+}
+
+.notification_item {
+  @apply h-full shadow-lg shadow-grey-500 rounded-lg overflow-hidden;
+}
+
+.notification_item {
+  @apply m-0 py-2;
+}
+
+.notification_item .bar {
+  @apply h-2;
+}
+
+.notification_item.succcess .bar {
+  @apply border-green-500;
+}
+
+.notification_item.error .bar {
+  @apply border-red-500;
+}
+
+/* Notification styles end here */
