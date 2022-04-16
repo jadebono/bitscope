@@ -1,27 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  bothHidden,
+  burgerShownMenuHidden,
+  toggle,
+} from "../store/NavBarSlice.js";
 
 export default function Navbar() {
   const { LOCAL_HOST } = process.env;
-  const [burger, setBurger] = useState({
-    burger: "",
-    menu: "",
-  });
+
+  const dispatch = useDispatch();
+  const navbar = useSelector((state) => state.navbar);
 
   useEffect(() => {
     function handleResize() {
       // track when screensize exceeds 768px or falls under it
       const md = window.innerWidth;
-      // when screensize is >= 768, close the hidden menu (if it is open)
-      md >= 768
-        ? setBurger((prevBurger) => {
-            return { burger: "hidden", menu: "hidden" };
-          })
-        : setBurger((prevBurger) => {
-            return { burger: "", menu: "hidden" };
-          });
+      // when screensize is >= 768, hide the burger and
+      // close the hidden menu (if it is open)
+      md >= 768 ? dispatch(bothHidden()) : dispatch(burgerShownMenuHidden());
     }
     // set resize listener
-    // this will create n event bindings of handleResize which can seriously affect
+    // this will create event bindings of handleResize which can seriously affect
     // performance if you resize the screen often enough forcing excessive rerendering
     window.addEventListener("resize", handleResize);
 
@@ -30,22 +30,13 @@ export default function Navbar() {
       // remove resize listener
       window.removeEventListener("resize", handleResize);
     };
-  });
-
-  function revealMenu() {
-    setBurger((prevState) => {
-      return {
-        burger: prevState.burger === "hidden" ? "" : "hidden",
-        menu: prevState.menu === "hidden" ? "" : "hidden",
-      };
-    });
-  }
+  }, [dispatch]);
 
   const mobileBurger = (
-    <div className="md:hidden flex items-center">
+    <div className={`${navbar.burger} md:hidden flex items-center`}>
       <button
-        className="outline-none mobile-menu-button hover:bg-orange-700 transition duration-300"
-        onClick={revealMenu}
+        className="outline-none hover:bg-orange-700 transition duration-300"
+        onClick={() => dispatch(toggle())}
       >
         <svg
           className="w-6 h-6"
@@ -155,12 +146,13 @@ export default function Navbar() {
                 </svg>
               </a>
             </div>
-            {/* generate the mobile menu button if burger state is false */}
-            {burger.burger === "" && mobileBurger}
+            {/* generate the mobile menu button if under the specified conditions */}
+            {(navbar.burger === "") & (navbar.menu === "hidden")
+              ? mobileBurger
+              : ""}
             {/* Mobile menu */}
-            <div className={`${burger.menu} mobile-menu md:hidden`}>
+            <div className={`${navbar.menu} md:hidden`}>
               <ul className="">
-                {/* !if screen is resized when the menu is open it remains open. Will this be a problem? */}
                 <li className="flex justify-end py-2">{mobileBurger}</li>
 
                 <li className="">

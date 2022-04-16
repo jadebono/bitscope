@@ -10,7 +10,12 @@
 
 # Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was bootstrapped with:
+
+[Create React App](https://github.com/facebook/create-react-app)  
+[React Redux](https://react-redux.js.org/)  
+[Redux Toolkit](https://redux-toolkit.js.org/)  
+[Tailwind](https://tailwindcss.com/)
 
 ## Available Scripts
 
@@ -55,13 +60,17 @@ You don't have to ever use `eject`. The curated feature set is suitable for smal
 
 ### `dependencies`
 
+1. "@reduxjs/toolkit": "^1.8.1",
 1. "@testing-library/jest-dom": "^5.16.4",
 1. "@testing-library/react": "^12.1.4",
 1. "@testing-library/user-event": "^13.5.0",
 1. "axios": "^0.26.1",
 1. "react": "^18.0.0",
 1. "react-dom": "^18.0.0",
+1. "react-redux": "^7.2.8",
 1. "react-scripts": "5.0.0",
+1. "redux": "^4.1.2",
+1. "uuid": "^8.3.2",
 1. "web-vitals": "^2.1.4"
 
 ### `Integrated Dependencies`
