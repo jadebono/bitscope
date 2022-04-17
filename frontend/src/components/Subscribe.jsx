@@ -1,51 +1,32 @@
-import React, { useState, useRef } from "react";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { subscribeUser, unsubscribeUser } from "../requests";
+import { clearSubscriber, setSubscriber } from "../store/SubscribeSlice";
 
 export default function Subscribe() {
-  const [subscriber, setSubscriber] = useState({
-    name: "",
-    surname: "",
-    email: "",
-  });
-
-  const [email, setEmail] = useState("");
-
-  const nameRef = useRef();
-  const surnameRef = useRef();
-  const emailRef = useRef();
-  const emailUnsubscribeRef = useRef();
+  const dispatch = useDispatch();
+  const subscriber = useSelector((state) => state.subscriber);
 
   function handleSubscription(evt) {
     const { name, value } = evt.target;
-    setSubscriber((prevSubscriber) => {
-      return {
-        ...prevSubscriber,
-        [name]: value,
-      };
-    });
+    dispatch(setSubscriber({ [name]: value }));
   }
 
   function submitSubscriber(evt) {
     evt.preventDefault();
     subscribeUser(subscriber);
-    setSubscriber((prevSubscriber) => {
-      return {
-        name: "",
-        surname: "",
-        email: "",
-      };
-    });
+    dispatch(clearSubscriber());
   }
 
   function handleUnsubscribe(evt) {
     const { value } = evt.target;
-    setEmail((prevEmail) => value);
+    dispatch(setSubscriber({ emailToUnsubscribe: value }));
   }
 
   function submitUnsubscribe(evt) {
     evt.preventDefault();
-    unsubscribeUser({ email: email });
-    setEmail((prevEmail) => "");
+    unsubscribeUser({ email: subscriber.emailToUnsubscribe });
+    dispatch(clearSubscriber());
   }
 
   return (
@@ -62,7 +43,6 @@ export default function Subscribe() {
             </label>
             <input
               className="border-2 border-indigo-200 rounded-md ml-10"
-              ref={nameRef}
               name="name"
               type="text"
               required
@@ -76,7 +56,6 @@ export default function Subscribe() {
             </label>
             <input
               className="border-2 border-indigo-200 rounded-md ml-4"
-              ref={surnameRef}
               name="surname"
               type="text"
               required
@@ -90,7 +69,6 @@ export default function Subscribe() {
             </label>
             <input
               className="border-2 border-indigo-200 rounded-md ml-11"
-              ref={emailRef}
               name="email"
               type="email"
               required
@@ -119,11 +97,10 @@ export default function Subscribe() {
             </label>
             <input
               className="border-2 border-indigo-200 rounded-md ml-5"
-              ref={emailUnsubscribeRef}
               name="email"
               type="email"
               required
-              value={email || ""} // see if you need state for this
+              value={subscriber.emailToUnsubscribe || ""}
               onChange={handleUnsubscribe}
             />
           </div>

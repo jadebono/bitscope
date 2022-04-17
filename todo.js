@@ -31,10 +31,11 @@ current todos
 // todo add facility to test whether subscriber's email is already in db 
 // todo encrypt user's name and surname in the db too
 // todo add unsubscribe route
-todo rebuild structure with redux and react-router
+// todo rebuild structure with redux toolkit
+// todo app to test color scheme
+todo use react-router
 todo add frontend notification to un/successful un/subscription
 todo colour scheme
-todo app to test color scheme
 todo create a separate app to write emails and send them to the addresses stored in db
 todo deploy frontend as a mobile app
 */
