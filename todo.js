@@ -33,9 +33,24 @@ current todos
 // todo add unsubscribe route
 // todo rebuild structure with redux toolkit
 // todo app to test color scheme
+todo Start integrating Redux Thunk for async requests with axios
+todo use react-router
+todo add frontend notification to un/successful un/subscription
+todo add home page and about page and create the links with react-router
+todo colour scheme
+todo create a separate app to write emails and send them to the addresses stored in db
+todo deploy frontend as a mobile app => this will require react native
+*/
+
+/*
+* Opening phase: Week starting 17 April  (3)
+current todos
+// todo add footer
+// todo create a header component
+todo Start integrating Redux Thunk for async requests with axios
 todo use react-router
 todo add frontend notification to un/successful un/subscription
 todo colour scheme
 todo create a separate app to write emails and send them to the addresses stored in db
-todo deploy frontend as a mobile app
+todo deploy frontend as a mobile app => this will require react native
 */

@@ -3,28 +3,55 @@
 @tailwind utilities;
 
 /* Notification styles start here */
-.notification_wrapper {
-  @apply relative top-2 right-2 w-80;
+.notification-wrapper {
+  @apply fixed top-20 md:top-24 right-2 w-60 md:w-80;
 }
 
-.notification_item {
-  @apply h-full shadow-lg shadow-grey-500 rounded-lg overflow-hidden;
+.notification-item {
+  @apply shadow-lg shadow-grey-500 rounded-lg overflow-hidden mb-2 w-full;
 }
 
-.notification_item {
-  @apply m-0 py-2;
+.notification-item p {
+  @apply m-0 p-2;
 }
 
-.notification_item .bar {
-  @apply h-2;
+.notification-item {
+  animation: SlideLeft 0.2s;
+  animation-fill-mode: forwards;
+}
+@keyframes SlideLeft {
+  0% {
+    margin-left: 120%;
+  }
+  100% {
+    margin-left: 0%;
+  }
 }
 
-.notification_item.succcess .bar {
-  @apply border-green-500;
+@keyframes SlideRight {
+  0% {
+    margin-left: 0;
+  }
+  100% {
+    margin-left: 120%;
+  }
 }
 
-.notification_item.error .bar {
-  @apply border-red-500;
+.notification-item.exit {
+  animation: SlideRight 0.2s;
+  animation-fill-mode: forwards;
+}
+
+.notification-item.succcess .bar {
+  @apply h-2 bg-green-500;
+}
+
+.notification-item.error .bar {
+  @apply h-2 bg-red-500;
+}
+
+.notification-item .bar {
+  @apply h-2 bg-indigo-400;
 }
 
 /* Notification styles end here */

@@ -14,7 +14,6 @@ export async function subscribeUser(subscriber) {
 
 // async function to post an email to the /newsletter/unsubscribe route
 export async function unsubscribeUser(email) {
-  console.log(email);
   await axios
     .post(`${SERVER}/newsletter/unsubscribe`, email)
     .then((res) => console.log(res.data))

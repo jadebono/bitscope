@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 
 export default function Notification(props) {
-  const [width, setWidth] = useState(0);
+  const [exit, setExit] = useState(false);
   const [intervalID, setIntervalID] = useState(null);
+  const [width, setWidth] = useState(0);
 
   function handleStartTimer() {
     const id = setInterval(() => {
@@ -10,16 +11,32 @@ export default function Notification(props) {
         if (prevWidth < 100) {
           return prevWidth + 0.5;
         } else {
+          clearInterval(id);
           return prevWidth;
         }
       });
-    }, 20);
+    }, 500);
     setIntervalID(id);
   }
 
   function handlePauseTimer() {
     clearInterval(intervalID);
   }
+
+  function handleCloseNotification() {
+    handlePauseTimer();
+    setExit((prevState) => true);
+    setTimeout(() => {
+      // remove from state and therefore the dom
+    }, 400);
+  }
+
+  useEffect(() => {
+    if (width === 100) {
+      // if width === 100% close notification
+      handleCloseNotification();
+    }
+  });
 
   useEffect(() => {
     handleStartTimer();
@@ -32,13 +49,17 @@ export default function Notification(props) {
   return (
     <React.Fragment>
       <div
-        className={`notification_item ${
-          props.type === "SUCCESS" ? "success" : "error"
-        }`}
+        onMouseEnter={handlePauseTimer}
+        onMouseLeave={handleStartTimer}
+        // className={`notification-item ${
+        //   props.type === "SUCCESS" ? "success" : "error"
+        // } ${exit ? "exit" : ""}`}
+        className={`notification-item ${props.type} ${exit ? "exit" : ""}`}
       >
         <p className="ml-2">{props.message}</p>
+
+        <div className="bar" style={{ width: `${width}%` }} />
       </div>
-      <div className="bar" />
     </React.Fragment>
   );
 }

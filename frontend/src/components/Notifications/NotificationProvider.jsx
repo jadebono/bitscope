@@ -7,14 +7,14 @@ export default function NotificationProvider(props) {
   const notifications = [
     {
       id: v4(),
-      type: "SUCCESS",
+      type: "success",
       message: "Hello World",
     },
   ];
 
   return (
     <React.Fragment>
-      <div className={"notification_wrapper"}>
+      <div className={"notification-wrapper"}>
         {notifications.map((note) => {
           return <Notification key={note.id} {...note} />;
         })}

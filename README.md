@@ -139,4 +139,11 @@ document.cookie = `session=""; max-age=0`;
 
 ### `MongoDB`
 
-Database:
+Database: ecom
+Collections: platform, subscribers
+
+## `Useful Tutorials`
+
+1. [React Tutorial - Beginner to Advanced - freeCodeCamp](https://youtu.be/zrs7u6bdbUw)
+1. [Full React Course 2020 - Learn Fundamentals, Hooks, Context API, React Router, Custom Hooks](https://youtu.be/4UZrsTqkcW4)
+1. [React Notification Component - ReactJS Tutorial](https://youtu.be/KYKmqeU6lOI)
