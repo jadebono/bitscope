@@ -110,7 +110,7 @@ export default function Navbar() {
                   About
                 </a>
                 <a
-                  href={LOCAL_HOST}
+                  href="/contact"
                   className="p-2 text-white rounded hover:bg-orange-700
                   font-semibold transition duration-300 cursor-pointer"
                 >
@@ -184,7 +184,7 @@ export default function Navbar() {
                 </li>
                 <li>
                   <a
-                    href={LOCAL_HOST}
+                    href="/contact"
                     className="block text-sm px-2 py-2 font-medium text-white
                     rounded hover:bg-orange-700 transition duration-300 cursor-pointer"
                   >
