@@ -32,7 +32,7 @@ export default function Subscribe() {
   return (
     <React.Fragment>
       {/* Subscribe facility */}
-      <div className="mx-4 mt-4 border-2 border-indigo-900 rounded-lg shadow-lg bg-indigo-50 sm:mx-4 md:w-2/3 md:mx-auto">
+      <div className="mx-4 my-4 border-2 border-indigo-900 rounded-lg shadow-lg bg-indigo-50 sm:mx-4 md:w-2/3 md:mx-auto">
         <form className="flex flex-col my-5">
           <div className="mb-4 text-center font-bold text-orange-700">
             Not a subscriber? Subscribe to our newsletter

@@ -52,8 +52,9 @@ todo use react-router
 // todo add frontend notification to un/successful un/subscription
 // todo make notifications change bar colour according to message
 todo convert notifications to use redux-toolkit
-todo add home page and about page and create the links with react-router
-todo link newsletter and contact us pages
+// todo add home page and subscribe page and create the links with react-router
+todo add contact us pages, about page,  an error page/404-not found
+todo check if Christine wants gradient or solid colour on navbar/footer
 todo colour scheme
 todo create a separate app to write emails and send them to the addresses stored in db
 todo deploy frontend as a mobile app => this will require react native

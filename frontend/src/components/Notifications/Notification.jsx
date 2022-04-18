@@ -16,6 +16,8 @@ export default function Notification(props) {
       ? "bg-red-100"
       : props.type === "warning"
       ? "bg-orange-100"
+      : props.type === "notify"
+      ? "bg-blue-100"
       : "bg-white";
 
   function handleStartTimer() {

@@ -54,6 +54,10 @@
   @apply h-2 bg-orange-500;
 }
 
+.notify {
+  @apply h-2 bg-blue-500;
+}
+
 /* .notification-item.succcess .bar {
   @apply h-2 bg-green-500;
 }

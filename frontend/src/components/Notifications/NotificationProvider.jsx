@@ -23,8 +23,8 @@ export default function NotificationProvider(props) {
       // you can create as many types as you like with their own styles in this array
       {
         id: v4(),
-        type: "error",
-        message: "note to me",
+        type: "notify",
+        message: "Automatic notification",
       },
     ]
   );

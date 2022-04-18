@@ -58,6 +58,10 @@ You don't have to ever use `eject`. The curated feature set is suitable for smal
 
 # `Frontend`
 
+## `Potential Name and Tagline`
+
+Polykranos, Multidisciplinarity in an Overspecialised World
+
 ## `dependencies`
 
 1. "@reduxjs/toolkit": "^1.8.1",
@@ -97,6 +101,7 @@ What styling and colour for each?
 
 so far:
 success: bar: bg-green-500, notification: bg-green-100, bar css: .success
+notify: bar: bg-blue-500, notification: bg-blue-100, bar css: .notify
 error: bar: bg-red-500, notification: bg-red-100, bar css: .error
 warning: bar: bg-orange-500, notification: bg-orange-100, bar css: .warning
 anything else: white background and no bar
@@ -160,3 +165,5 @@ Collections: platform, subscribers
 1. [React Tutorial - Beginner to Advanced - freeCodeCamp](https://youtu.be/zrs7u6bdbUw)
 1. [Full React Course 2020 - Learn Fundamentals, Hooks, Context API, React Router, Custom Hooks](https://youtu.be/4UZrsTqkcW4)
 1. [React Notification Component - ReactJS Tutorial](https://youtu.be/KYKmqeU6lOI)
+1. [React Router 6 Tutorial](https://www.youtube.com/playlist?list=PL4cUxeGkcC9h7F1LWaQ7MAI8ptg5VjvxJ)
+1. [React Router V6 Tutorial - Routes, Redirecting, UseNavigate, UseParams...](https://youtu.be/UjHT_NKR_gU)

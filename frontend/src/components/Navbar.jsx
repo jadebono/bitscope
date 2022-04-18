@@ -90,17 +90,17 @@ export default function Navbar() {
               {/* Primary Navbar items */}
               <div className="hidden md:flex items-center space-x-1">
                 <a
-                  href={LOCAL_HOST}
+                  href="/"
                   className="p-2 text-white rounded hover:bg-orange-700 font-semibold transition duration-300 cursor-pointer"
                 >
                   Home
                 </a>
                 <a
-                  href={LOCAL_HOST}
+                  href="/subscribe"
                   className="p-2 text-white rounded hover:bg-orange-700
                   font-semibold transition duration-300 cursor-pointer"
                 >
-                  Services
+                  Subscribe
                 </a>
                 <a
                   href={LOCAL_HOST}
@@ -157,7 +157,7 @@ export default function Navbar() {
 
                 <li className="">
                   <a
-                    href={LOCAL_HOST}
+                    href="/"
                     className="block text-sm px-2 py-2 font-medium text-white
                     rounded hover:bg-orange-700 transition duration-300 cursor-pointer"
                   >
@@ -166,11 +166,11 @@ export default function Navbar() {
                 </li>
                 <li>
                   <a
-                    href={LOCAL_HOST}
+                    href="/subscribe"
                     className="block text-sm px-2 py-2 font-medium text-white
                     rounded hover:bg-orange-700 transition duration-300 cursor-pointer"
                   >
-                    Services
+                    Subscribe
                   </a>
                 </li>
                 <li>
