@@ -58,7 +58,7 @@ You don't have to ever use `eject`. The curated feature set is suitable for smal
 
 # `Frontend`
 
-### `dependencies`
+## `dependencies`
 
 1. "@reduxjs/toolkit": "^1.8.1",
 1. "@testing-library/jest-dom": "^5.16.4",
@@ -73,7 +73,7 @@ You don't have to ever use `eject`. The curated feature set is suitable for smal
 1. "uuid": "^8.3.2",
 1. "web-vitals": "^2.1.4"
 
-### `Integrated Dependencies`
+## `Integrated Dependencies`
 
 Tailwind comes integrated with this version of Create-React-App. Just add:
 
@@ -87,6 +87,19 @@ contents of frontend/src/index.css
 @tailwind components;
 @tailwind utilities;
 ```
+
+## `Particular Components`
+
+<Notifications/>
+
+How many types of notifications? (perhaps: success, failure, warning)
+What styling and colour for each?
+
+so far:
+success: bar: bg-green-500, notification: bg-green-100, bar css: .success
+error: bar: bg-red-500, notification: bg-red-100, bar css: .error
+warning: bar: bg-orange-500, notification: bg-orange-100, bar css: .warning
+anything else: white background and no bar
 
 ### `Component Properties go here`
 
@@ -112,7 +125,7 @@ Port: 4000
 1. Most node variables are environment variables stored in the .env file.
 1. .env file in backend folder excluded from git for security
 
-### `Cookies`
+## `Cookies`
 
 ```js
 // setting the session cookie
@@ -122,9 +135,9 @@ document.cookie = `session=${user.token}; max-age:${whatever} `;
 document.cookie = `session=""; max-age=0`;
 ```
 
-### `Logging requests`
+## `Logging requests`
 
-### `dependencies`
+## `dependencies`
 
 1. "cookie-parser": "^1.4.6",
 1. "cors": "^2.8.5",

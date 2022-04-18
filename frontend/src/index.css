@@ -42,16 +42,24 @@
   animation-fill-mode: forwards;
 }
 
-.notification-item.succcess .bar {
+.success {
+  @apply h-2 bg-green-500;
+}
+
+.error {
+  @apply h-2 bg-red-500;
+}
+
+.warning {
+  @apply h-2 bg-orange-500;
+}
+
+/* .notification-item.succcess .bar {
   @apply h-2 bg-green-500;
 }
 
 .notification-item.error .bar {
   @apply h-2 bg-red-500;
-}
-
-.notification-item .bar {
-  @apply h-2 bg-indigo-400;
-}
+} */
 
 /* Notification styles end here */

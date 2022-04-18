@@ -5,6 +5,19 @@ export default function Notification(props) {
   const [intervalID, setIntervalID] = useState(null);
   const [width, setWidth] = useState(0);
 
+  // setting the backGroundColour of the main div
+  // this should be of a lighter colour than the bar
+  // current settings: (1) success: green-100, (2) error: red-100
+  // (3) warning: orange-100
+  const backGroundColour =
+    props.type === "success"
+      ? "bg-green-100"
+      : props.type === "error"
+      ? "bg-red-100"
+      : props.type === "warning"
+      ? "bg-orange-100"
+      : "bg-white";
+
   function handleStartTimer() {
     const id = setInterval(() => {
       setWidth((prevWidth) => {
@@ -15,7 +28,7 @@ export default function Notification(props) {
           return prevWidth;
         }
       });
-    }, 500);
+    }, 20);
     setIntervalID(id);
   }
 
@@ -28,6 +41,7 @@ export default function Notification(props) {
     setExit((prevState) => true);
     setTimeout(() => {
       // remove from state and therefore the dom
+      props.dispatch({ type: "REMOVE_NOTIFICATION", id: props.id });
     }, 400);
   }
 
@@ -40,25 +54,19 @@ export default function Notification(props) {
 
   useEffect(() => {
     handleStartTimer();
-  });
-
-  // style bar may have to be created here as it contains logic
-
-  // const [width, setWidth] = useState(0);
+  }, []);
 
   return (
     <React.Fragment>
       <div
         onMouseEnter={handlePauseTimer}
         onMouseLeave={handleStartTimer}
-        // className={`notification-item ${
-        //   props.type === "SUCCESS" ? "success" : "error"
-        // } ${exit ? "exit" : ""}`}
-        className={`notification-item ${props.type} ${exit ? "exit" : ""}`}
+        className={`notification-item ${backGroundColour} 
+         ${exit ? "exit" : ""}`}
       >
-        <p className="ml-2">{props.message}</p>
+        <p className="ml-2 text-indigo-900 font-bold">{props.message}</p>
 
-        <div className="bar" style={{ width: `${width}%` }} />
+        <div className={`${props.type}`} style={{ width: `${width}%` }} />
       </div>
     </React.Fragment>
   );

@@ -49,7 +49,11 @@ current todos
 // todo create a header component
 todo Start integrating Redux Thunk for async requests with axios
 todo use react-router
-todo add frontend notification to un/successful un/subscription
+// todo add frontend notification to un/successful un/subscription
+// todo make notifications change bar colour according to message
+todo convert notifications to use redux-toolkit
+todo add home page and about page and create the links with react-router
+todo link newsletter and contact us pages
 todo colour scheme
 todo create a separate app to write emails and send them to the addresses stored in db
 todo deploy frontend as a mobile app => this will require react native
