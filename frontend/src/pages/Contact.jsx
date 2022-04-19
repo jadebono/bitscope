@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // import { postState } from "../requests";
 
 export default function Contact(props) {
@@ -9,6 +9,10 @@ export default function Contact(props) {
     body: "",
   });
   const [submission, setSubmission] = useState(false);
+
+  useEffect(() => {
+    document.title = "Contact us";
+  }, []);
 
   // the form field that will be displayed if submission === false
   const form = (

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { subscribeUser, unsubscribeUser } from "../requests";
 import { clearSubscriber, setSubscriber } from "../store/SubscribeSlice";
@@ -6,6 +6,10 @@ import { clearSubscriber, setSubscriber } from "../store/SubscribeSlice";
 export default function Subscribe() {
   const dispatch = useDispatch();
   const subscriber = useSelector((state) => state.subscriber);
+
+  useEffect(() => {
+    document.title = "Newsletter";
+  }, []);
 
   function handleSubscription(evt) {
     const { name, value } = evt.target;

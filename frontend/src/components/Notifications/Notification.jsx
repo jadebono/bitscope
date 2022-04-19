@@ -8,7 +8,7 @@ export default function Notification(props) {
   // setting the backGroundColour of the main div
   // this should be of a lighter colour than the bar
   // current settings: (1) success: green-100, (2) error: red-100
-  // (3) warning: orange-100
+  // (3) warning: orange-100, (4) notify: blue-100
   const backGroundColour =
     props.type === "success"
       ? "bg-green-100"

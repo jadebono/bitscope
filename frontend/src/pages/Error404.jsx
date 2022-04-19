@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 export default function Error404() {
+  
+  useEffect(() => {
+    document.title = "Error 404";
+  }, []);
+
   return (
     <React.Fragment>
       <div className="ml-4 mb-20 md:mb-10 text-indigo-900">
@@ -13,15 +18,15 @@ export default function Error404() {
           did not find a current representation for the target resource or is
           not willing to disclose that one exists. A 404 status code does not
           indicate whether this lack of representation is temporary or
-          permanent; the 410 (Gone) status code is preferred over 404 if the
-          origin server knows, presumably through some configurable means, that
-          the condition is likely to be permanent. Unquote
+          permanent. Unquote
         </p>
         <div className="flex flex-row justify-start mt-2">
           <p className=" font-bold">Source:</p>
           <a
             href="https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.4"
             className="ml-2 underline "
+            rel="noreferrer"
+            target="_blank"
           >
             Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content
             specification, at the Internet Engineering Task Force

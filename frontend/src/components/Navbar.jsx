@@ -25,12 +25,12 @@ export default function Navbar() {
     // performance if you resize the screen often enough forcing excessive rerendering
     window.addEventListener("resize", handleResize);
 
-    // clean up function to remove the event listener once it is used
+    // return cleanup function to remove the event listener once it is used
     return () => {
       // remove resize listener
       window.removeEventListener("resize", handleResize);
     };
-  }, [dispatch]);
+  });
 
   const mobileBurger = (
     <div className={`${navbar.burger} md:hidden flex items-center`}>
@@ -115,6 +115,14 @@ export default function Navbar() {
                   font-semibold transition duration-300 cursor-pointer"
                 >
                   Contact Us
+                </a>
+                {/* // !! temporary! */}
+                <a
+                  href="/redtest"
+                  className="p-2 text-white rounded hover:bg-orange-700
+                  font-semibold transition duration-300 cursor-pointer"
+                >
+                  Redux
                 </a>
               </div>
             </div>

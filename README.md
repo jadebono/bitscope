@@ -167,3 +167,4 @@ Collections: platform, subscribers
 1. [React Notification Component - ReactJS Tutorial](https://youtu.be/KYKmqeU6lOI)
 1. [React Router 6 Tutorial](https://www.youtube.com/playlist?list=PL4cUxeGkcC9h7F1LWaQ7MAI8ptg5VjvxJ)
 1. [React Router V6 Tutorial - Routes, Redirecting, UseNavigate, UseParams...](https://youtu.be/UjHT_NKR_gU)
+1. [10 React Hooks Explained // Plus Build your own from Scratch](https://youtu.be/TNhaISOUy6Q)
