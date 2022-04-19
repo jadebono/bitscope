@@ -57,13 +57,10 @@
 .notify {
   @apply h-2 bg-blue-500;
 }
-
-/* .notification-item.succcess .bar {
-  @apply h-2 bg-green-500;
-}
-
-.notification-item.error .bar {
-  @apply h-2 bg-red-500;
-} */
-
 /* Notification styles end here */
+
+/* general buttons */
+
+.btn-gen {
+  @apply mt-5 w-28 mx-auto border-2 border-indigo-900 bg-indigo-900 text-white rounded-md hover:shadow-2xl hover:text-indigo-900 hover:bg-white transition ease-out duration-500;
+}

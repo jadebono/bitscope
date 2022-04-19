@@ -30,12 +30,10 @@ export default function Error404() {
         <div className="">
           <h1 className="text-3xl mt-10 ">Why does this happen? </h1>
           <ol className="list-decimal ml-4 mt-2">
-            <li>You have mistyped a url link;</li>
-            <li>You have run into a broken link;</li>
-            <li>
-              You have come here from a broken link returned by a search engine;
-            </li>
-            <li>You have come here from a broken link on another site.</li>
+            <li>You mistyped a url link;</li>
+            <li>You ran into a broken link;</li>
+            <li>You clicked on a broken link returned by a search engine;</li>
+            <li>You clicked on a broken link on another site.</li>
           </ol>
           <div className="">
             <h1 className="text-3xl mt-10 ">What can you do? </h1>

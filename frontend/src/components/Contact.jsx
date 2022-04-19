@@ -87,9 +87,7 @@ export default function Contact(props) {
             />
           </div>
           <div className="flex flex-row my-4 justify-around">
-            <button className=" mt-5 w-28 mx-auto border-2 border-indigo-900 bg-indigo-900 text-white rounded-md hover:shadow-2xl hover:text-indigo-900 hover:bg-white transition east-out duration-500">
-              Submit
-            </button>
+            <button className="btn-gen">Submit</button>
           </div>
         </form>
         <p className="mb-4 text-center text-indigo-900 font-bold">

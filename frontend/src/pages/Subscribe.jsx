@@ -76,10 +76,7 @@ export default function Subscribe() {
               onChange={handleSubscription}
             />
           </div>
-          <button
-            className=" mt-5 w-24  mx-auto border-2 border-indigo-900 bg-indigo-900 text-white rounded-md hover:shadow-2xl hover:text-indigo-900 hover:bg-white transition east-out duration-500"
-            onClick={submitSubscriber}
-          >
+          <button className="btn-gen" onClick={submitSubscriber}>
             Subscribe
           </button>
         </form>
@@ -104,10 +101,7 @@ export default function Subscribe() {
               onChange={handleUnsubscribe}
             />
           </div>
-          <button
-            className=" mt-5 w-28 mx-auto border-2 border-indigo-900 bg-indigo-900 text-white rounded-md hover:shadow-2xl hover:text-indigo-900 hover:bg-white transition east-out duration-500"
-            onClick={submitUnsubscribe}
-          >
+          <button className="btn-gen" onClick={submitUnsubscribe}>
             Unsubscribe
           </button>
         </form>
