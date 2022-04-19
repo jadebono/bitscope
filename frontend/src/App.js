@@ -7,6 +7,7 @@ import Header from "./components/Header";
 import Home from "./pages/Home";
 import Subscribe from "./pages/Subscribe";
 import Contact from "./components/Contact";
+import Error404 from "./components/Error404";
 import NotesTest from "./components/NotesTest";
 
 export default function App() {
@@ -20,6 +21,7 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/subscribe" element={<Subscribe />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="*" element={<Error404 />} />
         </Routes>
       </Router>
       <Footer />
