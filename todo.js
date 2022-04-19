@@ -47,11 +47,14 @@ todo deploy frontend as a mobile app => this will require react native
 current todos
 // todo add footer
 // todo create a header component
-todo Start integrating Redux Thunk for async requests with axios
-todo use react-router
+todo learn how to use Redux Thunk for async requests with axios in Slices
+todo find out how to use above to deliver notifications upon req/res etc
+todo add response oto subscribe page
+todo add response to contact us page
+// todo use react-router
 // todo add frontend notification to un/successful un/subscription
 // todo make notifications change bar colour according to message
-todo convert notifications to use redux-toolkit
+// todo convert notifications to use redux-toolkit
 // todo add home page and subscribe page and create the links with react-router
 // todo started contact page
 todo finish contact us pages

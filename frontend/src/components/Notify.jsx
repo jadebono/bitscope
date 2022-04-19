@@ -1,22 +1,28 @@
-import React, { useState, useEffect } from "react";
+// * The Notification system
 
-export default function Notification(props) {
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { clearNotification } from "../store/NotificationsSlice";
+
+export default function Notify() {
   const [exit, setExit] = useState(false);
   const [intervalID, setIntervalID] = useState(null);
   const [width, setWidth] = useState(0);
+  const dispatch = useDispatch();
+  const notify = useSelector((state) => state.notification);
 
   // setting the backGroundColour of the main div
   // this should be of a lighter colour than the bar
   // current settings: (1) success: green-100, (2) error: red-100
   // (3) warning: orange-100, (4) notify: blue-100
   const backGroundColour =
-    props.type === "success"
+    notify.type === "success"
       ? "bg-green-100"
-      : props.type === "error"
+      : notify.type === "error"
       ? "bg-red-100"
-      : props.type === "warning"
+      : notify.type === "warning"
       ? "bg-orange-100"
-      : props.type === "notify"
+      : notify.type === "notify"
       ? "bg-blue-100"
       : "bg-white";
 
@@ -43,8 +49,16 @@ export default function Notification(props) {
     setExit((prevState) => true);
     setTimeout(() => {
       // remove from state and therefore the dom
-      props.dispatch({ type: "REMOVE_NOTIFICATION", id: props.id });
-    }, 400);
+      dispatch(
+        clearNotification(
+          {
+            type: "",
+            message: "",
+          },
+          400
+        )
+      );
+    });
   }
 
   useEffect(() => {
@@ -60,15 +74,17 @@ export default function Notification(props) {
 
   return (
     <React.Fragment>
-      <div
-        onMouseEnter={handlePauseTimer}
-        onMouseLeave={handleStartTimer}
-        className={`notification-item ${backGroundColour} 
+      <div className="notification-wrapper">
+        <div
+          onMouseEnter={handlePauseTimer}
+          onMouseLeave={handleStartTimer}
+          className={`notification-item ${backGroundColour} 
          ${exit ? "exit" : ""}`}
-      >
-        <p className="ml-2 text-indigo-900 font-bold">{props.message}</p>
+        >
+          <p className="ml-2 text-indigo-900 font-bold">{notify.message}</p>
 
-        <div className={`${props.type}`} style={{ width: `${width}%` }} />
+          <div className={`${notify.type}`} style={{ width: `${width}%` }} />
+        </div>
       </div>
     </React.Fragment>
   );
