@@ -48,9 +48,12 @@ current todos
 // todo add footer
 // todo create a header component
 todo learn how to use Redux Thunk for async requests with axios in Slices
-todo find out how to use above to deliver notifications upon req/res etc
-todo add response oto subscribe page
+// todo find out how to use above to deliver notifications upon req/res etc
+? should I add functionality to have more than one notification display simultaneously?
+// todo add notify to app page and test there
+// todo add response to subscribe page
 todo add response to contact us page
+todo add different colours to the text of the notification for contrast
 // todo use react-router
 // todo add frontend notification to un/successful un/subscription
 // todo make notifications change bar colour according to message

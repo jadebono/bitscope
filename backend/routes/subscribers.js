@@ -51,10 +51,13 @@ subscribersRouter.route("/subscribe").post(async (req, res) => {
       email: encipheredEmail,
     })
       .then(() => {
-        res.send("Subscription succeeded!");
+        res.send(true);
         console.log("Subscription succeeded!");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        res.send(false);
+        console.log("Subscription Failed");
+      });
   }
 });
 
@@ -67,10 +70,15 @@ subscribersRouter.route("/unsubscribe").post(async (req, res) => {
   // if email exists delete user's record
   if (testEmail) {
     // delete record
-    await deleteFromDB("subscribers", { email: encipheredEmail }).then(() => {
-      res.send("Email successfully unsubscribed");
-      console.log("Email successfully unsubscribed");
-    });
+    await deleteFromDB("subscribers", { email: encipheredEmail })
+      .then(() => {
+        res.send(true);
+        console.log("Email successfully unsubscribed");
+      })
+      .catch((err) => {
+        res.send(false);
+        console.log("Attempt to unsubscribe has failed!");
+      });
   } else {
     res.send("That email is not subscribed!");
     console.log("That email is not subscribed!");

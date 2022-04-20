@@ -116,14 +116,6 @@ export default function Navbar() {
                 >
                   Contact Us
                 </a>
-                {/* // !! temporary! */}
-                <a
-                  href="/redtest"
-                  className="p-2 text-white rounded hover:bg-orange-700
-                  font-semibold transition duration-300 cursor-pointer"
-                >
-                  Redux
-                </a>
               </div>
             </div>
             {/* Secondary Navbar items  */}

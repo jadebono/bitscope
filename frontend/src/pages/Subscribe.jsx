@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { subscribeUser, unsubscribeUser } from "../requests";
 import { clearSubscriber, setSubscriber } from "../store/SubscribeSlice";
+import { setNotification } from "../store/NotificationsSlice";
 
 export default function Subscribe() {
   const dispatch = useDispatch();
@@ -16,9 +17,29 @@ export default function Subscribe() {
     dispatch(setSubscriber({ [name]: value }));
   }
 
-  function submitSubscriber(evt) {
+  async function submitSubscriber(evt) {
     evt.preventDefault();
-    subscribeUser(subscriber);
+    const response = await subscribeUser(subscriber);
+    if (response === "Email is already subscribed!") {
+      dispatch(
+        setNotification({
+          type: "error",
+          message: response,
+        })
+      );
+    } else if (response) {
+      dispatch(
+        setNotification({
+          type: "success",
+          message: "You have successfully subscribed to the newsletter.",
+        })
+      );
+    } else {
+      dispatch({
+        type: "error",
+        message: "Subscription failed! Please try again.",
+      });
+    }
     dispatch(clearSubscriber());
   }
 
@@ -27,9 +48,34 @@ export default function Subscribe() {
     dispatch(setSubscriber({ emailToUnsubscribe: value }));
   }
 
-  function submitUnsubscribe(evt) {
+  async function submitUnsubscribe(evt) {
     evt.preventDefault();
-    unsubscribeUser({ email: subscriber.emailToUnsubscribe });
+    const response = await unsubscribeUser({
+      email: subscriber.emailToUnsubscribe,
+    });
+    if (response === "That email is not subscribed!") {
+      dispatch(
+        setNotification({
+          type: "error",
+          message: response,
+        })
+      );
+    } else if (response) {
+      dispatch(
+        setNotification({
+          type: "success",
+          message: "You have successfully unsubscribed from the newsletter.",
+        })
+      );
+    } else {
+      dispatch(
+        setNotification({
+          type: "error",
+          message: "Unknown error.",
+        })
+      );
+    }
+
     dispatch(clearSubscriber());
   }
 

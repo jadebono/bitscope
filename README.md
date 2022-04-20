@@ -106,6 +106,15 @@ error: bar: bg-red-500, notification: bg-red-100, bar css: .error
 warning: bar: bg-orange-500, notification: bg-orange-100, bar css: .warning
 anything else: white background and no bar
 
+### `Procedure to generate a notification`
+
+To update notify state and generate a notification:
+
+1. Post/get request
+1. Await response
+1. if response is valid, send: message: success message, type: success/notify
+1. if response is an error, send: message: error message!, type: error/warning
+
 ### `Component Properties go here`
 
 ### `Component Variables and Properties`
