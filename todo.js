@@ -47,21 +47,23 @@ todo deploy frontend as a mobile app => this will require react native
 current todos
 // todo add footer
 // todo create a header component
-todo learn how to use Redux Thunk for async requests with axios in Slices
 // todo find out how to use above to deliver notifications upon req/res etc
 ? should I add functionality to have more than one notification display simultaneously?
 // todo add notify to app page and test there
 // todo add response to subscribe page
-todo add response to contact us page
-todo add different colours to the text of the notification for contrast
+// todo add response to contact us page and get it to work properly
 // todo use react-router
 // todo add frontend notification to un/successful un/subscription
 // todo make notifications change bar colour according to message
 // todo convert notifications to use redux-toolkit
 // todo add home page and subscribe page and create the links with react-router
 // todo started contact page
-todo finish contact us pages
 // todo an error page/404-not found
+todo register page (enforce a complicated password policy)
+todo login/out page. The user pic should take you to an account page if you are logged in, to a login page if you are not. If you go to the login page, you should have a logout button there.
+todo cookie with max-age
+todo learn how to use Redux Thunk for async requests with axios in Slices
+todo add different colours to the text of the notification for contrast
 todo about page  
 todo check if Christine wants gradient or solid colour on navbar/footer
 todo colour scheme

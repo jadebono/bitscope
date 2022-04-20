@@ -121,7 +121,7 @@ export default function Navbar() {
             {/* Secondary Navbar items  */}
             <div className="hidden md:flex justify-end items-center  space-x-3 ">
               <a
-                href={LOCAL_HOST}
+                href="/register"
                 className="p-2 font-medium text-white rounded hover:bg-orange-700
                 transition duration-300 cursor-pointer"
               >
@@ -193,7 +193,7 @@ export default function Navbar() {
                 </li>
                 <li>
                   <a
-                    href={LOCAL_HOST}
+                    href="/register"
                     className="block text-sm px-2 py-2 font-medium text-white
                     rounded hover:bg-orange-700 transition duration-300 cursor-pointer"
                   >

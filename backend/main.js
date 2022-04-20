@@ -9,6 +9,7 @@ import { ConnectMDB, CloseMDB } from "./mongoConnect.js";
 
 // importing routes
 import { subscribersRouter } from "./routes/subscribers.js";
+import { usersRouter } from "./routes/users.js";
 
 // todo import routes here
 
@@ -25,7 +26,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // routes
 // todo routes
-app.use("/newsletter", subscribersRouter);
+app.use("/users", usersRouter);
 
 // connect to db at server start
 ConnectMDB();

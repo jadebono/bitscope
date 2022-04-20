@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { subscribeUser, unsubscribeUser } from "../requests";
+import { subscribeUser, unsubscribeUser } from "../modules/requests";
 import { clearSubscriber, setSubscriber } from "../store/SubscribeSlice";
 import { setNotification } from "../store/NotificationsSlice";
 

@@ -167,7 +167,7 @@ document.cookie = `session=""; max-age=0`;
 ### `MongoDB`
 
 Database: ecom
-Collections: platform, subscribers
+Collections: platform, subscribers, users
 
 ## `Useful Tutorials`
 
