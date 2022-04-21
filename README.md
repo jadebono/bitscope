@@ -162,14 +162,35 @@ document.cookie = `session=""; max-age=0`;
 1. "nodemailer": "^6.7.2",
 1. "nodemon": "^2.0.15",
 
-## `External Services`
+---
 
-### `MongoDB`
+# `External Services`
+
+## `MongoDB`
 
 Database: ecom
 Collections: platform, subscribers, users
 
-## `Useful Tutorials`
+---
+
+# `Policies`
+
+## `Registration Policy`
+
+Registration policy
+
+1. Password must contain must contain at least one uppercase character, one lowercase character, one digit, one symbol, between 16 and 128 characters and must not contain any whitespace;
+1. Password will be hashed but not encrypted;
+1. Username has to be unique. If it is not unique, prevent registration and inform registrant that registration has been stopped because the username has already been registered;
+1. Email has to be unique. If it is not unique, prevent registration but only inform registrant that his registration has been stopped because one of his credentials has already been registered. This will protect the privacy of the email account that has already been registered;
+1. If both username and email have been registered, tell registrant that the registration has been stopped because one or more of his credentials has already been registered. This will protect the privacy of the email account that has already been registered.
+1. Name, Surname, Username & Email fields will each be encrypted with a secret key and a secret initVector to preserve registrant privacy in case of a database hack or leak.
+
+---
+
+# `Useful Tutorials`
+
+## `React`
 
 1. [React Tutorial - Beginner to Advanced - freeCodeCamp](https://youtu.be/zrs7u6bdbUw)
 1. [Full React Course 2020 - Learn Fundamentals, Hooks, Context API, React Router, Custom Hooks](https://youtu.be/4UZrsTqkcW4)
@@ -177,3 +198,11 @@ Collections: platform, subscribers, users
 1. [React Router 6 Tutorial](https://www.youtube.com/playlist?list=PL4cUxeGkcC9h7F1LWaQ7MAI8ptg5VjvxJ)
 1. [React Router V6 Tutorial - Routes, Redirecting, UseNavigate, UseParams...](https://youtu.be/UjHT_NKR_gU)
 1. [10 React Hooks Explained // Plus Build your own from Scratch](https://youtu.be/TNhaISOUy6Q)
+
+## `Design`
+
+1. [Jim Krause Design](https://www.youtube.com/channel/UC1Wlk6JGgAcSiSCKU5mJt7w)
+1. [Logo design lounge](https://www.logolounge.com/)
+1. [Print Magazine](https://www.logolounge.com/)
+
+---

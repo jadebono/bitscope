@@ -149,14 +149,13 @@ usersRouter.route("/contact").post(async (req, res) => {
 Name and surname do not have to be unique
 enforce unique user name & encrypt
  enforce unique email & encrypt
+ send the user a confirm email link to finalise registration
  Upon registration notify user that he has been registered and request him to log in to his account
 */
 
 //post to register user
 usersRouter.route("/register").post(async (req, res) => {
-  // check the body of the req
-
-  const { name, surname, username, email, password } = req.body;
+    const { name, surname, username, email, password } = req.body;
   // Hash password
   const hashedPassword = HashString(password);
   // encrypt name, surname, username, email
@@ -165,37 +164,32 @@ usersRouter.route("/register").post(async (req, res) => {
   const encryptedUsername = encipher(username);
   const encryptedEmail = encipher(email);
 
-  // test whether username and email are already registered, if not stop registration and inform registratnt. Else, register
-
-  // post first user
-  await SaveToDB("users", {
-    name: encryptedName,
-    surname: encryptedSurname,
-    username: encryptedUsername,
-    email: encryptedEmail,
-    password: hashedPassword,
-  });
-  res.send(true);
   /*
-  const _username = req.body.username;
-  const _email = req.body.email;
-  const _password = HashString(req.body.password);
-  // check to see whether username and/or email are already in db
-  const testUser = await testUserEmail({ username: _username });
-  const testEmail = await testUserEmail({ email: _email });
-  if (!testUser && !testEmail) {
-    // if not, register new user
-    await SaveToDB("users", {
-      username: _username,
-      email: _email,
-      password: _password,
-    });
-    res.send(true);
-    // then start a new document for the user in the log collection
-    await startNewUserLog(_username);
-  } else {
-    res.send(false);
-  }
-
+  test whether username and email are already registered, if not stop registration and inform registrant. Else, register
+   if the username has been registered, tell the registrant
+  /if the email has been registered, do not tell the registrant, but tell him only that there is a problem with the credentials to preserve the privacy of the registered email address.
   */
+
+  const testUserName = await testUsersData("username", encryptedUsername);
+  const testEmail = await testUsersData("email", encryptedEmail);
+  if (testUserName && testEmail) {
+    console.log("username and email already registered!");
+    res.send("bothTaken");
+  } else if (testUserName) {
+    console.log("username already registered!");
+    res.send("usernameTaken");
+  } else if (testEmail) {
+    console.log("Email already registered!");
+    res.send("emailTaken");
+  } else {
+    // register user
+    await SaveToDB("users", {
+      name: encryptedName,
+      surname: encryptedSurname,
+      username: encryptedUsername,
+      email: encryptedEmail,
+      password: hashedPassword,
+    });
+    res.send("registered");
+  }
 });

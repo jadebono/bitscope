@@ -3,7 +3,15 @@ import { useDispatch } from "react-redux";
 import { setNotification } from "../store/NotificationsSlice";
 import { postRegister } from "../modules/requests";
 
-// enforce password policy & password has to be hashed (not encrypted)
+/*
+Registration policy
+(1) Password must contain must contain at least one uppercase character, one lowercase character, one digit, one symbol, between 16 and 128 characters and must not contain any whitespace;
+(2) Password will be hashed but not encrypted;
+(3) Username has to be unique. If it is not unique, prevent registration and inform registrant that registration has been stopped because the username has already been registered;
+(4) Email has to be unique. If it is not unique, prevent registration but only inform registrant that his registration has been stopped because one of his credentials has already been registered. This will protect the privacy of the email account that has already been registered;
+(5) If both username and email have been registered, tell registrant that the registration has been stopped because one or more of his credentials has already been registered. This will protect the privacy of the email account that has already been registered.
+(6) Name, Surname, Username & Email fields will each be encrypted with a secret key and a secret initVector to preserve registrant privacy in case of a database hack or leak.
+*/
 
 export default function Register() {
   const [register, setRegister] = useState({
@@ -17,10 +25,7 @@ export default function Register() {
 
   const dispatch = useDispatch();
 
-  /*
-Function to test password.
-Password must contain must contain at least one uppercase character, one lowercase character, one digit, one symbol, between 16 and 128 characters and must not contain any whitespace
-  */
+  // Function to test password.
   function checkPasswordValidation(password) {
     const test =
       /^(?!.*\s)(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[~`!@#$%^&*()--+={}\[\]|\\:;"'<>,.?/_₹]).{16,128}$/;
@@ -62,21 +67,45 @@ Password must contain must contain at least one uppercase character, one lowerca
       // transmit register to axios post request
       const response = await postRegister(register);
       console.log(`response is ${response}`);
-      response
-        ? dispatch(
-            setNotification({
-              type: "success",
-              message: "You have successfully registered! Please sign in.",
-            })
-          )
-        : // set up individual notifications for failure because email and username are already registered
-          dispatch(
-            setNotification({
-              type: "error",
-              message:
-                "There was an error with your registration! Please try again.",
-            })
-          );
+      if (response === "bothTaken") {
+        dispatch(
+          setNotification({
+            type: "warning",
+            message:
+              "One or more of your supplied credentials has already been registered",
+          })
+        );
+      } else if (response === "registered") {
+        dispatch(
+          setNotification({
+            type: "success",
+            message: "You have successfully registered! Please sign in.",
+          })
+        );
+      } else if (response === "usernameTaken") {
+        dispatch(
+          setNotification({
+            type: "warning",
+            message: "Username already registered.",
+          })
+        );
+      } else if (response === "emailTaken") {
+        dispatch(
+          setNotification({
+            type: "warning",
+            message: "One of your credentials has already been registered.",
+          })
+        );
+      } else {
+        dispatch(
+          setNotification({
+            type: "error",
+            message:
+              "There was an error with your registration! Please try again.",
+          })
+        );
+      }
+
       setRegister((prevRegister) => {
         return {
           name: "",
@@ -88,6 +117,7 @@ Password must contain must contain at least one uppercase character, one lowerca
         };
       });
     } else {
+      // if password is invalid and/or passowords do not match
       passwordNotify();
       setRegister((prevRegister) => {
         return {
@@ -176,10 +206,10 @@ Password must contain must contain at least one uppercase character, one lowerca
               className="ml-4 w-2/3 border border-indigo-900 rounded-md shadow-sm p-1"
             />
           </div>
-          <div className="flex flex-col mt-4 ml-4 mr-4 mb-2">
+          <div className="flex flex-col mt-4 ml-4 mb-2">
             <label className="" htmlFor="password">
               Password: <p className="inline-block">*</p>{" "}
-              <p className="inline-block text-orange-700 text-justify">
+              <p className="w-2/3 text-sm text-orange-700 text-justify">
                 Password must contain at least one uppercase character, one
                 lowercase character, one digit, one symbol, between 16 and 128
                 characters and must not contain any whitespace.

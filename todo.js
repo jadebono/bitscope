@@ -59,7 +59,7 @@ current todos
 // todo add home page and subscribe page and create the links with react-router
 // todo started contact page
 // todo an error page/404-not found
-todo register page (enforce a complicated password policy)
+// todo register page (enforce a complicated password policy)
 todo login/out page. The user pic should take you to an account page if you are logged in, to a login page if you are not. If you go to the login page, you should have a logout button there.
 todo cookie with max-age
 todo learn how to use Redux Thunk for async requests with axios in Slices
