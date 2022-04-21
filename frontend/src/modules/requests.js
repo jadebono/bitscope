@@ -35,13 +35,22 @@ export async function postContactForm(fields) {
 export async function postRegister(register) {
   const { name, surname, username, email, password } = register;
   const response = await axios
-    .post("http://localhost:4000/users/register", {
+    .post(`${SERVER}/users/register`, {
       name,
       surname,
       username,
       email,
       password,
     })
+    .then((response) => response.data)
+    .catch((err) => err);
+  return response;
+}
+
+// async function to Login user for <Login/>
+export async function postLogin(userData) {
+  const response = await axios
+    .post(`${SERVER}/users/login`, { userData })
     .then((response) => response.data)
     .catch((err) => err);
   return response;

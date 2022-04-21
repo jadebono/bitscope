@@ -9,6 +9,7 @@ import Subscribe from "./pages/Subscribe";
 import Contact from "./pages/Contact";
 import Error404 from "./pages/Error404";
 import Register from "./pages/Register";
+import Login from "./pages/Login";
 import Footer from "./components/Footer";
 
 import Notify from "./components/Notify";
@@ -26,6 +27,7 @@ export default function App() {
           <Route path="/subscribe" element={<Subscribe />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
           <Route path="*" element={<Error404 />} />
         </Routes>
       </Router>

@@ -8,9 +8,13 @@ import { encipher, decipher } from "../encryption.js";
 import * as fs from "fs";
 import HashString from "../mongoConnect.js";
 import { deleteFromDB, LoadFromDB, SaveToDB } from "../mongoConnect.js";
-import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
 import { ObjectId } from "mongodb";
+import {
+  signSessionToken,
+  validateSessionToken,
+  decryptSessionToken,
+} from "../token.js";
 export const usersRouter = express.Router();
 
 dotenv.config();
@@ -145,6 +149,7 @@ usersRouter.route("/contact").post(async (req, res) => {
     });
 });
 
+
 /*
 Name and surname do not have to be unique
 enforce unique user name & encrypt
@@ -155,7 +160,7 @@ enforce unique user name & encrypt
 
 //post to register user
 usersRouter.route("/register").post(async (req, res) => {
-    const { name, surname, username, email, password } = req.body;
+  const { name, surname, username, email, password } = req.body;
   // Hash password
   const hashedPassword = HashString(password);
   // encrypt name, surname, username, email
@@ -163,13 +168,9 @@ usersRouter.route("/register").post(async (req, res) => {
   const encryptedSurname = encipher(surname);
   const encryptedUsername = encipher(username);
   const encryptedEmail = encipher(email);
-
   /*
-  test whether username and email are already registered, if not stop registration and inform registrant. Else, register
-   if the username has been registered, tell the registrant
-  /if the email has been registered, do not tell the registrant, but tell him only that there is a problem with the credentials to preserve the privacy of the registered email address.
-  */
-
+  test whether username and email are already registered, if not stop registration and inform registrant. 
+     */
   const testUserName = await testUsersData("username", encryptedUsername);
   const testEmail = await testUsersData("email", encryptedEmail);
   if (testUserName && testEmail) {
@@ -192,4 +193,54 @@ usersRouter.route("/register").post(async (req, res) => {
     });
     res.send("registered");
   }
+});
+
+//post to signin user
+usersRouter.route("/login").post(async (req, res) => {
+  const { username, password } = req.body.userData;
+  // encrypt username
+  const encryptedUsername = encipher(username);
+  // hash password
+  const hashedPassword = HashString(password);
+  // search collection users for someone with this username
+  await LoadFromDB("users", { username: encryptedUsername })
+    .then((response) => {
+      // destructure and decrypt data
+      const user = response[0];
+      // check that user is not "undefined"
+      if (!user) {
+        res.send({
+          login: false,
+          userId: "",
+          username: "",
+          token: "",
+        });
+        // if username exists AND password matches
+      } else if (
+        encryptedUsername === user.username &&
+        hashedPassword === user.password
+      ) {
+        // generate token
+        const token = signSessionToken(user._id);
+        res.send({
+          login: true,
+          userId: user._id,
+          username: username,
+          token: token,
+        });
+        console.log("Successful login!");
+      }
+      // if username exists but password is incorrect
+      // send an empty object with login: false
+      else {
+        res.send({
+          login: false,
+          userId: "",
+          username: "",
+          token: "",
+        });
+        console.log("Invalid login!");
+      }
+    })
+    .catch((error) => console.log(error));
 });

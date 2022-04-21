@@ -7,10 +7,13 @@ import {
 } from "../store/NavBarSlice.js";
 
 export default function Navbar() {
-  const { LOCAL_HOST } = process.env;
+  const { LOCAL_HOST } = "http://localhost:3001";
 
   const dispatch = useDispatch();
   const navbar = useSelector((state) => state.navbar);
+
+  // access the user state from the store
+  const user = useSelector((state) => state.user);
 
   useEffect(() => {
     function handleResize() {
@@ -128,9 +131,10 @@ export default function Navbar() {
                 Register
               </a>
               <a
-                href={LOCAL_HOST}
-                className="p-2 font-medium text-white border-2 border-white
-                rounded-full hover:bg-orange-700 transition duration-300 cursor-pointer"
+                href="/login"
+                className={
+                  user.logged ? "user-logged-in" : "user-not-logged-in"
+                }
               >
                 <svg
                   className="w-6 h-6 "
@@ -202,9 +206,12 @@ export default function Navbar() {
                 </li>
                 <li>
                   <a
-                    href={LOCAL_HOST}
-                    className="block p-2 mb-2 font-medium text-white rounded
-                    hover:bg-orange-700 transition duration-300 cursor-pointer"
+                    href="/login"
+                    className={
+                      user.logged
+                        ? "burger-user-logged-in"
+                        : "birger-user-not-logged-in"
+                    }
                   >
                     <svg
                       className="w-6 h-6 "

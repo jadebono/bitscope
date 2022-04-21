@@ -3,36 +3,26 @@ import { createSlice } from "@reduxjs/toolkit";
 // store state here at least: username, user ID from database
 
 const initialState = {
-  name: "",
-  surname: "",
-  email: "",
-  emailToUnsubscribe: "",
+  userId: "",
+  username: "",
 };
 
-export const SubscribeSlice = createSlice({
-  name: "Subscriber",
+export const UserSlice = createSlice({
+  name: "User",
   initialState,
   reducers: {
-    setSubscriber(state, action) {
-      // get the key of the form input from action.payload
-      const stateKey = Object.keys(action.payload);
-      // get the value of the form input from action.payload
-      const stateVal = action.payload[stateKey];
-      return {
-        ...state,
-        [stateKey]: stateVal,
-      };
-    },
-    clearSubscriber(state) {
+    setUser(state, action) {
       return (state = {
-        name: "",
-        surname: "",
-        email: "",
-        emailToUnsubscribe: "",
+        logged: true,
+        userId: action.payload.userId,
+        username: action.payload.username,
       });
+    },
+    clearUser(state) {
+      return (state = { logged: false, userId: "", username: "" });
     },
   },
 });
 
-export default SubscribeSlice;
-export const { clearSubscriber, setSubscriber } = SubscribeSlice.actions;
+export default UserSlice;
+export const { setUser, clearUser } = UserSlice.actions;
