@@ -18,13 +18,11 @@ current todos
 // todo start backend 
 // todo create new db in cluster0 
 // todo create subscribers collection in new db  
-! emails are to be stored as jsonwebtoken consisting of the email and the key so that if the db is hacked the emails will be unreadable. STATUS: FAILED. JST tokens are not deterministic and can be independently read. Find a real encryption method
+// ! emails are to be stored as jsonwebtoken consisting of the email and the key so that if the db is hacked the emails will be unreadable. STATUS: FAILED. JST tokens are not deterministic and can be independently read. Find a real encryption method. FOUND.
 
 * responsive means to make mobile friendly
 * db is database
-*/
 
-/*
 * Opening phase: Week starting 10 April  (2)
 current todos
 // todo add encryption functions to encrypt and decrypt all user data
@@ -33,16 +31,8 @@ current todos
 // todo add unsubscribe route
 // todo rebuild structure with redux toolkit
 // todo app to test color scheme
-todo Start integrating Redux Thunk for async requests with axios
-todo use react-router
-todo add frontend notification to un/successful un/subscription
-todo add home page and about page and create the links with react-router
-todo colour scheme
-todo create a separate app to write emails and send them to the addresses stored in db
-todo deploy frontend as a mobile app => this will require react native
-*/
 
-/*
+
 * Opening phase: Week starting 17 April  (3)
 current todos
 // todo add footer
@@ -62,11 +52,11 @@ current todos
 // todo register page (enforce a complicated password policy)
 // todo redux loses state when routing to a new link. Find out why and resolve.
 // todo login page
-todo logout page. The user pic should take you to an account page if you are logged in, to a login page if you are not. 
 // todo cookie with max-age
 // todo validate cookie and auto login if cookie is still valid
+// todo add different colours to the text of the notification for contrast
+todo logout page. The user pic should take you to an account page if you are logged in, to a login page if you are not. 
 todo learn how to use Redux Thunk for async requests with axios in Slices
-todo add different colours to the text of the notification for contrast
 todo about page  
 todo check if Christine wants gradient or solid colour on navbar/footer
 todo colour scheme
