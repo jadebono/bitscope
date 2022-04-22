@@ -149,7 +149,6 @@ usersRouter.route("/contact").post(async (req, res) => {
     });
 });
 
-
 /*
 Name and surname do not have to be unique
 enforce unique user name & encrypt
@@ -243,4 +242,42 @@ usersRouter.route("/login").post(async (req, res) => {
       }
     })
     .catch((error) => console.log(error));
+});
+
+// route to validate session
+usersRouter.route("/validatesession").post((req, res) => {
+  let token = req.body.cookie;
+  res.send(validateSessionToken(token));
+});
+
+// route to sign in a user if session is still active
+usersRouter.route("/sessionSignin").post(async (req, res) => {
+  let token = req.body.cookie;
+  let user = decryptSessionToken(token);
+  // fetch user data
+  if (user) {
+    await LoadFromDB("users", { _id: { $eq: new ObjectId(user) } })
+      .then((response) => {
+        const loggedUser = response.pop();
+        const username = decipher(loggedUser.username);
+        res.send({
+          id: loggedUser._id,
+          username: username,
+        });
+        console.log("User session successfully restored");
+      })
+      .catch((err) => {
+        res.send({
+          id: "",
+          username: "",
+        });
+        console.log("There was some error!");
+      });
+  } else {
+    res.send({
+      id: "",
+      username: "",
+    });
+    console.log("User was not authenticated!");
+  }
 });

@@ -74,6 +74,7 @@ Polykranos, Multidisciplinarity in an Overspecialised World
 1. "react-redux": "^7.2.8",
 1. "react-scripts": "5.0.0",
 1. "redux": "^4.1.2",
+1. "redux-persist": "^6.0.0",
 1. "uuid": "^8.3.2",
 1. "web-vitals": "^2.1.4"
 
@@ -199,6 +200,11 @@ Registration policy
 1. [React Router V6 Tutorial - Routes, Redirecting, UseNavigate, UseParams...](https://youtu.be/UjHT_NKR_gU)
 1. [10 React Hooks Explained // Plus Build your own from Scratch](https://youtu.be/TNhaISOUy6Q)
 
+## `Persist Redux state`
+
+1. [react js persistence state Redux-toolkit with redux-persist](https://youtu.be/0Uva7sEmDhk)
+1. [using reactjs/toolwith with redux-persist](https://redux-toolkit.js.org/usage/usage-guide#use-with-redux-persist)
+
 ## `Design`
 
 1. [Jim Krause Design](https://www.youtube.com/channel/UC1Wlk6JGgAcSiSCKU5mJt7w)
@@ -206,3 +212,29 @@ Registration policy
 1. [Print Magazine](https://www.logolounge.com/)
 
 ---
+
+# `Things I learnt`
+
+## `React-Router`
+
+1. BrowserRouter should be the most external wrapper in the index.js file:
+
+```js
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <BrowserRouter>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <App />
+      </PersistGate>
+    </Provider>
+  </BrowserRouter>
+);
+```
+
+1. Use <Link to="/">Home</Link> instead of <a href="/">Home</a> as <a> refreshes the app, but <Link> does not.
+
+## `Persisting State`
+
+Refreshing a page or navigating to another link refreshes the state of the app, even when using redux store. If you have state that needs to be kept between refreshes
+/navigation (such as login user data), use redux-persist to save it in local storage. redux-persist can persist state in local storage, session, and cookies, but for storing a logged in user, using cookies in the state of <App/> and transferring it as a prop to navbar seems preferable

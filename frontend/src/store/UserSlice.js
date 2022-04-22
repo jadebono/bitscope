@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 // store state here at least: username, user ID from database
 
 const initialState = {
+  logged: false,
   userId: "",
   username: "",
 };

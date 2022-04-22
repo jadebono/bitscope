@@ -60,10 +60,11 @@ current todos
 // todo started contact page
 // todo an error page/404-not found
 // todo register page (enforce a complicated password policy)
-todo login/out page. The user pic should take you to an account page if you are logged in, to a login page if you are not. 
-todo user img toggles off logged in state when you click on it. Find out why
+// todo redux loses state when routing to a new link. Find out why and resolve.
+// todo login page
+todo logout page. The user pic should take you to an account page if you are logged in, to a login page if you are not. 
 // todo cookie with max-age
-todo validate cookie and auto login if cookie is still valid
+// todo validate cookie and auto login if cookie is still valid
 todo learn how to use Redux Thunk for async requests with axios in Slices
 todo add different colours to the text of the notification for contrast
 todo about page  

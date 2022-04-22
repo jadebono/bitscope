@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   bothHidden,
@@ -6,13 +7,14 @@ import {
   toggle,
 } from "../store/NavBarSlice.js";
 
-export default function Navbar() {
-  const { LOCAL_HOST } = "http://localhost:3001";
+export default function Navbar(props) {
+  const LOCAL_HOST = "http://localhost:3001";
 
   const dispatch = useDispatch();
   const navbar = useSelector((state) => state.navbar);
 
   // access the user state from the store
+  // !! if you are trying to keep the user logged in by persistent state
   const user = useSelector((state) => state.user);
 
   useEffect(() => {
@@ -68,7 +70,7 @@ export default function Navbar() {
             <div className="flex">
               {/* Website Logo */}
               <div className="flex mr-8">
-                <a href={LOCAL_HOST} className="flex items-center mr-2">
+                <Link to={LOCAL_HOST} className="flex items-center mr-2">
                   <svg
                     className=" h-8 w-8 "
                     fill="none"
@@ -85,53 +87,53 @@ export default function Navbar() {
                       d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"
                     />
                   </svg>
-                </a>
+                </Link>
                 <span className="flex items-center font-semibold text-white text-lg ml-2">
                   Navigation
                 </span>
               </div>
               {/* Primary Navbar items */}
               <div className="hidden md:flex items-center space-x-1">
-                <a
-                  href="/"
+                <Link
+                  to="/"
                   className="p-2 text-white rounded hover:bg-orange-700 font-semibold transition duration-300 cursor-pointer"
                 >
                   Home
-                </a>
-                <a
-                  href="/subscribe"
+                </Link>
+                <Link
+                  to="/subscribe"
                   className="p-2 text-white rounded hover:bg-orange-700
                   font-semibold transition duration-300 cursor-pointer"
                 >
                   Subscribe
-                </a>
-                <a
-                  href={LOCAL_HOST}
+                </Link>
+                <Link
+                  to=""
                   className="p-2 text-white rounded hover:bg-orange-700
                   font-semibold transition duration-300 cursor-pointer"
                 >
                   About
-                </a>
-                <a
-                  href="/contact"
+                </Link>
+                <Link
+                  to="/contact"
                   className="p-2 text-white rounded hover:bg-orange-700
                   font-semibold transition duration-300 cursor-pointer"
                 >
                   Contact Us
-                </a>
+                </Link>
               </div>
             </div>
             {/* Secondary Navbar items  */}
             <div className="hidden md:flex justify-end items-center  space-x-3 ">
-              <a
-                href="/register"
+              <Link
+                to="/register"
                 className="p-2 font-medium text-white rounded hover:bg-orange-700
                 transition duration-300 cursor-pointer"
               >
                 Register
-              </a>
-              <a
-                href="/login"
+              </Link>
+              <Link
+                to="/login"
                 className={
                   user.logged ? "user-logged-in" : "user-not-logged-in"
                 }
@@ -148,9 +150,9 @@ export default function Navbar() {
                     clipRule="evenodd"
                   />
                 </svg>
-              </a>
+              </Link>
             </div>
-            {/* generate the mobile menu button if under the specified conditions */}
+            {/* generate the mobile mLinknton if under the specified conditions */}
             {(navbar.burger === "") & (navbar.menu === "hidden")
               ? mobileBurger
               : ""}
@@ -160,53 +162,53 @@ export default function Navbar() {
                 <li className="flex justify-end py-2">{mobileBurger}</li>
 
                 <li className="">
-                  <a
-                    href="/"
+                  <Link
+                    to="/"
                     className="block text-sm px-2 py-2 font-medium text-white
                     rounded hover:bg-orange-700 transition duration-300 cursor-pointer"
                   >
                     Home
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    href="/subscribe"
+                  <Link
+                    to="/subscribe"
                     className="block text-sm px-2 py-2 font-medium text-white
                     rounded hover:bg-orange-700 transition duration-300 cursor-pointer"
                   >
                     Subscribe
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    href={LOCAL_HOST}
+                  <Link
+                    to={LOCAL_HOST}
                     className="block text-sm px-2 py-2 font-medium text-white
                     rounded hover:bg-orange-700 transition duration-300 cursor-pointer"
                   >
                     About
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    href="/contact"
+                  <Link
+                    to="/contact"
                     className="block text-sm px-2 py-2 font-medium text-white
                     rounded hover:bg-orange-700 transition duration-300 cursor-pointer"
                   >
                     Contact Us
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    href="/register"
+                  <Link
+                    to="/register"
                     className="block text-sm px-2 py-2 font-medium text-white
                     rounded hover:bg-orange-700 transition duration-300 cursor-pointer"
                   >
                     Register
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    href="/login"
+                  <Link
+                    to="/login"
                     className={
                       user.logged
                         ? "burger-user-logged-in"
@@ -225,7 +227,7 @@ export default function Navbar() {
                         clipRule="evenodd"
                       />
                     </svg>
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>

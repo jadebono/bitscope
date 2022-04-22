@@ -2,8 +2,6 @@ import axios from "axios";
 const SERVER = "http://localhost:4000";
 // Route requests
 
-// Requests to the /newsletter routes
-
 // async function to post a user and email to the /newsletter/subscribe route
 export async function subscribeUser(subscriber) {
   const response = await axios
@@ -55,3 +53,41 @@ export async function postLogin(userData) {
     .catch((err) => err);
   return response;
 }
+
+//session  validation functions start here =>
+
+// async funtion to signin if valid cookie is found
+async function sessionSignin(token) {
+  let user = { id: "", username: "" };
+  await axios
+    .post(`${SERVER}/users/sessionSignin`, {
+      cookie: token,
+    })
+    .then((res) => {
+      const { id, username } = { ...res.data };
+      user = { id: id, username: username };
+    });
+  return user;
+}
+
+// async function to validate session
+async function reqValidation(token) {
+  const response = await axios
+    .post(`${SERVER}/users/validatesession`, {
+      cookie: token,
+    })
+    .catch((err) => console.log(err));
+  return response;
+}
+
+// async session validation for <App/>
+export async function session() {
+  if (document.cookie && reqValidation(document.cookie.split("=")[1])) {
+    const response = await sessionSignin(document.cookie.split("=")[1]);
+    return response;
+  } else {
+    return false;
+  }
+}
+
+//<- session  validation functions end here

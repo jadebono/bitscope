@@ -1,8 +1,8 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 // importing react-router
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar";
+import { Routes, Route } from "react-router-dom";
+import Navbar from "./components/NavBar";
 import Header from "./components/Header";
 import Home from "./pages/Home";
 import Subscribe from "./pages/Subscribe";
@@ -11,26 +11,76 @@ import Error404 from "./pages/Error404";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Footer from "./components/Footer";
-
 import Notify from "./components/Notify";
+import { session } from "./modules/requests";
+import { setUser } from "./store/UserSlice";
 
 export default function App() {
+  const [userSess, setUserSess] = useState({
+    id: "",
+    username: "",
+    logged: false,
+  });
   const notify = useSelector((state) => state.notification);
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  // if there is a cookie in the browser sign in and retrieve user details
+  useEffect(() => {
+    async function getSession() {
+      // if user.logged and !userSess.logged it means that the user has just logged in
+      if (user.logged && !userSess.logged) {
+        setUserSess((prevUser) => {
+          return {
+            id: user.id,
+            username: user.username,
+            logged: true,
+          };
+        });
+        // if there is no userSess logged in, check to see if there is a cookie
+        // if so, log in the user and send the userSess.logged as a prop to Navbar
+      } else if (!userSess.logged) {
+        let loggedUser = await session();
+        !loggedUser
+          ? setUserSess((prevUser) => {
+              return {
+                id: "",
+                username: "",
+                logged: false,
+              };
+            })
+          : setUserSess((prevUser) => {
+              return {
+                id: loggedUser.id,
+                username: loggedUser.username,
+                logged: true,
+              };
+            });
+      }
+    }
+    getSession();
+  }, [user, userSess]);
+
+  useEffect(() => {
+    // if useSess.logged, dispatch a copy of local state to the state.user store
+    if (userSess.logged) {
+      dispatch(setUser({ userId: userSess.id, username: userSess.username }));
+    }
+  }, [userSess]);
+
   return (
     <React.Fragment>
       {notify.active && <Notify />}
       <Navbar />
       <Header />
-      <Router>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/subscribe" element={<Subscribe />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="*" element={<Error404 />} />
-        </Routes>
-      </Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/subscribe" element={<Subscribe />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="*" element={<Error404 />} />
+      </Routes>
       <Footer />
     </React.Fragment>
   );

@@ -20,10 +20,11 @@ export default function Login() {
   const dispatch = useDispatch();
 
   // access the user state from the store
+  // ? why do I need this?
   const user = useSelector((state) => state.user);
 
   // max_age for the cookie in seconds
-  const { MAX_AGE } = 14400;
+  const max_age = 14400;
 
   function handleLoginChange(evt) {
     const { name, value } = evt.target;
@@ -40,10 +41,9 @@ export default function Login() {
     evt.preventDefault();
     const response = await postLogin(userData);
     const { login, userId, username, token } = response;
-    console.log(login, userId, username, token);
     if (login) {
       //save cookie manually
-      document.cookie = `session=${token};max-age=${MAX_AGE} `;
+      document.cookie = `session=${token};max-age=${max_age} `;
       // send data to redux store
       dispatch(setUser({ userId: userId, username: username }));
       // send notification to user that he has logged in
@@ -53,7 +53,6 @@ export default function Login() {
           message: "You have successfully logged in!",
         })
       );
-      console.log(user);
     } else {
       // send notification to user that log in has failed
       dispatch(
@@ -74,7 +73,7 @@ export default function Login() {
           LOGIN
         </div>
         <form
-          className="w-5/6 mb-5 bg-white rounded-xl shadow-lg border border-1 border-blue-700 "
+          className="w-5/6 mb-5 bg-white rounded-xl shadow-lg border border-1 border-indigo-900 "
           onSubmit={submitLogin}
         >
           <div className="ml-4 my-2">
@@ -89,7 +88,7 @@ export default function Login() {
               type="text"
               value={userData.username || ""}
               onChange={handleLoginChange}
-              className="ml-4 w-2/3 border border-gray-300 rounded-md shadow-sm p-1"
+              className="ml-4 w-2/3 border border-indigo-900 rounded-md shadow-sm p-1"
             />
           </div>
           <div className="my-4 ml-4">
