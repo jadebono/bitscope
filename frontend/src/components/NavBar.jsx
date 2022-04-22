@@ -133,7 +133,7 @@ export default function Navbar(props) {
                 Register
               </Link>
               <Link
-                to="/login"
+                to="/user"
                 className={
                   user.logged ? "user-logged-in" : "user-not-logged-in"
                 }
@@ -208,7 +208,7 @@ export default function Navbar(props) {
                 </li>
                 <li>
                   <Link
-                    to="/login"
+                    to="/user"
                     className={
                       user.logged
                         ? "burger-user-logged-in"

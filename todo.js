@@ -12,13 +12,13 @@ current todos
 // todo make the navbar responsive
 // todo  one account link on Navbar instead of Sign in/out 
 // todo a register link on Navbar DONE
-// ? use .env file for frontend environmental variables? - yes
+// ? use .env file for frontend environmental variables? - no
 // todo create git repository
 // todo make Subscribe component responsive
 // todo start backend 
 // todo create new db in cluster0 
 // todo create subscribers collection in new db  
-// ! emails are to be stored as jsonwebtoken consisting of the email and the key so that if the db is hacked the emails will be unreadable. STATUS: FAILED. JST tokens are not deterministic and can be independently read. Find a real encryption method. FOUND.
+//  emails are to be stored as jsonwebtoken consisting of the email and the key so that if the db is hacked the emails will be unreadable. STATUS: FAILED. JST tokens are not deterministic and can be independently read. Find a real encryption method. ENCRYPTION METHOD FOUND.
 
 * responsive means to make mobile friendly
 * db is database
@@ -55,7 +55,8 @@ current todos
 // todo cookie with max-age
 // todo validate cookie and auto login if cookie is still valid
 // todo add different colours to the text of the notification for contrast
-todo logout page. The user pic should take you to an account page if you are logged in, to a login page if you are not. 
+// todo users route takes you to Login page if you are not logged in, to Account page if you are
+todo Account page with logout button 
 todo learn how to use Redux Thunk for async requests with axios in Slices
 todo about page  
 todo check if Christine wants gradient or solid colour on navbar/footer

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/NavBar";
 import Header from "./components/Header";
+import Account from "./pages/Account";
 import Home from "./pages/Home";
 import Subscribe from "./pages/Subscribe";
 import Contact from "./pages/Contact";
@@ -25,8 +26,9 @@ export default function App() {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
-  // if there is a cookie in the browser sign in and retrieve user details
+  // if there is a cookie in the browser retrieve user details and restore session
   useEffect(() => {
+    console.log(`1st usereffect`);
     async function getSession() {
       // if user.logged and !userSess.logged it means that the user has just logged in
       if (user.logged && !userSess.logged) {
@@ -62,6 +64,7 @@ export default function App() {
   }, [user, userSess]);
 
   useEffect(() => {
+    console.log(`2nd usereffect`);
     // if useSess.logged, dispatch a copy of local state to the state.user store
     if (userSess.logged) {
       dispatch(setUser({ userId: userSess.id, username: userSess.username }));
@@ -78,7 +81,11 @@ export default function App() {
         <Route path="/subscribe" element={<Subscribe />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
+        {/* if useSess.logged display <Account/> else <Login/> decide whether to change the name of the route too */}
+        <Route
+          path="/user"
+          element={userSess.logged ? <Account /> : <Login />}
+        />
         <Route path="*" element={<Error404 />} />
       </Routes>
       <Footer />
