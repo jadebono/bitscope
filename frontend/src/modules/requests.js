@@ -54,7 +54,7 @@ export async function postLogin(userData) {
   return response;
 }
 
-//session  validation functions start here =>
+//session login/out & validation functions start here =>
 
 // async funtion to signin if valid cookie is found
 async function sessionSignin(token) {
@@ -90,4 +90,4 @@ export async function session() {
   }
 }
 
-//<- session  validation functions end here
+//<- session login/out & validation functions end here

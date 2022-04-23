@@ -28,7 +28,6 @@ export default function App() {
 
   // if there is a cookie in the browser retrieve user details and restore session
   useEffect(() => {
-    console.log(`1st usereffect`);
     async function getSession() {
       // if user.logged and !userSess.logged it means that the user has just logged in
       if (user.logged && !userSess.logged) {
@@ -40,36 +39,37 @@ export default function App() {
           };
         });
         // if there is no userSess logged in, check to see if there is a cookie
-        // if so, log in the user and send the userSess.logged as a prop to Navbar
-      } else if (!userSess.logged) {
+        // if so, log in the user and and set the state.user to the same state as
+        // userSess
+      } else if (!userSess.logged && cookieExists()) {
         let loggedUser = await session();
-        !loggedUser
-          ? setUserSess((prevUser) => {
-              return {
-                id: "",
-                username: "",
-                logged: false,
-              };
-            })
-          : setUserSess((prevUser) => {
-              return {
-                id: loggedUser.id,
-                username: loggedUser.username,
-                logged: true,
-              };
-            });
+        setUserSess((prevUser) => {
+          return {
+            id: loggedUser.id,
+            username: loggedUser.username,
+            logged: true,
+          };
+        });
+        dispatch(setUser({ userId: userSess.id, username: userSess.username }));
+        // if userSess is logged in but !user.logged and there is no
+        // cookie, it means the user has logged out so clear userSess
+      } else if (userSess.logged && !user.logged && !cookieExists()) {
+        setUserSess((prevUser) => {
+          return {
+            id: "",
+            username: "",
+            logged: false,
+          };
+        });
       }
     }
     getSession();
-  }, [user, userSess]);
+  }, [userSess, user]);
 
-  useEffect(() => {
-    console.log(`2nd usereffect`);
-    // if useSess.logged, dispatch a copy of local state to the state.user store
-    if (userSess.logged) {
-      dispatch(setUser({ userId: userSess.id, username: userSess.username }));
-    }
-  }, [userSess]);
+  //test if cookie exists
+  function cookieExists() {
+    return document.cookie === true;
+  }
 
   return (
     <React.Fragment>

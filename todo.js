@@ -56,7 +56,14 @@ current todos
 // todo validate cookie and auto login if cookie is still valid
 // todo add different colours to the text of the notification for contrast
 // todo users route takes you to Login page if you are not logged in, to Account page if you are
-todo Account page with logout button 
+// todo start Account page 
+// todo add logout button to Account page
+todo add left-hand user details panel to Account page
+todo add edit details button to Account page (username/email/password)
+todo add right-hand edit user details panel to Account page when user clicks edit details
+todo add email confirmation for password update to Account page
+todo Add 2FA for logging in  
+todo add email confirmation for registration
 todo learn how to use Redux Thunk for async requests with axios in Slices
 todo about page  
 todo check if Christine wants gradient or solid colour on navbar/footer

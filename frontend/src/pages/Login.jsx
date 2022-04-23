@@ -43,7 +43,7 @@ export default function Login() {
     const { login, userId, username, token } = response;
     if (login) {
       //save cookie manually
-      document.cookie = `session=${token};max-age=${max_age} `;
+      document.cookie = `session=${token};max-age=${max_age};path=/;`;
       // send data to redux store
       dispatch(setUser({ userId: userId, username: username }));
       // send notification to user that he has logged in

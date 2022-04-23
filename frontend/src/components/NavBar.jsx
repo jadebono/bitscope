@@ -14,8 +14,7 @@ export default function Navbar(props) {
   const navbar = useSelector((state) => state.navbar);
 
   // access the user state from the store
-  // !! if you are trying to keep the user logged in by persistent state
-  const user = useSelector((state) => state.user);
+   const user = useSelector((state) => state.user);
 
   useEffect(() => {
     function handleResize() {
