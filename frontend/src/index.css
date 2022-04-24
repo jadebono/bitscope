@@ -72,7 +72,7 @@
 }
 
 .burger-user-logged-in {
-  @apply p-2 block p-2 mb-2 font-medium text-white rounded bg-orange-700
+  @apply p-2 block mb-2 font-medium text-white rounded bg-orange-700
   hover:bg-deep-orange-900 transition duration-300 cursor-pointer;
 }
 
@@ -85,4 +85,8 @@
 
 .btn-gen {
   @apply mt-5 w-28 mx-auto border-2 border-indigo-900 bg-indigo-900 text-white rounded-md hover:shadow-2xl hover:text-indigo-900 hover:bg-white transition ease-out duration-500;
+}
+
+.btn-danger {
+  @apply mt-5 w-40   mx-auto border-2 border-red-900 bg-red-900 text-white rounded-md hover:shadow-2xl hover:text-red-900 hover:bg-white transition ease-out duration-500;
 }

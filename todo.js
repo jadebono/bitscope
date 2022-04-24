@@ -38,7 +38,6 @@ current todos
 // todo add footer
 // todo create a header component
 // todo find out how to use above to deliver notifications upon req/res etc
-? should I add functionality to have more than one notification display simultaneously?
 // todo add notify to app page and test there
 // todo add response to subscribe page
 // todo add response to contact us page and get it to work properly
@@ -58,6 +57,14 @@ current todos
 // todo users route takes you to Login page if you are not logged in, to Account page if you are
 // todo start Account page 
 // todo add logout button to Account page
+
+
+
+* Opening phase: Week starting 24 April  (4)
+
+? should I add functionality to have more than one notification display simultaneously?
+// ? should I move the user icon to be visible on a mobile page? - yes. Resolved
+// todo refreshing loses state that the user is logged in. Find issue and resolve it (problem was with the expression of some of the conditions)
 todo add left-hand user details panel to Account page
 todo add edit details button to Account page (username/email/password)
 todo add right-hand edit user details panel to Account page when user clicks edit details
@@ -68,6 +75,14 @@ todo learn how to use Redux Thunk for async requests with axios in Slices
 todo about page  
 todo check if Christine wants gradient or solid colour on navbar/footer
 todo colour scheme
+todo typography scheme
 todo create a separate app to write emails and send them to the addresses stored in db
 todo deploy frontend as a mobile app => this will require react native
+
+
+
+
+
+
+
 */

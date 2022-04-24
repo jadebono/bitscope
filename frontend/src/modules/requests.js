@@ -54,6 +54,15 @@ export async function postLogin(userData) {
   return response;
 }
 
+// async function to delete user for <Account/>
+export async function deleteUser(userId) {
+  const response = await axios
+    .post(`${SERVER}/users/deleteUser`, { userId: userId })
+    .then((response) => response.data)
+    .catch((err) => false);
+  return response;
+}
+
 //session login/out & validation functions start here =>
 
 // async funtion to signin if valid cookie is found
@@ -82,6 +91,7 @@ async function reqValidation(token) {
 
 // async session validation for <App/>
 export async function session() {
+  console.log(document.cookie);
   if (document.cookie && reqValidation(document.cookie.split("=")[1])) {
     const response = await sessionSignin(document.cookie.split("=")[1]);
     return response;

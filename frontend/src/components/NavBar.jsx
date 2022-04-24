@@ -14,7 +14,7 @@ export default function Navbar(props) {
   const navbar = useSelector((state) => state.navbar);
 
   // access the user state from the store
-   const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user);
 
   useEffect(() => {
     function handleResize() {
@@ -37,7 +37,24 @@ export default function Navbar(props) {
   });
 
   const mobileBurger = (
-    <div className={`${navbar.burger} md:hidden flex items-center`}>
+    <div className={`${navbar.burger} md:hidden flex items-center gap-2`}>
+      <Link
+        to="/user"
+        className={user.logged ? "user-logged-in" : "user-not-logged-in"}
+      >
+        <svg
+          className="w-6 h-6 "
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fillRule="evenodd"
+            d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+            clipRule="evenodd"
+          />
+        </svg>
+      </Link>
       <button
         className="outline-none hover:bg-orange-700 transition duration-300"
         onClick={() => dispatch(toggle())}
@@ -205,29 +222,7 @@ export default function Navbar(props) {
                     Register
                   </Link>
                 </li>
-                <li>
-                  <Link
-                    to="/user"
-                    className={
-                      user.logged
-                        ? "burger-user-logged-in"
-                        : "birger-user-not-logged-in"
-                    }
-                  >
-                    <svg
-                      className="w-6 h-6 "
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </Link>
-                </li>
+                <li></li>
               </ul>
             </div>
           </div>

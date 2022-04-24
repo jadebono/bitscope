@@ -281,3 +281,17 @@ usersRouter.route("/sessionSignin").post(async (req, res) => {
     console.log("User was not authenticated!");
   }
 });
+
+// route to close a user's account
+usersRouter.route("/deleteUser").post(async (req, res) => {
+  const user = req.body.userId;
+  await deleteFromDB("users", { _id: { $eq: new ObjectId(user) } })
+    .then(() => {
+      res.send(true);
+      console.log("Account successfully closed!");
+    })
+    .catch((err) => {
+      res.send(false);
+      console.log("Unknown Error! Account not closed!");
+    });
+});

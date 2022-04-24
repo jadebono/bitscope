@@ -6,31 +6,53 @@ button to cancel registration
 */
 
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteUser } from "../modules/requests";
 import { setNotification } from "../store/NotificationsSlice";
 import { clearUser } from "../store/UserSlice";
 
 export default function Account() {
   const dispatch = useDispatch();
 
-  function logout() {
+  // access the user state from the store
+  const user = useSelector((state) => state.user);
+
+  function logout(message) {
     document.cookie = `session=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;`;
     dispatch(clearUser());
     dispatch(
       setNotification({
         type: "success",
-        message: "You have successfully logged out!",
+        message: message,
       })
     );
+  }
+
+  async function closeAccount(message) {
+    const response = await deleteUser(user.userId);
+    if (response) {
+      logout("You have successfully closed your account!");
+    } else {
+      setNotification({
+        type: "error",
+        message: "An unknown error has prevented the closure of this account.",
+      });
+    }
   }
 
   return (
     <React.Fragment>
       {" "}
       <div className="text-center text-indigo-900 text-4xl">Account</div>{" "}
-      <div className="ml-4">
-        <button className="btn-gen" onClick={logout}>
+      <div className="mx-4 flex flex-row">
+        <button
+          className="btn-gen"
+          onClick={() => logout("You have successfully logged out!")}
+        >
           logout
+        </button>
+        <button className="btn-danger" onClick={closeAccount}>
+          close account
         </button>
       </div>
     </React.Fragment>

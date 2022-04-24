@@ -28,12 +28,13 @@ export default function App() {
 
   // if there is a cookie in the browser retrieve user details and restore session
   useEffect(() => {
-    async function getSession() {
+    async function getSession(cookieExists) {
+      console.log(`I am in getSession`);
       // if user.logged and !userSess.logged it means that the user has just logged in
       if (user.logged && !userSess.logged) {
         setUserSess((prevUser) => {
           return {
-            id: user.id,
+            id: user.userId,
             username: user.username,
             logged: true,
           };
@@ -41,7 +42,7 @@ export default function App() {
         // if there is no userSess logged in, check to see if there is a cookie
         // if so, log in the user and and set the state.user to the same state as
         // userSess
-      } else if (!userSess.logged && cookieExists()) {
+      } else if (!userSess.logged && cookieExists === 0) {
         let loggedUser = await session();
         setUserSess((prevUser) => {
           return {
@@ -52,8 +53,8 @@ export default function App() {
         });
         dispatch(setUser({ userId: userSess.id, username: userSess.username }));
         // if userSess is logged in but !user.logged and there is no
-        // cookie, it means the user has logged out so clear userSess
-      } else if (userSess.logged && !user.logged && !cookieExists()) {
+        // cookie, it means the user has logged out so clear userSes
+      } else if (userSess.logged && !user.logged && cookieExists === -1) {
         setUserSess((prevUser) => {
           return {
             id: "",
@@ -63,13 +64,10 @@ export default function App() {
         });
       }
     }
-    getSession();
-  }, [userSess, user]);
-
-  //test if cookie exists
-  function cookieExists() {
-    return document.cookie === true;
-  }
+    // if myCookie === 0, session cookie exists, if -1, session cookie does not exist
+    const myCookie = document.cookie.indexOf("session=");
+    myCookie === 0 && getSession(myCookie);
+  });
 
   return (
     <React.Fragment>
