@@ -7,7 +7,12 @@ import express from "express";
 import { encipher, decipher } from "../encryption.js";
 import * as fs from "fs";
 import HashString from "../mongoConnect.js";
-import { deleteFromDB, LoadFromDB, SaveToDB } from "../mongoConnect.js";
+import {
+  deleteFromDB,
+  LoadFromDB,
+  SaveToDB,
+  updateDB,
+} from "../mongoConnect.js";
 import nodemailer from "nodemailer";
 import { ObjectId } from "mongodb";
 import {
@@ -295,3 +300,65 @@ usersRouter.route("/deleteUser").post(async (req, res) => {
       console.log("Unknown Error! Account not closed!");
     });
 });
+
+// route to retrieve user details
+usersRouter.route("/details").post(async (req, res) => {
+  const user = req.body.userId;
+  await LoadFromDB("users", { _id: { $eq: new ObjectId(user) } })
+    .then((response) => {
+      const loggedUser = response.pop();
+      const name = decipher(loggedUser.name);
+      const surname = decipher(loggedUser.surname);
+      const username = decipher(loggedUser.username);
+      const email = decipher(loggedUser.email);
+      res.send({
+        name: name,
+        surname: surname,
+        username: username,
+        email: email,
+      });
+      console.log(`user details successfully retrieved!`);
+    })
+    .catch((err) => {
+      res.send(false);
+      console.log("An unknown problem has occurred");
+    });
+});
+
+// update user details routes start here =>
+
+// route to update username
+usersRouter.route("/updateusername").post(async (req, res) => {
+  const username = req.body.username;
+  const userId = req.body.userId;
+  console.log(username, userId);
+  // encrypt username
+  const encryptedUsername = encipher(username);
+  // search collection users for someone with this username
+  const usernameExists = await LoadFromDB("users", {
+    username: encryptedUsername,
+  });
+  // .then((response) => decipher(response[0].username));
+
+  console.log(usernameExists.length);
+  // {
+  // destructure and decrypt data
+  // const username = decipher(response[0].username);
+  // check that user is not "undefined"
+
+  // if username does NOT exist, update record
+  if (usernameExists.length === 0) {
+    await updateDB(
+      "users",
+      { _id: ObjectId(userId) },
+      { username: encryptedUsername }
+    );
+    res.send("usernameUpdated");
+    console.log("username changed!");
+  } else {
+    res.send("usernameTaken");
+    console.log("That username already exists!");
+  }
+});
+
+// <- update user details routes end here

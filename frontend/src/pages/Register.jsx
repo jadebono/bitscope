@@ -3,6 +3,8 @@ import { useDispatch } from "react-redux";
 import { setNotification } from "../store/NotificationsSlice";
 import { postRegister } from "../modules/requests";
 
+// ! Impose email confirmation upon registration
+
 /*
 Registration policy
 (1) Password must contain must contain at least one uppercase character, one lowercase character, one digit, one symbol, between 16 and 128 characters and must not contain any whitespace;
@@ -252,7 +254,6 @@ export default function Register() {
           </span>
         </p>
       </div>
-      ;
     </React.Fragment>
   );
 }

@@ -197,7 +197,7 @@ export default function Navbar(props) {
                 </li>
                 <li>
                   <Link
-                    to={LOCAL_HOST}
+                    to=""
                     className="block text-sm px-2 py-2 font-medium text-white
                     rounded hover:bg-orange-700 transition duration-300 cursor-pointer"
                   >

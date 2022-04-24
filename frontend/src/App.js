@@ -29,9 +29,20 @@ export default function App() {
   // if there is a cookie in the browser retrieve user details and restore session
   useEffect(() => {
     async function getSession(cookieExists) {
-      console.log(`I am in getSession`);
-      // if user.logged and !userSess.logged it means that the user has just logged in
-      if (user.logged && !userSess.logged) {
+      // if there is no userSess logged in, check to see if there is a cookie
+      // if so, log in the user and and set the state.user to the same state as
+      // userSess
+      if (!userSess.logged && cookieExists === 0) {
+        let loggedUser = await session();
+        await setUserSess((prevUser) => {
+          return {
+            id: loggedUser.id,
+            username: loggedUser.username,
+            logged: true,
+          };
+        });
+        // if user.logged and !userSess.logged it means that the user has just logged in
+      } else if (user.logged && !userSess.logged) {
         setUserSess((prevUser) => {
           return {
             id: user.userId,
@@ -39,23 +50,16 @@ export default function App() {
             logged: true,
           };
         });
-        // if there is no userSess logged in, check to see if there is a cookie
-        // if so, log in the user and and set the state.user to the same state as
-        // userSess
-      } else if (!userSess.logged && cookieExists === 0) {
-        let loggedUser = await session();
-        setUserSess((prevUser) => {
-          return {
-            id: loggedUser.id,
-            username: loggedUser.username,
-            logged: true,
-          };
-        });
+        // if userSess is logged in but !user.logged and there is
+        // cookie, it means that a refresh has happened so repopulate user
+      } else if (userSess.logged && !user.logged && cookieExists === 0) {
         dispatch(setUser({ userId: userSess.id, username: userSess.username }));
-        // if userSess is logged in but !user.logged and there is no
-        // cookie, it means the user has logged out so clear userSes
-      } else if (userSess.logged && !user.logged && cookieExists === -1) {
-        setUserSess((prevUser) => {
+      }
+      // if userSess is logged in but !user.logged and there is no
+      // cookie, it means the user has logged out so clear userSes
+      else if (userSess.logged && !user.logged && cookieExists === -1) {
+        console.log(`clearing state`);
+        await setUserSess((prevUser) => {
           return {
             id: "",
             username: "",
@@ -67,7 +71,7 @@ export default function App() {
     // if myCookie === 0, session cookie exists, if -1, session cookie does not exist
     const myCookie = document.cookie.indexOf("session=");
     myCookie === 0 && getSession(myCookie);
-  });
+  }, [user, userSess]);
 
   return (
     <React.Fragment>
@@ -80,10 +84,7 @@ export default function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/register" element={<Register />} />
         {/* if useSess.logged display <Account/> else <Login/> decide whether to change the name of the route too */}
-        <Route
-          path="/user"
-          element={userSess.logged ? <Account /> : <Login />}
-        />
+        <Route path="/user" element={user.logged ? <Account /> : <Login />} />
         <Route path="*" element={<Error404 />} />
       </Routes>
       <Footer />

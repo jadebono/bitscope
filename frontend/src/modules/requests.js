@@ -41,6 +41,7 @@ export async function postRegister(register) {
       password,
     })
     .then((response) => response.data)
+    // !! return an error message properly formatted for no
     .catch((err) => err);
   return response;
 }
@@ -101,3 +102,28 @@ export async function session() {
 }
 
 //<- session login/out & validation functions end here
+
+// async funtion to retrieve user details for login page
+export async function userDetails(userId) {
+  const user = await axios
+    .post(`${SERVER}/users/details`, {
+      userId: userId,
+    })
+    .then((res) => res.data)
+    .catch((err) => false);
+
+  return user;
+}
+
+//update user details requests start here =>
+
+// async function to register user for <Register/>
+export async function postUpdateUsername(myDetails) {
+  const response = await axios
+    .post(`${SERVER}/users/updateusername`, myDetails)
+    .then((response) => response.data)
+    .catch((err) => err);
+  return response;
+}
+
+// <- update user details requests end here
