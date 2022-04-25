@@ -68,10 +68,11 @@ current todos
 todo userSess state in App not clearing after user clears. Why not?
 // todo add left-hand user details panel to Account page
 // todo add edit details button to Account page (username/email/password)
-todo add right-hand edit <Updateusername/> panel to Account page when user clicks edit username button
+// todo add right-hand edit <Updateusername/> panel to Account page when user clicks edit username button
 todo add right-hand edit <Updateemail/> panel to Account page when user clicks edit username button
 todo add right-hand edit <Updatepassword/> panel to Account page when user clicks edit username button
 todo add email confirmation for password update to Account page
+todo make buttons for username, email and password toggle from Account page
 todo Add 2FA for logging in  
 todo add email confirmation for registration
 todo learn how to use Redux Thunk for async requests with axios in Slices

@@ -7,11 +7,16 @@ button to cancel registration
 
 import React, { useState, useEffect } from "react";
 import Updateusername from "../components/Updateusername";
+import Updateemail from "../components/Updateemail";
 import UserPanel from "../components/UserPanel";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteUser, userDetails } from "../modules/requests";
 import { setNotification } from "../store/NotificationsSlice";
 import { clearUser } from "../store/UserSlice";
+import {
+  clearUpdateButtons,
+  setUpdateButtons,
+} from "../store/UpdateButtonsSlice";
 
 export default function Account() {
   const [currentUser, setCurrentUser] = useState({
@@ -20,9 +25,9 @@ export default function Account() {
     username: "",
     email: "",
   });
-  const [updateDetails, setUpdateDetails] = useState({
-    update: "",
-  });
+
+  // use updatebuttons to toggle Updateusername, Updateemail, Updatepassword panels
+  const updatebuttons = useSelector((state) => state.updatebuttons);
 
   const dispatch = useDispatch();
   // access the user state from the store
@@ -40,11 +45,11 @@ export default function Account() {
 
   function showUpdatePanel(choice) {
     if (choice === 1) {
-      setUpdateDetails((prev) => {
-        return {
-          update: "username",
-        };
-      });
+      dispatch(setUpdateButtons({ username: true }));
+    } else if (choice === 2) {
+      dispatch(setUpdateButtons({ email: true }));
+    } else if (choice === 3) {
+      dispatch(setUpdateButtons({ password: true }));
     }
   }
 
@@ -90,7 +95,13 @@ export default function Account() {
       </div>
       {/* user details panel - submit data from currentUser as a prop */}
       <UserPanel userDetails={currentUser} showUpdatePanel={showUpdatePanel} />
-      {updateDetails.update === "username" && <Updateusername />}
+      {updatebuttons.username ? (
+        <Updateusername />
+      ) : updatebuttons.email ? (
+        <Updateemail />
+      ) : (
+        " "
+      )}
     </React.Fragment>
   );
 }

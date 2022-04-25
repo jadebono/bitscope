@@ -1,60 +1,59 @@
 import React, { useState } from "react";
-import { postUpdateUsername } from "../modules/requests";
+import { postUpdateEmail } from "../modules/requests";
 import { useDispatch, useSelector } from "react-redux";
 import { setNotification } from "../store/NotificationsSlice";
 import { setUser } from "../store/UserSlice";
 import { clearUpdateButtons } from "../store/UpdateButtonsSlice";
 /*
-Username Update policy
-
-(1) Username has to be unique. If it is not unique, prevent registration and inform registrant that registration has been stopped because the username has already been registered;
-(2) Username will each be encrypted with a secret key and a secret initVector to preserve registrant privacy in case of a database hack or leak.
+Email update policy 
+(1) Email has to be unique. If it is not unique, prevent registration but only inform registrant that his registration has been stopped because one of his credentials has already been registered. This will protect the privacy of the email account that has already been registered;
+(2) Email field will be encrypted with a secret key and a secret initVector to preserve registrant privacy in case of a database hack or leak.
 */
 
-export default function Updateusername() {
+export default function Updateemail() {
   // access the user state from the store
   const user = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
-  const [username, setUsername] = useState({ username: "" });
+  const [email, setEmail] = useState({ email: "" }); // !! ??
 
   function handleUpdateChange(evt) {
     const { name, value } = evt.target;
-    setUsername((prevMyReg) => {
+    setEmail((prevMyReg) => {
       return {
         [name]: value,
       };
     });
   }
 
-  // submit new username
+  // submit new email
 
-  async function updateUsername(evt) {
+  async function updateEmail(evt) {
     // check if you need to prevent default behaviour
     evt.preventDefault();
     // transmit register to axios post request
-    const myDetails = { userId: user.userId, username: username.username };
+    const myDetails = { userId: user.userId, email: email.email };
 
-    const response = await postUpdateUsername(myDetails);
-    if (response === "usernameUpdated") {
+    const response = await postUpdateEmail(myDetails);
+    if (response === "emailUpdated") {
       dispatch(
         setNotification({
           type: "success",
-          message: "Username updated!",
+          message: "Email updated!",
         })
       );
-      dispatch(setUser({ userId: user.userId, username: username.username }));
       dispatch(clearUpdateButtons());
-    } else if (response === "usernameTaken") {
+      // dispatch(setUser({ userId: user.userId, username: username.username })); // !! what is this for? Is it necessary
+    } else if (response === "emailTaken") {
       dispatch(
         setNotification({
           type: "warning",
-          message: "Username already registered.",
+          message: "There is a problem with the supplied email.",
         })
       );
     }
-    setUsername((prevUsername) => {
-      return { username: "" };
+    setEmail((prevEmail) => {
+      return { email: "" };
     });
   }
 
@@ -62,24 +61,24 @@ export default function Updateusername() {
     <React.Fragment>
       <div className="m-auto mb-20 md:mb-10 flex flex-col w-5/6 md:w-1/2 h-full mt-5 border-2 border-indigo-900 bg-indigo-50 rounded-2xl">
         <div className="my-2 text-xl text-indigo-900 font-bold text-center">
-          Update Username
+          Update Email
         </div>
 
         <form
           className="bg-white mb-4 w-5/6 m-auto rounded-xl shadow-lg border border-1 border-blue-700 flex flex-col justify-center text-indigo-900  font-semibold "
-          onSubmit={updateUsername}
+          onSubmit={updateEmail}
         >
           <div className="flex flex-col ml-4 my-2">
-            <label className="" htmlFor="username">
-              Username:
+            <label className="" htmlFor="email">
+              Email:
             </label>
           </div>
           <div className="flex flex-col">
             <input
               required
-              name="username"
-              type="text"
-              value={username.username || ""}
+              name="email"
+              type="email"
+              value={email.email || ""}
               onChange={handleUpdateChange}
               className="ml-4 w-2/3 border border-indigo-900 rounded-md shadow-sm p-1"
             />

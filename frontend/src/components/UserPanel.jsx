@@ -3,8 +3,6 @@
 import React from "react";
 
 export default function UserPanel(props) {
-  
-
   // get userDetails as a prop from <Account/> and populate the fields with it
   const userDetails = props.userDetails;
 

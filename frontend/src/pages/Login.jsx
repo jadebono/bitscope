@@ -38,6 +38,7 @@ export default function Login() {
 
   // async function to submit login data to server and db
   async function submitLogin(evt) {
+    console.log(userData);
     evt.preventDefault();
     const response = await postLogin(userData);
     const { login, userId, username, token } = response;

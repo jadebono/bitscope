@@ -136,7 +136,7 @@ export default function Register() {
 
   return (
     <React.Fragment>
-      <div className="m-auto mb-20 md:mb-10 flex flex-col w-5/6 md:w-1/2 h-full mt-5 border-2 border-indigo-900 bg-indigo-50 rounded-2xl">
+      <div className="m-auto mb-20 flex flex-col w-5/6 md:w-1/2 h-full mt-5 border-2 border-indigo-900 bg-indigo-50 rounded-2xl">
         <div className="my-2 text-xl text-indigo-900 font-bold text-center">
           {/* change BRAND to actual brand name */}
           New to BRAND?
