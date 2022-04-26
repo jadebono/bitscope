@@ -129,7 +129,7 @@ export async function postUpdateUsername(myDetails) {
 // async function to register user for <Register/>
 export async function postUpdateEmail(myDetails) {
   const response = await axios
-    .post(`${SERVER}/users/updateusername`, myDetails)
+    .post(`${SERVER}/users/updateemail`, myDetails)
     .then((response) => response.data)
     .catch((err) => err);
   return response;

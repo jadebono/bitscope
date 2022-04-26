@@ -331,21 +331,12 @@ usersRouter.route("/details").post(async (req, res) => {
 usersRouter.route("/updateusername").post(async (req, res) => {
   const username = req.body.username;
   const userId = req.body.userId;
-  console.log(username, userId);
   // encrypt username
   const encryptedUsername = encipher(username);
   // search collection users for someone with this username
   const usernameExists = await LoadFromDB("users", {
     username: encryptedUsername,
   });
-  // .then((response) => decipher(response[0].username));
-
-  console.log(usernameExists.length);
-  // {
-  // destructure and decrypt data
-  // const username = decipher(response[0].username);
-  // check that user is not "undefined"
-
   // if username does NOT exist, update record
   if (usernameExists.length === 0) {
     await updateDB(
@@ -358,6 +349,31 @@ usersRouter.route("/updateusername").post(async (req, res) => {
   } else {
     res.send("usernameTaken");
     console.log("That username already exists!");
+  }
+});
+
+// route to update email
+usersRouter.route("/updateemail").post(async (req, res) => {
+  const email = req.body.email;
+  const userId = req.body.userId;
+  // encrypt email
+  const encryptedEmail = encipher(email);
+  // search collection users for someone with this email
+  const emailExists = await LoadFromDB("users", {
+    email: encryptedEmail,
+  });
+  // if email NOT exist, update record
+  if (emailExists.length === 0) {
+    await updateDB(
+      "users",
+      { _id: ObjectId(userId) },
+      { email: encryptedEmail }
+    );
+    res.send("emailUpdated");
+    console.log("email changed!");
+  } else {
+    res.send("emailTaken");
+    console.log("Unknown problem with that email");
   }
 });
 

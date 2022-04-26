@@ -15,7 +15,7 @@ export default function Updateemail() {
   const user = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
-  const [email, setEmail] = useState({ email: "" }); // !! ??
+  const [email, setEmail] = useState({ email: "" });
 
   function handleUpdateChange(evt) {
     const { name, value } = evt.target;
@@ -43,12 +43,12 @@ export default function Updateemail() {
         })
       );
       dispatch(clearUpdateButtons());
-      // dispatch(setUser({ userId: user.userId, username: username.username })); // !! what is this for? Is it necessary
+      dispatch(setUser({ userId: user.userId, email: email.email }));
     } else if (response === "emailTaken") {
       dispatch(
         setNotification({
           type: "warning",
-          message: "There is a problem with the supplied email.",
+          message: "Unknown problem with that email",
         })
       );
     }
