@@ -19,7 +19,7 @@ export default function Updateemail() {
 
   function handleUpdateChange(evt) {
     const { name, value } = evt.target;
-    setEmail((prevMyReg) => {
+    setEmail((prevMyEmail) => {
       return {
         [name]: value,
       };

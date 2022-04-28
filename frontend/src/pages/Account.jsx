@@ -1,6 +1,6 @@
 // Account page with logout facility
 /*
-Two panels, left panel with current details, right panel to appear only if user clicks on update details to display a panel to edit either username/email/password
+Two panels, top panel with current details, bottom panel to appear only if user clicks on update details to display a panel to edit either username/email/password
 button to cancel registration
 
 */
@@ -8,6 +8,7 @@ button to cancel registration
 import React, { useState, useEffect } from "react";
 import Updateusername from "../components/Updateusername";
 import Updateemail from "../components/Updateemail";
+import Updatepassword from "../components/Updatepassword";
 import UserPanel from "../components/UserPanel";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteUser, userDetails } from "../modules/requests";
@@ -43,13 +44,15 @@ export default function Account() {
     getDetails();
   }, [user]);
 
-  function showUpdatePanel(choice) {
-    if (choice === 1) {
+  function togglePanel(choice) {
+    if (choice === 1 && !updatebuttons.username) {
       dispatch(setUpdateButtons({ username: true }));
-    } else if (choice === 2) {
+    } else if (choice === 2 && !updatebuttons.email) {
       dispatch(setUpdateButtons({ email: true }));
-    } else if (choice === 3) {
+    } else if (choice === 3 && !updatebuttons.password) {
       dispatch(setUpdateButtons({ password: true }));
+    } else {
+      dispatch(clearUpdateButtons());
     }
   }
 
@@ -94,11 +97,13 @@ export default function Account() {
         </button>
       </div>
       {/* user details panel - submit data from currentUser as a prop */}
-      <UserPanel userDetails={currentUser} showUpdatePanel={showUpdatePanel} />
+      <UserPanel userDetails={currentUser} togglePanel={togglePanel} />
       {updatebuttons.username ? (
         <Updateusername />
       ) : updatebuttons.email ? (
         <Updateemail />
+      ) : updatebuttons.password ? (
+        <Updatepassword />
       ) : (
         " "
       )}

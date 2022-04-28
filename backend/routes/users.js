@@ -362,7 +362,7 @@ usersRouter.route("/updateemail").post(async (req, res) => {
   const emailExists = await LoadFromDB("users", {
     email: encryptedEmail,
   });
-  // if email NOT exist, update record
+  // if email does NOT exist, update record
   if (emailExists.length === 0) {
     await updateDB(
       "users",
@@ -374,6 +374,24 @@ usersRouter.route("/updateemail").post(async (req, res) => {
   } else {
     res.send("emailTaken");
     console.log("Unknown problem with that email");
+  }
+});
+
+// route to update password
+usersRouter.route("/updatepwd").post(async (req, res) => {
+  // hash password
+  const password = HashString(req.body.password);
+  const userId = req.body.userId;
+
+  // update password
+
+  try {
+    await updateDB("users", { _id: ObjectId(userId) }, { password: password });
+    res.send("passwordUpdated");
+    console.log("Password changed!");
+  } catch (error) {
+    res.send("passwordProblem");
+    console.log("Unknown problem with that password");
   }
 });
 

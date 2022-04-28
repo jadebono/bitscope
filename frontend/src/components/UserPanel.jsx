@@ -38,13 +38,13 @@ export default function UserPanel(props) {
           applicable buttons below
         </div>
         <div className="flex flex-row mb-2">
-          <button className="btn-gen" onClick={() => props.showUpdatePanel(1)}>
+          <button className="btn-gen" onClick={() => props.togglePanel(1)}>
             username
           </button>
-          <button className="btn-gen" onClick={() => props.showUpdatePanel(2)}>
+          <button className="btn-gen" onClick={() => props.togglePanel(2)}>
             email
           </button>
-          <button className="btn-gen" onClick={() => props.showUpdatePanel(3)}>
+          <button className="btn-gen" onClick={() => props.togglePanel(3)}>
             password
           </button>
         </div>

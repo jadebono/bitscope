@@ -65,14 +65,14 @@ current todos
 ? should I add functionality to have more than one notification display simultaneously?
 // ? should I move the user icon to be visible on a mobile page? - yes. Resolved
 // todo refreshing loses state that the user is logged in. Find issue and resolve it (problem was with the expression of some of the conditions)
-todo userSess state in App not clearing after user clears. Why not?
+// todo userSess state in App not clearing after user clears. Why not?
 // todo add left-hand user details panel to Account page
 // todo add edit details button to Account page (username/email/password)
 // todo add r<Updateusername/> panel to Account page when user clicks edit username button
 // todo add <Updateemail/> panel to Account page when user clicks edit email button
-todo add  <Updatepassword/> panel to Account page when user clicks edit username button
+// todo add  <Updatepassword/> panel to Account page when user clicks edit username button
+// todo make buttons for username, email and password toggle from Account page
 todo add email confirmation for password update to Account page
-todo make buttons for username, email and password toggle from Account page
 todo Add 2FA for logging in  
 todo add email confirmation for registration
 todo learn how to use Redux Thunk for async requests with axios in Slices
@@ -80,6 +80,7 @@ todo about page
 todo check if Christine wants gradient or solid colour on navbar/footer
 todo colour scheme
 todo typography scheme
+todo decide on the colour of the text on the notification slices
 todo create a separate app to write emails and send them to the addresses stored in db
 todo deploy frontend as a mobile app => this will require react native
 

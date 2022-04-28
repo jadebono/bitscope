@@ -117,7 +117,7 @@ export async function userDetails(userId) {
 
 //update user details requests start here =>
 
-// async function to register user for <Register/>
+// async function to change username for <Register/>
 export async function postUpdateUsername(myDetails) {
   const response = await axios
     .post(`${SERVER}/users/updateusername`, myDetails)
@@ -126,10 +126,19 @@ export async function postUpdateUsername(myDetails) {
   return response;
 }
 
-// async function to register user for <Register/>
+// async function to change email for <Register/>
 export async function postUpdateEmail(myDetails) {
   const response = await axios
     .post(`${SERVER}/users/updateemail`, myDetails)
+    .then((response) => response.data)
+    .catch((err) => err);
+  return response;
+}
+
+// async function to change password for <Register/>
+export async function postUpdatePassword(myDetails) {
+  const response = await axios
+    .post(`${SERVER}/users/updatepwd`, myDetails)
     .then((response) => response.data)
     .catch((err) => err);
   return response;

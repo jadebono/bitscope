@@ -28,7 +28,6 @@ export default function Updateusername() {
   }
 
   // submit new username
-
   async function updateUsername(evt) {
     // check if you need to prevent default behaviour
     evt.preventDefault();
