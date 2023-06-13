@@ -1,7 +1,7 @@
 # `Platform - Working Title`
 
-**Author:** Christine Borg (design), Joseph Anthony Debono (code),  
-**email:** [criborg@gmail.com](criborg@gmail.com), [joe@jadebono.com](joe@jadebono.com)  
+**Author:** Joseph Anthony Debono (code),  
+**email:** [joe@jadebono.com](joe@jadebono.com)  
 **Institution**: Placeholder  
 **Site:** [not available](http:localhost:3001/)  
 **Date of commencement:** 3 April 2022
