@@ -122,12 +122,6 @@ To update notify state and generate a notification:
 
 ### `Component Variables and Properties`
 
-#### `Variables`
-
-1. Example: vatRate variable allows operator to change the vat rate.
-
-#### `Properties`
-
 ---
 
 # `Backend`
