@@ -25,7 +25,6 @@ export default function SearchBar({ setBlockchainData }) {
         );
       } else {
         console.log("Blockchain data:", data);
-        // TODO: Handle the blockchain data as needed
         setBlockchainData(data);
       }
     });

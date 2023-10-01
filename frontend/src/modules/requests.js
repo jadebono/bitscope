@@ -157,8 +157,6 @@ export async function postUpdateCurrency(myDetails) {
 
 // <- update user details requests end here
 
-// Requests to the BlockCypher API start here ->
-
 // Function to search the Bitcoin blockchain using BlockCypher API
 export async function searchBitcoinBlockchain(query) {
   const baseUrl = "https://api.blockcypher.com/v1/btc/main";
@@ -178,6 +176,18 @@ export async function searchBitcoinBlockchain(query) {
     return response.data;
   } catch (error) {
     console.error("Error searching the Bitcoin blockchain:", error);
+    return null;
+  }
+}
+
+// currency conversion API query
+export async function getBTCConversionRate(currency) {
+  const url = `https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=${currency.toLowerCase()}`;
+  try {
+    const response = await axios.get(url);
+    return response.data.bitcoin[currency.toLowerCase()];
+  } catch (error) {
+    console.error("Error fetching conversion rate:", error);
     return null;
   }
 }
