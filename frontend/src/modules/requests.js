@@ -156,3 +156,28 @@ export async function postUpdateCurrency(myDetails) {
 }
 
 // <- update user details requests end here
+
+// Requests to the BlockCypher API start here ->
+
+// Function to search the Bitcoin blockchain using BlockCypher API
+export async function searchBitcoinBlockchain(query) {
+  const baseUrl = "https://api.blockcypher.com/v1/btc/main";
+  let url = "";
+
+  // Determine if the query is likely a transaction ID or an address based on length
+
+  if (query.length === 64) {
+    // typical length of a transaction ID
+    url = `${baseUrl}/txs/${query}`;
+  } else {
+    url = `${baseUrl}/addrs/${query}`;
+  }
+
+  try {
+    const response = await axios.get(url);
+    return response.data;
+  } catch (error) {
+    console.error("Error searching the Bitcoin blockchain:", error);
+    return null;
+  }
+}

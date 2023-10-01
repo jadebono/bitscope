@@ -1,7 +1,12 @@
 import React, { useState } from "react";
+import { searchBitcoinBlockchain } from "../modules/requests";
+import { useDispatch } from "react-redux";
+import { setNotification } from "../store/NotificationsSlice";
 
-export default function SearchBar() {
+export default function SearchBar({ setBlockchainData }) {
   const [searchTerm, setSearchTerm] = useState("");
+
+  const dispatch = useDispatch();
 
   function handleSearchChange(evt) {
     setSearchTerm(evt.target.value);
@@ -9,8 +14,22 @@ export default function SearchBar() {
 
   function handleSearchSubmit(evt) {
     evt.preventDefault();
-    // TODO: implement your search logic here
-    console.log("Search term submitted:", searchTerm);
+    // Call the function to search the Bitcoin blockchain
+    searchBitcoinBlockchain(searchTerm).then((data) => {
+      if (data == null) {
+        dispatch(
+          setNotification({
+            type: "error",
+            message: "invalid search term!",
+          })
+        );
+      } else {
+        console.log("Blockchain data:", data);
+        // TODO: Handle the blockchain data as needed
+        setBlockchainData(data);
+      }
+    });
+    setSearchTerm("");
   }
 
   return (
