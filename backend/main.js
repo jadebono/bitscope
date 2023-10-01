@@ -11,8 +11,6 @@ import { ConnectMDB, CloseMDB } from "./mongoConnect.js";
 import { subscribersRouter } from "./routes/subscribers.js";
 import { usersRouter } from "./routes/users.js";
 
-// todo import routes here
-
 // run dotenv.config()
 dotenv.config();
 
@@ -25,7 +23,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // routes
-// todo routes
+// todo import routes here
 app.use("/users", usersRouter);
 
 // connect to db at server start

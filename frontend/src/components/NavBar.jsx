@@ -86,27 +86,13 @@ export default function Navbar(props) {
             <div className="flex">
               {/* Website Logo */}
               <div className="flex mr-8">
-                <Link to={LOCAL_HOST} className="flex items-center mr-2">
-                  <svg
-                    className=" h-8 w-8 "
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path d="M12 14l9-5-9-5-9 5 9 5z" />
-                    <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"
-                    />
-                  </svg>
-                </Link>
-                <span className="flex items-center font-semibold text-white text-lg ml-2">
-                  Navigation
-                </span>
+                <div className="flex items-center mr-2">
+                  <img
+                    src="/assets/Bitcoin.svg"
+                    alt="Bitcoin Logo"
+                    className="h-10 w-10 "
+                  ></img>
+                </div>
               </div>
               {/* Primary Navbar items */}
               <div className="hidden md:flex items-center space-x-1">
@@ -123,13 +109,7 @@ export default function Navbar(props) {
                 >
                   Subscribe
                 </Link>
-                <Link
-                  to=""
-                  className="p-2 text-white rounded hover:bg-orange-700
-                  font-semibold transition duration-300 cursor-pointer"
-                >
-                  About
-                </Link>
+
                 <Link
                   to="/contact"
                   className="p-2 text-white rounded hover:bg-orange-700
@@ -168,7 +148,7 @@ export default function Navbar(props) {
                 </svg>
               </Link>
             </div>
-            {/* generate the mobile mLinknton if under the specified conditions */}
+            {/* generate the mobile Link if under the specified conditions */}
             {(navbar.burger === "") & (navbar.menu === "hidden")
               ? mobileBurger
               : ""}
@@ -195,15 +175,7 @@ export default function Navbar(props) {
                     Subscribe
                   </Link>
                 </li>
-                <li>
-                  <Link
-                    to=""
-                    className="block text-sm px-2 py-2 font-medium text-white
-                    rounded hover:bg-orange-700 transition duration-300 cursor-pointer"
-                  >
-                    About
-                  </Link>
-                </li>
+                <li></li>
                 <li>
                   <Link
                     to="/contact"

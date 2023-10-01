@@ -2,13 +2,13 @@
 
 **Author:** Joseph Anthony Debono (code),  
 **email:** [joe@jadebono.com](joe@jadebono.com)  
-**Institution**: Placeholder  
-**Site:** [not available](http:localhost:3001/)  
-**Date of commencement:** 3 April 2022
+**Frontend:** [Localhost](http:localhost:3001/)  
+**Backend:** [Localhost](http:localhost:4000/)  
+**Date of commencement:** 29 September 2023
 
 ---
 
-# Getting Started with Create React App
+# Frontend
 
 This project was bootstrapped with:
 
@@ -19,7 +19,7 @@ This project was bootstrapped with:
 
 ## Available Scripts
 
-In the project directory, you can run:
+In the frontend/ directory, you can run:
 
 ### `npm start`
 
@@ -58,9 +58,10 @@ You don't have to ever use `eject`. The curated feature set is suitable for smal
 
 # `Frontend`
 
-## `Potential Name and Tagline`
+## `Name and Tagline`
 
-Polykranos, Multidisciplinarity in an Overspecialised World
+Bitscope - The Bitcoin Explorer
+Vires in Numeris
 
 ## `dependencies`
 
@@ -72,6 +73,7 @@ Polykranos, Multidisciplinarity in an Overspecialised World
 1. "react": "^18.0.0",
 1. "react-dom": "^18.0.0",
 1. "react-redux": "^7.2.8",
+1. "react-router-dom": "^6.3.0",
 1. "react-scripts": "5.0.0",
 1. "redux": "^4.1.2",
 1. "redux-persist": "^6.0.0",
@@ -138,7 +140,6 @@ Port: 4000
 **IMPORTANT**
 
 1. Most node variables are environment variables stored in the .env file.
-1. .env file in backend folder excluded from git for security
 
 ## `Cookies`
 
@@ -185,56 +186,6 @@ Registration policy
 1. Username has to be unique. If it is not unique, prevent registration and inform registrant that registration has been stopped because the username has already been registered;
 1. Email has to be unique. If it is not unique, prevent registration but only inform registrant that his registration has been stopped because one of his credentials has already been registered. This will protect the privacy of the email account that has already been registered;
 1. If both username and email have been registered, tell registrant that the registration has been stopped because one or more of his credentials has already been registered. This will protect the privacy of the email account that has already been registered.
-1. Name, Surname, Username & Email fields will each be encrypted with a secret key and a secret initVector to preserve registrant privacy in case of a database hack or leak.
+1. Name, Surname, Username, Email & Currency fields will each be encrypted with a secret key and a secret initVector to preserve registrant privacy in case of a database hack or leak.
 
 ---
-
-# `Useful Tutorials`
-
-## `React`
-
-1. [React Tutorial - Beginner to Advanced - freeCodeCamp](https://youtu.be/zrs7u6bdbUw)
-1. [Full React Course 2020 - Learn Fundamentals, Hooks, Context API, React Router, Custom Hooks](https://youtu.be/4UZrsTqkcW4)
-1. [React Notification Component - ReactJS Tutorial](https://youtu.be/KYKmqeU6lOI)
-1. [React Router 6 Tutorial](https://www.youtube.com/playlist?list=PL4cUxeGkcC9h7F1LWaQ7MAI8ptg5VjvxJ)
-1. [React Router V6 Tutorial - Routes, Redirecting, UseNavigate, UseParams...](https://youtu.be/UjHT_NKR_gU)
-1. [10 React Hooks Explained // Plus Build your own from Scratch](https://youtu.be/TNhaISOUy6Q)
-
-## `Persist Redux state`
-
-1. [react js persistence state Redux-toolkit with redux-persist](https://youtu.be/0Uva7sEmDhk)
-1. [using reactjs/toolwith with redux-persist](https://redux-toolkit.js.org/usage/usage-guide#use-with-redux-persist)
-
-## `Design`
-
-1. [Jim Krause Design](https://www.youtube.com/channel/UC1Wlk6JGgAcSiSCKU5mJt7w)
-1. [Logo design lounge](https://www.logolounge.com/)
-1. [Print Magazine](https://www.logolounge.com/)
-
----
-
-# `Things I learnt`
-
-## `React-Router`
-
-1. BrowserRouter should be the most external wrapper in the index.js file:
-
-```js
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(
-  <BrowserRouter>
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <App />
-      </PersistGate>
-    </Provider>
-  </BrowserRouter>
-);
-```
-
-1. Use <Link to="/">Home</Link> instead of <a href="/">Home</a> as <a> refreshes the app, but <Link> does not.
-
-## `Persisting State`
-
-Refreshing a page or navigating to another link refreshes the state of the app, even when using redux store. If you have state that needs to be kept between refreshes
-/navigation (such as login user data), use redux-persist to save it in local storage. redux-persist can persist state in local storage, session, and cookies, but for storing a logged in user, using cookies in the state of <App/> and transferring it as a prop to navbar seems preferable

@@ -12,7 +12,7 @@ Registration policy
 (3) Username has to be unique. If it is not unique, prevent registration and inform registrant that registration has been stopped because the username has already been registered;
 (4) Email has to be unique. If it is not unique, prevent registration but only inform registrant that his registration has been stopped because one of his credentials has already been registered. This will protect the privacy of the email account that has already been registered;
 (5) If both username and email have been registered, tell registrant that the registration has been stopped because one or more of his credentials has already been registered. This will protect the privacy of the email account that has already been registered.
-(6) Name, Surname, Username & Email fields will each be encrypted with a secret key and a secret initVector to preserve registrant privacy in case of a database hack or leak.
+(6) Name, Surname, Username, Email & Currency fields will each be encrypted with a secret key and a secret initVector to preserve registrant privacy in case of a database hack or leak.
 */
 
 export default function Register() {
@@ -23,6 +23,7 @@ export default function Register() {
     email: "",
     password: "",
     passwordTwo: "",
+    currency: "BTC", // Default currency set to BTC
   });
 
   const dispatch = useDispatch();
@@ -30,7 +31,7 @@ export default function Register() {
   // Function to test password.
   function checkPasswordValidation(password) {
     const test =
-      /^(?!.*\s)(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[~`!@#$%^&*()--+={}\[\]|\\:;"'<>,.?/_₹]).{16,128}$/;
+      /^(?!.*\s)(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[~`!@#$%^&*()--+={}[\]|\\:;"'<>,.?/_₹]).{16,128}$/;
     const validPassword = new RegExp(test);
     return validPassword.test(password) ? true : false;
   }
@@ -116,6 +117,7 @@ export default function Register() {
           email: "",
           password: "",
           passwordTwo: "",
+          currency: "",
         };
       });
     } else {
@@ -129,6 +131,7 @@ export default function Register() {
           email: "",
           password: "",
           passwordTwo: "",
+          currency: "",
         };
       });
     }
@@ -138,8 +141,7 @@ export default function Register() {
     <React.Fragment>
       <div className="m-auto mb-20 flex flex-col w-5/6 md:w-1/2 h-full mt-5 border-2 border-indigo-900 bg-indigo-50 rounded-2xl">
         <div className="my-2 text-xl text-indigo-900 font-bold text-center">
-          {/* change BRAND to actual brand name */}
-          New to BRAND?
+          New to Bitscope?
         </div>
         <div className="mb-2 text-center text-lg font-semibold  text-orange-700">
           Register
@@ -242,6 +244,24 @@ export default function Register() {
               onChange={handleRegisterChange}
               className="ml-4 w-2/3 border border-indigo-900 rounded-md shadow-sm p-1"
             />
+          </div>
+          <div className="flex flex-col mt-4 ml-4 mb-2">
+            <label className="" htmlFor="currency">
+              Preferred currency: <p className="inline-block">*</p>
+            </label>
+          </div>
+          <div className="flex flex-col">
+            <select
+              required
+              name="currency"
+              value={register.currency}
+              onChange={handleRegisterChange}
+              className="ml-4 w-2/3 border border-indigo-900 bg-white rounded-md shadow-sm p-1"
+            >
+              <option value="BTC">BTC</option>
+              <option value="EUR">EUR</option>
+              <option value="USD">USD</option>
+            </select>
           </div>
           <div className="flex flex-row my-4 justify-around">
             <button className="btn-gen">Register</button>

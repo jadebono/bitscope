@@ -164,7 +164,7 @@ enforce unique user name & encrypt
 
 //post to register user
 usersRouter.route("/register").post(async (req, res) => {
-  const { name, surname, username, email, password } = req.body;
+  const { name, surname, username, email, password, currency } = req.body;
   // Hash password
   const hashedPassword = HashString(password);
   // encrypt name, surname, username, email
@@ -172,6 +172,7 @@ usersRouter.route("/register").post(async (req, res) => {
   const encryptedSurname = encipher(surname);
   const encryptedUsername = encipher(username);
   const encryptedEmail = encipher(email);
+  const encryptedCurrency = encipher(currency);
   /*
   test whether username and email are already registered, if not stop registration and inform registrant. 
      */
@@ -194,6 +195,7 @@ usersRouter.route("/register").post(async (req, res) => {
       username: encryptedUsername,
       email: encryptedEmail,
       password: hashedPassword,
+      currency: encryptedCurrency,
     });
     res.send("registered");
   }
@@ -201,7 +203,7 @@ usersRouter.route("/register").post(async (req, res) => {
 
 //post to signin user
 usersRouter.route("/login").post(async (req, res) => {
-  const { username, password } = req.body.userData;
+  const { username, password, currency } = req.body.userData;
   // encrypt username
   const encryptedUsername = encipher(username);
   // hash password
@@ -217,6 +219,7 @@ usersRouter.route("/login").post(async (req, res) => {
           login: false,
           userId: "",
           username: "",
+          currency: "",
           token: "",
         });
         // if username exists AND password matches
@@ -230,6 +233,7 @@ usersRouter.route("/login").post(async (req, res) => {
           login: true,
           userId: user._id,
           username: username,
+          currency: currency,
           token: token,
         });
         console.log("Successful login!");
@@ -311,11 +315,13 @@ usersRouter.route("/details").post(async (req, res) => {
       const surname = decipher(loggedUser.surname);
       const username = decipher(loggedUser.username);
       const email = decipher(loggedUser.email);
+      const currency = decipher(loggedUser.currency);
       res.send({
         name: name,
         surname: surname,
         username: username,
         email: email,
+        currency: currency,
       });
       console.log(`user details successfully retrieved!`);
     })
@@ -393,6 +399,23 @@ usersRouter.route("/updatepwd").post(async (req, res) => {
     res.send("passwordProblem");
     console.log("Unknown problem with that password");
   }
+});
+
+// route to update currency
+usersRouter.route("/updatecurrency").post(async (req, res) => {
+  const currency = req.body.currency;
+  console.log(currency);
+  // encrypt currency
+  const encryptedCurrency = encipher(currency);
+  const userId = req.body.userId;
+  // Update the currency in the database
+  await updateDB(
+    "users",
+    { _id: ObjectId(userId) },
+    { currency: encryptedCurrency }
+  );
+  res.send("currencyUpdated");
+  console.log("currency changed!");
 });
 
 // <- update user details routes end here

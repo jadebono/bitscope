@@ -31,7 +31,7 @@ export async function postContactForm(fields) {
 
 // async function to register user for <Register/>
 export async function postRegister(register) {
-  const { name, surname, username, email, password } = register;
+  const { name, surname, username, email, password, currency } = register;
   const response = await axios
     .post(`${SERVER}/users/register`, {
       name,
@@ -39,9 +39,10 @@ export async function postRegister(register) {
       username,
       email,
       password,
+      currency,
     })
     .then((response) => response.data)
-    // !! return an error message properly formatted for no
+    // !! return an error message properly formatted for username/email problems
     .catch((err) => err);
   return response;
 }
@@ -111,13 +112,13 @@ export async function userDetails(userId) {
     })
     .then((res) => res.data)
     .catch((err) => false);
-
+  
   return user;
 }
 
 //update user details requests start here =>
 
-// async function to change username for <Register/>
+// async function to change username for <UserPanel/>
 export async function postUpdateUsername(myDetails) {
   const response = await axios
     .post(`${SERVER}/users/updateusername`, myDetails)
@@ -126,7 +127,7 @@ export async function postUpdateUsername(myDetails) {
   return response;
 }
 
-// async function to change email for <Register/>
+// async function to change email for <UserPanel/>
 export async function postUpdateEmail(myDetails) {
   const response = await axios
     .post(`${SERVER}/users/updateemail`, myDetails)
@@ -135,10 +136,20 @@ export async function postUpdateEmail(myDetails) {
   return response;
 }
 
-// async function to change password for <Register/>
+// async function to change password for <UserPanel/>
 export async function postUpdatePassword(myDetails) {
   const response = await axios
     .post(`${SERVER}/users/updatepwd`, myDetails)
+    .then((response) => response.data)
+    .catch((err) => err);
+  return response;
+}
+
+// async function to change currency for <UserPanel/>
+export async function postUpdateCurrency(myDetails) {
+  console.log(myDetails);
+  const response = await axios
+    .post(`${SERVER}/users/updatecurrency`, myDetails)
     .then((response) => response.data)
     .catch((err) => err);
   return response;

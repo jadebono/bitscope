@@ -1,7 +1,9 @@
 // Account page with logout facility
 /*
-Two panels, top panel with current details, bottom panel to appear only if user clicks on update details to display a panel to edit either username/email/password
-button to cancel registration
+- panel with current details, and buttons to edit username/email/password
+- second panel for update username/email/password that appears when the user clicks on the relevant buttons
+- button to delete account
+- button to logout
 
 */
 
@@ -25,6 +27,7 @@ export default function Account() {
     surname: "",
     username: "",
     email: "",
+    currency: "",
   });
 
   // use updatebuttons to toggle Updateusername, Updateemail, Updatepassword panels
