@@ -21,7 +21,9 @@ This project was bootstrapped with:
 
 In the frontend/ directory, you can run:
 
-### `npm start`
+```bash
+npm start
+```
 
 Runs the app in the development mode.\
 Open [http://localhost:3001](http://localhost:3001) to view it in your browser.
@@ -128,7 +130,14 @@ To update notify state and generate a notification:
 
 Port: 4000
 
-1. folder for middleware
+## `Running the Server`
+
+In the backend/ directory, you can run:
+
+```bash
+node main.js
+```
+
 1. folder for routes
 
 **IMPORTANT**
@@ -145,7 +154,9 @@ document.cookie = `session=${user.token}; max-age:${whatever} `;
 document.cookie = `session=""; max-age=0`;
 ```
 
-## `Logging requests`
+## `Subscription and Logging in`
+
+A user can search for addresses and transaction ids, with the values expressed in BTC. But for more functionality, the user can create an account. Account registration consists of inputting name, surname, email, and choosing a username, password and currency preference. Once the user has created an account, the user can log in by clicking on the profile icon on the extreme right of the navigation bar. Once a user is logged in, the profile icon will turn orange indicating that a session is active. Values will then be provided in the preferred currency. To terminate the session, the user will have to log out manually or else the session will expire in 4 hours.
 
 ## `dependencies`
 
@@ -165,6 +176,7 @@ document.cookie = `session=""; max-age=0`;
 ## `MongoDB`
 
 Database: ecom
+Database name: platform
 Collections: platform, subscribers, users
 
 ---

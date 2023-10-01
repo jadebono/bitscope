@@ -20,7 +20,7 @@ export default function Login() {
   const dispatch = useDispatch();
 
   // access the user state from the store
-  // ? why do I need this?
+  // ?  do I need this here?
   const user = useSelector((state) => state.user);
 
   // max_age for the cookie in seconds
