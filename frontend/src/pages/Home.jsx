@@ -1,4 +1,5 @@
 import React from "react";
+import SearchBar from "../components/SearchBar";
 
 export default function Home() {
   return (
@@ -7,6 +8,9 @@ export default function Home() {
       <h2 className="text-center text-indigo-900 text-3xl">
         A Bitcoin Blockchain Explorer
       </h2>
+      <div>
+        <SearchBar />
+      </div>
     </React.Fragment>
   );
 }

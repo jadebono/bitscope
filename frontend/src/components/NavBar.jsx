@@ -8,8 +8,6 @@ import {
 } from "../store/NavBarSlice.js";
 
 export default function Navbar(props) {
-  const LOCAL_HOST = "http://localhost:3001";
-
   const dispatch = useDispatch();
   const navbar = useSelector((state) => state.navbar);
 

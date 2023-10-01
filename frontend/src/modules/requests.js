@@ -1,5 +1,6 @@
 import axios from "axios";
-const SERVER = "http://localhost:4000";
+const SERVER = `${process.env.REACT_APP_HOST}${process.env.REACT_APP_SERVER}`;
+
 // Route requests
 
 // async function to post a user and email to the /newsletter/subscribe route
@@ -42,7 +43,6 @@ export async function postRegister(register) {
       currency,
     })
     .then((response) => response.data)
-    // !! return an error message properly formatted for username/email problems
     .catch((err) => err);
   return response;
 }
@@ -112,7 +112,7 @@ export async function userDetails(userId) {
     })
     .then((res) => res.data)
     .catch((err) => false);
-  
+
   return user;
 }
 

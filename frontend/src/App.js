@@ -71,7 +71,7 @@ export default function App() {
     // if myCookie === 0, session cookie exists, if -1, session cookie does not exist
     const myCookie = document.cookie.indexOf("session=");
     myCookie === 0 && getSession(myCookie);
-  }, [user, userSess]);
+  }, [user, userSess, dispatch]);
 
   return (
     <React.Fragment>
@@ -83,7 +83,7 @@ export default function App() {
         <Route path="/subscribe" element={<Subscribe />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/register" element={<Register />} />
-        {/* if useSess.logged display <Account/> else <Login/> decide whether to change the name of the route too */}
+        {/* if user.logged display <Account/> else <Login/> decide whether to change the name of the route too */}
         <Route path="/user" element={user.logged ? <Account /> : <Login />} />
         <Route path="*" element={<Error404 />} />
       </Routes>

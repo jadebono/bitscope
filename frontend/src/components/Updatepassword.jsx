@@ -18,11 +18,10 @@ export default function Updatepassword() {
   const dispatch = useDispatch();
   const [password, setPassword] = useState({ password: "", passwordTwo: "" });
 
-
   // Function to test password.
   function checkPasswordValidation(password) {
     const test =
-      /^(?!.*\s)(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[~`!@#$%^&*()--+={}\[\]|\\:;"'<>,.?/_₹]).{16,128}$/;
+      /^(?!.*\s)(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[~`!@#$%^&*()--+={}[\]|\\:;"'<>,.?/_₹]).{16,128}$/;
     const validPassword = new RegExp(test);
     return validPassword.test(password) ? true : false;
   }

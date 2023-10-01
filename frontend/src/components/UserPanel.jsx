@@ -2,12 +2,13 @@
 
 import React, { useState, useEffect } from "react";
 import { postUpdateCurrency } from "../modules/requests";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setNotification } from "../store/NotificationsSlice";
 
 export default function UserPanel(props) {
   // get userDetails as a prop from <Account/> and populate the fields with it
   const userDetails = props.userDetails;
-  console.log(userDetails);
+  const dispatch = useDispatch();
 
   // state for currency as currency update will be handled from here
   const [selectedCurrency, setSelectedCurrency] = useState(""); // initialized to empty string
@@ -36,9 +37,21 @@ export default function UserPanel(props) {
       userId: userId,
     });
     if (response === "currencyUpdated") {
-      // Handle successful currency update (e.g., show a success message)
+      // Handle successful currency update (emit success notification)
+      dispatch(
+        setNotification({
+          type: "success",
+          message: "Currency updated!",
+        })
+      );
     } else {
-      // Handle unsuccessful currency update (e.g., show an error message)
+      // handle currency update failure
+      dispatch(
+        setNotification({
+          type: "warning",
+          message: "Unknown problem. Currency not updated!",
+        })
+      );
     }
   }
 
