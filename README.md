@@ -1,4 +1,4 @@
-# `Platform - Working Title`
+# `Bitscope - The Bitcoin Explorer`
 
 **Author:** Joseph Anthony Debono (code),  
 **email:** [joe@jadebono.com](joe@jadebono.com)  
