@@ -1,9 +1,11 @@
+// App.js
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // importing react-router
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/NavBar";
 import Header from "./components/Header";
+import Status from "./components/Status";
 import Account from "./pages/Account";
 import Home from "./pages/Home";
 import Subscribe from "./pages/Subscribe";
@@ -13,7 +15,7 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Footer from "./components/Footer";
 import Notify from "./components/Notify";
-import { session } from "./modules/requests";
+import { userDetails, session } from "./modules/requests";
 import { setUser } from "./store/UserSlice";
 
 export default function App() {
@@ -23,6 +25,7 @@ export default function App() {
     logged: false,
   });
   const notify = useSelector((state) => state.notification);
+
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
@@ -77,7 +80,17 @@ export default function App() {
     <React.Fragment>
       {notify.active && <Notify />}
       <Navbar />
-      <Header />
+
+      <div className="flex justify-between">
+        <div className="p-4">
+          <Header />
+        </div>
+        {user.logged && (
+          <div className="">
+            <Status />
+          </div>
+        )}
+      </div>
       <div className="pb-20">
         <Routes>
           <Route path="/" element={<Home />} />
