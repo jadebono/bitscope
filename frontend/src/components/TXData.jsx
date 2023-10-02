@@ -31,10 +31,13 @@ function TXData({ data }) {
   }, [currency]);
 
   const status = data.confirmations > 0 ? "Confirmed" : "Unconfirmed";
-  const totalBTCInput =
-    data.inputs.reduce((sum, input) => sum + (input.value || 0), 0) / 100000000;
-  const totalBTCOutput =
-    data.outputs.reduce((sum, output) => sum + output.value, 0) / 100000000;
+  const totalBTCInput = data.inputs
+    ? data.inputs.reduce((sum, input) => sum + (input.value || 0), 0) /
+      100000000
+    : 0;
+  const totalBTCOutput = data.outputs
+    ? data.outputs.reduce((sum, output) => sum + output.value, 0) / 100000000
+    : 0;
   const totalFees = ((data.fees / 100000000) * conversionRate).toFixed(2); // Assuming fees is in satoshis
 
   return (

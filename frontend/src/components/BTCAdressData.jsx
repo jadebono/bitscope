@@ -39,7 +39,9 @@ function BTCAddressData({ data }) {
         <div className="grid grid-cols-2 gap-4">
           <div className="flex flex-col">
             <label className="text-indigo-900 font-bold">Address:</label>
-            <div className="rounded-md font-bold">{data.address}</div>
+            <div className="rounded-md font-bold break-words">
+              {data.address}
+            </div>
           </div>
           <div className="flex flex-col">
             <label className="text-indigo-900 font-bold">

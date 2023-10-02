@@ -9,6 +9,8 @@ export default function Home() {
   const [isTransactionData, setIsTransactionData] = useState(false);
 
   useEffect(() => {
+    console.log("blockchainData", blockchainData);
+    console.log("isTransactionData", isTransactionData);
     // This is a simplistic check and may need to be replaced
     // with a more robust check depending on the actual shape of the data
     if (blockchainData && blockchainData.hash) {
