@@ -147,7 +147,6 @@ export async function postUpdatePassword(myDetails) {
 
 // async function to change currency for <UserPanel/>
 export async function postUpdateCurrency(myDetails) {
-  console.log(myDetails);
   const response = await axios
     .post(`${SERVER}/users/updatecurrency`, myDetails)
     .then((response) => response.data)

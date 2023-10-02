@@ -38,7 +38,6 @@ export default function Login() {
 
   // async function to submit login data to server and db
   async function submitLogin(evt) {
-    console.log(userData);
     evt.preventDefault();
     const response = await postLogin(userData);
     const { login, userId, username, token } = response;
@@ -46,7 +45,13 @@ export default function Login() {
       //save cookie manually
       document.cookie = `session=${token};max-age=${max_age};path=/;`;
       // send data to redux store
-      dispatch(setUser({ userId: userId, username: username }));
+      dispatch(
+        setUser({
+          userId: userId,
+          username: username,
+          currency: response.currency,
+        })
+      );
       // send notification to user that he has logged in
       dispatch(
         setNotification({

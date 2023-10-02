@@ -203,7 +203,7 @@ usersRouter.route("/register").post(async (req, res) => {
 
 //post to signin user
 usersRouter.route("/login").post(async (req, res) => {
-  const { username, password, currency } = req.body.userData;
+  const { username, password } = req.body.userData;
   // encrypt username
   const encryptedUsername = encipher(username);
   // hash password
@@ -213,6 +213,9 @@ usersRouter.route("/login").post(async (req, res) => {
     .then((response) => {
       // destructure and decrypt data
       const user = response[0];
+
+      // decipher currency because it is the only encrypted data from the DB we're going to send back
+      const currency = decipher(user.currency);
       // check that user is not "undefined"
       if (!user) {
         res.send({

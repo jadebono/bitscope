@@ -36,7 +36,7 @@ export default function Notify() {
           return prevWidth;
         }
       });
-    }, 20);
+    }, 20); // -n to increase speed of timer bar, +n to increase it
     setIntervalID(id);
   }
 
@@ -55,7 +55,7 @@ export default function Notify() {
             type: "",
             message: "",
           },
-          400
+          400 // increase this to increase speed of notification timer
         )
       );
     });

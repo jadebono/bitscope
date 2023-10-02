@@ -1,36 +1,25 @@
 // BTCAddressData.jsx
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { getBTCConversionRate, userDetails } from "../modules/requests";
+import { getBTCConversionRate } from "../modules/requests";
 
 function BTCAddressData({ data }) {
   const [conversionRate, setConversionRate] = useState(1); // Default to 1 for BTC
-  const [currency, setCurrency] = useState("BTC"); // Default to BTC
 
-  const user = useSelector((state) => state.user);
-
-  useEffect(() => {
-    // Check if a user is logged in
-    if (user && user.userId) {
-      // Fetch user details to get the currency
-      userDetails(user.userId).then((userDetails) => {
-        if (userDetails && userDetails.currency) {
-          setCurrency(userDetails.currency);
-        }
-      });
-    }
-  }, [user]);
+  const user = useSelector((state) => state.user); // This will now include the currency
 
   useEffect(() => {
     // If the currency is not BTC, fetch the conversion rate
-    if (currency !== "BTC") {
-      getBTCConversionRate(currency).then((rate) => {
+    if (user.currency !== "BTC") {
+      getBTCConversionRate(user.currency).then((rate) => {
         setConversionRate(rate);
       });
+    } else {
+      setConversionRate(1); // Set conversionRate back to 1 if currency is BTC
     }
-  }, [currency]);
+  }, [user.currency]); // Depend on user.currency instead of local currency state
 
-  //   since data is being retrieved in satoshis, it has to be converted to BTC first before converting it.
+  // Since data is being retrieved in satoshis, it has to be converted to BTC first before converting it.
   const currentValue = ((data.balance / 100000000) * conversionRate).toFixed(2);
 
   return (
@@ -60,8 +49,7 @@ function BTCAddressData({ data }) {
               Current Address Value:
             </label>
             <div className="rounded-md font-bold">
-              {currency} {currentValue}{" "}
-              {/* Display the currency ticker before the amount */}
+              {user.currency} {currentValue}
             </div>
           </div>
           <div className="flex flex-col">

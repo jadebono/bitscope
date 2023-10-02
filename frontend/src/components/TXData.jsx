@@ -1,43 +1,34 @@
 // TXData.jsx
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { getBTCConversionRate, userDetails } from "../modules/requests";
+import { getBTCConversionRate } from "../modules/requests";
 
 function TXData({ data }) {
   const [conversionRate, setConversionRate] = useState(1); // Default to 1 for BTC
-  const [currency, setCurrency] = useState("BTC"); // Default to BTC
 
   const user = useSelector((state) => state.user);
 
   useEffect(() => {
-    // Check if a user is logged in
-    if (user && user.userId) {
-      // Fetch user details to get the currency
-      userDetails(user.userId).then((userDetails) => {
-        if (userDetails && userDetails.currency) {
-          setCurrency(userDetails.currency);
-        }
-      });
-    }
-  }, [user]);
-
-  useEffect(() => {
     // If the currency is not BTC, fetch the conversion rate
-    if (currency !== "BTC") {
-      getBTCConversionRate(currency).then((rate) => {
+    if (user.currency !== "BTC") {
+      getBTCConversionRate(user.currency).then((rate) => {
         setConversionRate(rate);
       });
+    } else {
+      setConversionRate(1); // Set conversionRate back to 1 if currency is BTC
     }
-  }, [currency]);
+  }, [user.currency]); // Depend on user.currency instead of local currency state
 
   const status = data.confirmations > 0 ? "Confirmed" : "Unconfirmed";
   const totalInput = data.inputs ? data.inputs.length : 0;
   const totalOutput = data.outputs ? data.outputs.length : 0;
   let totalFees;
-  if (currency === "BTC") {
+  if (user.currency === "BTC") {
     totalFees = `${(data.fees / 100000000).toFixed(8)} SATS`; // Display fees in SATS if the currency is BTC
   } else {
-    totalFees = `${(data.fees * conversionRate).toFixed(0)} ${currency} cents`; // Convert fees to cents and display in user's preferred currency
+    totalFees = `${(data.fees * conversionRate).toFixed(0)} ${
+      user.currency
+    } cents`; // Convert fees to cents and display in user's preferred currency
   }
 
   return (
