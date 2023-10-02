@@ -1,9 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SearchBar from "../components/SearchBar";
 import BTCAddressData from "../components/BTCAdressData";
+// Import the new TXData component
+import TXData from "../components/TXData";
 
 export default function Home() {
   const [blockchainData, setBlockchainData] = useState(null);
+  const [isTransactionData, setIsTransactionData] = useState(false);
+
+  useEffect(() => {
+    // This is a simplistic check and may need to be replaced
+    // with a more robust check depending on the actual shape of the data
+    if (blockchainData && blockchainData.hash) {
+      setIsTransactionData(true);
+    } else {
+      setIsTransactionData(false);
+    }
+  }, [blockchainData]);
 
   return (
     <React.Fragment>
@@ -15,7 +28,11 @@ export default function Home() {
         <SearchBar setBlockchainData={setBlockchainData} />
       </div>
 
-      {blockchainData && <BTCAddressData data={blockchainData} />}
+      {isTransactionData ? (
+        <TXData data={blockchainData} />
+      ) : (
+        blockchainData && <BTCAddressData data={blockchainData} />
+      )}
     </React.Fragment>
   );
 }
