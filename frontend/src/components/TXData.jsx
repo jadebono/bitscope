@@ -31,14 +31,14 @@ function TXData({ data }) {
   }, [currency]);
 
   const status = data.confirmations > 0 ? "Confirmed" : "Unconfirmed";
-  const totalBTCInput = data.inputs
-    ? data.inputs.reduce((sum, input) => sum + (input.value || 0), 0) /
-      100000000
-    : 0;
-  const totalBTCOutput = data.outputs
-    ? data.outputs.reduce((sum, output) => sum + output.value, 0) / 100000000
-    : 0;
-  const totalFees = ((data.fees / 100000000) * conversionRate).toFixed(2); // Assuming fees is in satoshis
+  const totalInput = data.inputs ? data.inputs.length : 0;
+  const totalOutput = data.outputs ? data.outputs.length : 0;
+  let totalFees;
+  if (currency === "BTC") {
+    totalFees = `${(data.fees / 100000000).toFixed(8)} SATS`; // Display fees in SATS if the currency is BTC
+  } else {
+    totalFees = `${(data.fees * conversionRate).toFixed(0)} ${currency} cents`; // Convert fees to cents and display in user's preferred currency
+  }
 
   return (
     <React.Fragment>
@@ -71,21 +71,17 @@ function TXData({ data }) {
             <div className="rounded-md font-bold">{data.confirmations}</div>
           </div>
           <div className="flex flex-col">
-            <label className="text-indigo-900 font-bold">
-              Total BTC Input:
-            </label>
-            <div className="rounded-md font-bold">{totalBTCInput}</div>
+            <label className="text-indigo-900 font-bold">Total Inputs:</label>
+            <div className="rounded-md font-bold">{totalInput}</div>
           </div>
           <div className="flex flex-col">
-            <label className="text-indigo-900 font-bold">
-              Total BTC Output:
-            </label>
-            <div className="rounded-md font-bold">{totalBTCOutput}</div>
+            <label className="text-indigo-900 font-bold">Total Outputs:</label>
+            <div className="rounded-md font-bold">{totalOutput}</div>
           </div>
           <div className="flex flex-col">
             <label className="text-indigo-900 font-bold">Total Fees:</label>
             <div className="rounded-md font-bold">
-              {currency} {totalFees}
+              {totalFees}
               {/* Display the currency ticker before the amount */}
             </div>
           </div>

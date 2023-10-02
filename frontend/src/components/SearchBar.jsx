@@ -3,7 +3,7 @@ import { searchBitcoinBlockchain } from "../modules/requests";
 import { useDispatch } from "react-redux";
 import { setNotification } from "../store/NotificationsSlice";
 
-export default function SearchBar({ setBlockchainData }) {
+export default function SearchBar({ setBlockchainData, setIsTransactionData }) {
   const [searchTerm, setSearchTerm] = useState("");
 
   const dispatch = useDispatch();
@@ -26,6 +26,12 @@ export default function SearchBar({ setBlockchainData }) {
       } else {
         console.log("Blockchain data:", data);
         setBlockchainData(data);
+        // Determine if the data is related to a transaction or address
+        if (data && data.hash) {
+          setIsTransactionData(true); // It's transaction data
+        } else {
+          setIsTransactionData(false); // It's address data
+        }
       }
     });
     setSearchTerm("");
@@ -54,10 +60,10 @@ export default function SearchBar({ setBlockchainData }) {
               type="text"
               value={searchTerm}
               onChange={handleSearchChange}
-              className="w-2/3 border border-indigo-900 rounded-md shadow-sm p-1 -mb-5"
+              className="w-2/3 border border-indigo-900 rounded-md shadow-sm p-1 -mb-5 mr-2"
               placeholder="address or transaction id"
             />
-            <button className="btn-gen rounded-r-md">Search</button>
+            <button className="btn-gen rounded-r-md ">Search</button>
           </div>
         </form>
       </div>

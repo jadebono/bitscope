@@ -78,16 +78,18 @@ export default function App() {
       {notify.active && <Notify />}
       <Navbar />
       <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/subscribe" element={<Subscribe />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/register" element={<Register />} />
-        {/* if user.logged display <Account/> else <Login/> decide whether to change the name of the route too */}
-        <Route path="/user" element={user.logged ? <Account /> : <Login />} />
-        <Route path="*" element={<Error404 />} />
-      </Routes>
-      <Footer />
+      <div className="pb-20">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/subscribe" element={<Subscribe />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/register" element={<Register />} />
+          {/* if user.logged display <Account/> else <Login/> decide whether to change the name of the route too */}
+          <Route path="/user" element={user.logged ? <Account /> : <Login />} />
+          <Route path="*" element={<Error404 />} />
+        </Routes>
+        <Footer />
+      </div>
     </React.Fragment>
   );
 }

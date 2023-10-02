@@ -166,9 +166,9 @@ export async function searchBitcoinBlockchain(query) {
 
   if (query.length === 64) {
     // typical length of a transaction ID
-    url = `${baseUrl}/txs/${query}`;
+    url = `${baseUrl}/txs/${query}?token=${process.env.REACT_APP_BlOCKCYPHER_API}`;
   } else {
-    url = `${baseUrl}/addrs/${query}`;
+    url = `${baseUrl}/addrs/${query}?token=${process.env.REACT_APP_BlOCKCYPHER_API}`;
   }
 
   try {
