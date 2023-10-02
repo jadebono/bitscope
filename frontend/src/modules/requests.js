@@ -3,7 +3,7 @@ const SERVER = `${process.env.REACT_APP_HOST}${process.env.REACT_APP_SERVER}`;
 
 // Route requests
 
-// async function to post a user and email to the /newsletter/subscribe route
+// async function to post a user and email to the /users/subscribe route for the newsletter
 export async function subscribeUser(subscriber) {
   const response = await axios
     .post(`${SERVER}/users/subscribe`, subscriber)
@@ -12,7 +12,7 @@ export async function subscribeUser(subscriber) {
   return response;
 }
 
-// async function to post an email to the /newsletter/unsubscribe route
+// async function to post an email to the /users/unsubscribe route to unsubscribe from a newsletter
 export async function unsubscribeUser(email) {
   const response = await axios
     .post(`${SERVER}/users/unsubscribe`, email)
@@ -66,7 +66,6 @@ export async function deleteUser(userId) {
 }
 
 //session login/out & validation functions start here =>
-
 // async funtion to signin if valid cookie is found
 async function sessionSignin(token) {
   let user = { id: "", username: "" };
@@ -101,9 +100,7 @@ export async function session() {
     return false;
   }
 }
-
 //<- session login/out & validation functions end here
-
 // async funtion to retrieve user details for login page
 export async function userDetails(userId) {
   const user = await axios
@@ -117,7 +114,6 @@ export async function userDetails(userId) {
 }
 
 //update user details requests start here =>
-
 // async function to change username for <UserPanel/>
 export async function postUpdateUsername(myDetails) {
   const response = await axios
@@ -153,7 +149,6 @@ export async function postUpdateCurrency(myDetails) {
     .catch((err) => err);
   return response;
 }
-
 // <- update user details requests end here
 
 // Function to search the Bitcoin blockchain using BlockCypher API
@@ -190,3 +185,20 @@ export async function getBTCConversionRate(currency) {
     return null;
   }
 }
+
+//subscribe hashes requests start here =>
+// async function to Subscribe user for changes to a specific BTC address
+export async function postAddressSubscription(address, userSliceData) {
+  const userData = {
+    userId: userSliceData.userId,
+    username: userSliceData.username,
+    currency: userSliceData.currency,
+  };
+  const response = await axios
+    .post(`${SERVER}/subscribers/btcaddress`, { address, userData })
+    .then((response) => response.data)
+    .catch((err) => err);
+  return response;
+}
+
+//<= subscribe hashes requests end here

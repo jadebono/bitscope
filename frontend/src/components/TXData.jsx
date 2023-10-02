@@ -77,6 +77,19 @@ function TXData({ data }) {
             </div>
           </div>
         </div>
+        {user.logged ? (
+          <div className="flex justify-center mt-4">
+            <button
+              type="button"
+              className="btn-gen rounded-r-md "
+              onClick={() => {
+                /* !!TODO subscription logic */
+              }}
+            >
+              Subscribe
+            </button>
+          </div>
+        ) : null}
       </div>
     </React.Fragment>
   );

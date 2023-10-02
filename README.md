@@ -177,7 +177,7 @@ A user can search for addresses and transaction ids, with the values expressed i
 
 Database: ecom
 Database name: platform
-Collections: platform, subscribers, users
+Collections: platform, subscribers, subscriptions, users
 
 ---
 

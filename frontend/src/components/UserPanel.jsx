@@ -26,13 +26,10 @@ export default function UserPanel(props) {
   // Access the userId from the Redux store
   const userId = useSelector((state) => state.user.userId);
 
-
-
   function handleCurrencyChange(evt) {
     // function to handle changes to the currency dropdown menu
     const value = evt.target.value;
     setSelectedCurrency(value);
-    
   }
 
   async function handleChangeCurrencyButtonClick() {
@@ -48,9 +45,8 @@ export default function UserPanel(props) {
           message: "Currency updated!",
         })
       );
-  
-      dispatch(updateCurrency(selectedCurrency));  // Step 2: Dispatch updateCurrency action
-  
+
+      dispatch(updateCurrency(selectedCurrency)); // Step 2: Dispatch updateCurrency action
     } else {
       // handle currency update failure
       dispatch(
@@ -97,8 +93,8 @@ export default function UserPanel(props) {
           </div>
         </div>
         <div className="mx-1 mt-2 text-center text-lg font-semibold  text-orange-700">
-          You may update your username, email, and password by clicking on the
-          applicable buttons below
+          You may update your username, email, password and currency by clicking
+          on the applicable buttons below
         </div>
         <div className="flex flex-row mb-2">
           <button className="btn-gen" onClick={() => props.togglePanel(1)}>

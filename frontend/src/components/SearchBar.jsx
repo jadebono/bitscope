@@ -24,7 +24,6 @@ export default function SearchBar({ setBlockchainData, setIsTransactionData }) {
           })
         );
       } else {
-        console.log("Blockchain data:", data);
         setBlockchainData(data);
         // Determine if the data is related to a transaction or address
         if (data && data.hash) {

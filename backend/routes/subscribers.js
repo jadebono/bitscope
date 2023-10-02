@@ -1,6 +1,6 @@
 "use strict";
 
-// route for all interactions with users
+// route for all interactions with subscribers to the newsletter
 
 import dotenv from "dotenv";
 import express from "express";
@@ -9,78 +9,41 @@ import * as fs from "fs";
 import HashString from "../mongoConnect.js";
 import { deleteFromDB, LoadFromDB, SaveToDB } from "../mongoConnect.js";
 import jwt from "jsonwebtoken";
-import nodemailer from "nodemailer";
 import { ObjectId } from "mongodb";
 export const subscribersRouter = express.Router();
 
 dotenv.config();
 
-// async function to test if any of the user's data exists in encrypted form in the db
-async function testData(key, value) {
-  const obj = { [key]: value };
-  const test = await LoadFromDB("subscribers", obj)
-    .then((response) => {
-      if (response.length) {
-        const user = response[0];
-        return user[key] === value ? true : false;
-      } else {
-        return false;
-      }
-    })
-    .catch((error) => console.log(error));
-  return test;
-}
+// post route to subscribe a user to a BTC address hash
+subscribersRouter.route("/btcaddress").post(async (req, res) => {
+  const { address, userData } = req.body;
+  const { userId, username, currency } = userData;
 
-// post route to subscribe a user to the newsletter
-subscribersRouter.route("/subscribe").post(async (req, res) => {
-  const { name, surname, email } = req.body;
-  // encrypt data
-  const encipheredName = encipher(name);
-  const encipheredSurname = encipher(surname);
-  const encipheredEmail = encipher(email);
-  // Check to make sure submitted email is not already there
-  const testEmail = await testData("email", encipheredEmail);
-  // if email does not exist, add user to list of subscribers
-  if (testEmail) {
-    res.send("Email is already subscribed!");
-    console.log("Email is already subscribed!");
-  } else {
-    await SaveToDB("subscribers", {
-      name: encipheredName,
-      surname: encipheredSurname,
-      email: encipheredEmail,
-    })
-      .then(() => {
-        res.send(true);
-        console.log("Subscription succeeded!");
-      })
-      .catch((err) => {
-        res.send(false);
-        console.log("Subscription Failed");
-      });
-  }
-});
+  // Encrypt required fields
+  const encryptedUsername = encipher(username);
+  const encryptedCurrency = encipher(currency);
+  const encryptedAddress = encipher(address);
+  // Prepare data object to save to database
+  const subscriberData = {
+    _id: ObjectId(userId),
+    username: encryptedUsername,
+    currency: encryptedCurrency,
+    address: [encryptedAddress], // Store as an array to allow for multiple addresses per user
+  };
 
-// post route to delete a user from the newsletter
-subscribersRouter.route("/unsubscribe").post(async (req, res) => {
-  const { email } = req.body;
-  const encipheredEmail = encipher(email);
-  // Check to make sure submitted email is already there
-  const testEmail = await testData("email", encipheredEmail);
-  // if email exists delete user's record
-  if (testEmail) {
-    // delete record
-    await deleteFromDB("subscribers", { email: encipheredEmail })
-      .then(() => {
-        res.send(true);
-        console.log("Email successfully unsubscribed");
-      })
-      .catch((err) => {
-        res.send(false);
-        console.log("Attempt to unsubscribe has failed!");
-      });
+  /* Check if user is already subscribed to the given address:
+  
+  if the user is already in the subscriptions collection{
+    then we simply add encryptedAddress to his address array. 
   } else {
-    res.send("That email is not subscribed!");
-    console.log("That email is not subscribed!");
+    we create a new record for the user with his array to store his subscribed addresses
   }
+
+
+  */
+
+  // Save to database
+  await SaveToDB("subscriptions", subscriberData);
+  // check if successful else check the error and send it back
+  res.send("Subscription successful");
 });

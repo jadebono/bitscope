@@ -1,7 +1,10 @@
 // BTCAddressData.jsx
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { getBTCConversionRate } from "../modules/requests";
+import {
+  getBTCConversionRate,
+  postAddressSubscription,
+} from "../modules/requests";
 
 function BTCAddressData({ data }) {
   const [conversionRate, setConversionRate] = useState(1); // Default to 1 for BTC
@@ -21,6 +24,19 @@ function BTCAddressData({ data }) {
 
   // Since data is being retrieved in satoshis, it has to be converted to BTC first before converting it.
   const currentValue = ((data.balance / 100000000) * conversionRate).toFixed(2);
+
+  const handleAddressSubscription = async () => {
+    const response = await postAddressSubscription(data.address, user);
+    /*  Handle the response: if successful response {
+        emit succesful notification
+        else {
+            emit failed notification
+        }
+    }
+
+
+*/
+  };
 
   return (
     <React.Fragment>
@@ -65,6 +81,17 @@ function BTCAddressData({ data }) {
             <div className="rounded-md font-bold">{data.total_sent / 1e6}</div>
           </div>
         </div>
+        {user.logged ? (
+          <div className="flex justify-center mt-4">
+            <button
+              type="button"
+              className="btn-gen rounded-r-md "
+              onClick={handleAddressSubscription}
+            >
+              Subscribe
+            </button>
+          </div>
+        ) : null}
       </div>
     </React.Fragment>
   );

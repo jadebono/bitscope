@@ -8,8 +8,8 @@ import express from "express";
 import { ConnectMDB, CloseMDB } from "./mongoConnect.js";
 
 // importing routes
-import { subscribersRouter } from "./routes/subscribers.js";
 import { usersRouter } from "./routes/users.js";
+import { subscribersRouter } from "./routes/subscribers.js";
 
 // run dotenv.config()
 dotenv.config();
@@ -17,7 +17,7 @@ dotenv.config();
 const app = express();
 
 // middleware
-app.use(cors({ origin: "http://localhost:3000" }));
+app.use(cors({ origin: `${process.env.HOST}3000` }));
 app.use(cookieParser()); // * unknown if needed yet
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -25,6 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 // routes
 // todo import routes here
 app.use("/users", usersRouter);
+app.use("/subscribers", subscribersRouter);
 
 // connect to db at server start
 ConnectMDB();
