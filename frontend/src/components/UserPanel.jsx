@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { postUpdateCurrency } from "../modules/requests";
 import { useDispatch, useSelector } from "react-redux";
 import { setNotification } from "../store/NotificationsSlice";
+import { updateCurrency } from "../store/UserSlice";
 
 export default function UserPanel(props) {
   // get userDetails as a prop from <Account/> and populate the fields with it
@@ -25,10 +26,13 @@ export default function UserPanel(props) {
   // Access the userId from the Redux store
   const userId = useSelector((state) => state.user.userId);
 
+
+
   function handleCurrencyChange(evt) {
     // function to handle changes to the currency dropdown menu
     const value = evt.target.value;
     setSelectedCurrency(value);
+    
   }
 
   async function handleChangeCurrencyButtonClick() {
@@ -44,6 +48,9 @@ export default function UserPanel(props) {
           message: "Currency updated!",
         })
       );
+  
+      dispatch(updateCurrency(selectedCurrency));  // Step 2: Dispatch updateCurrency action
+  
     } else {
       // handle currency update failure
       dispatch(
