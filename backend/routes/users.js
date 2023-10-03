@@ -420,7 +420,6 @@ usersRouter.route("/updatepwd").post(async (req, res) => {
 // route to update currency
 usersRouter.route("/updatecurrency").post(async (req, res) => {
   const currency = req.body.currency;
-  console.log(currency);
   // encrypt currency
   const encryptedCurrency = encipher(currency);
   const userId = req.body.userId;

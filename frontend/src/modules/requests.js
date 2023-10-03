@@ -208,6 +208,7 @@ export async function postAddressSubscription(address, userSliceData) {
 
 // initiate webhook request starts here ->
 // In requests.jsx or a similar file
+// !! Currently the webhook is coming from the App component to ensure that the event is happening in all routes.
 export async function initiateWebhook(userData) {
   const response = await axios
     .post(`${SERVER}/subscribers/webhook/initiate`, { userData })

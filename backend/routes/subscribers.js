@@ -69,7 +69,6 @@ subscribersRouter.route("/btcaddress").post(async (req, res) => {
     await LoadFromDB(process.env.DB_COLLECTION_SUBSCRIPTIONS, {
       username: encryptedUsername,
     }).then(async (response) => {
-      console.log(response[0]);
       const retrievedAddresses = response[0].address;
       if (retrievedAddresses.includes(encryptedAddress)) {
         res.send("You are already subscribed to: ");
@@ -106,8 +105,25 @@ subscribersRouter.route("/btcaddress").post(async (req, res) => {
 });
 
 // calling the webhook:
-
+// This is all test code so far
 subscribersRouter.route("/webhook/initiate").post(async (req, res) => {
   const userData = req.body;
-  console.log(userData);
+  // when the user data is received, check if the user has subscriptions
+  // if so, return a list of the addresses he has subcribed to the request
+  const userId = userData.userData.userId;
+  await LoadFromDB(process.env.DB_COLLECTION_SUBSCRIPTIONS, {
+    _id: { $eq: new ObjectId(userId) },
+  }).then((response) => {
+    // if the first item of the response array contains data (is not falsy) and the array addresses does not have length 0 (falsy), then log the addresses
+    if (response[0] && response[0].address) {
+      const addresses = response[0].address;
+      const decryptedArray = [];
+      addresses.forEach((item) => {
+        decryptedArray.push(decipher(item));
+      });
+      console.log(decryptedArray);
+    } else {
+      console.log("No addresses found");
+    }
+  });
 });

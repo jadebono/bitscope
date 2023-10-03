@@ -1,6 +1,7 @@
 // App.js
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { setNotification } from "../src/store/NotificationsSlice";
 // importing react-router
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/NavBar";
@@ -15,7 +16,7 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Footer from "./components/Footer";
 import Notify from "./components/Notify";
-import { userDetails, session } from "./modules/requests";
+import { userDetails, initiateWebhook, session } from "./modules/requests";
 import { setUser } from "./store/UserSlice";
 
 export default function App() {
@@ -75,6 +76,25 @@ export default function App() {
     const myCookie = document.cookie.indexOf("session=");
     myCookie === 0 && getSession(myCookie);
   }, [user, userSess, dispatch]);
+
+  // useEffect for webhook
+  // !! Currently the webhook is initiated from here, but it might be a better idea to initiate it from the App component.
+  useEffect(() => {
+    if (user.logged) {
+      // Check if the user is logged in
+      const webhookHandler = () => {
+        initiateWebhook(user); // Send the request to initiate the webhook
+      };
+
+      // Call the handler immediately upon mounting
+      webhookHandler();
+
+      // Then set up the interval
+      const intervalId = setInterval(webhookHandler, 1e4); // Set interval to run every 10 minutes (10 * 60 * 1000 milliseconds = 6e5 milliseconds) which is time it takes the bitcoin blockchain to add a block. For testing keep it to 10 (1e4 milliseconds) seconds
+
+      return () => clearInterval(intervalId); // Clear interval upon component unmount
+    }
+  }, [user]); // Re-run this effect if the user data changes
 
   return (
     <React.Fragment>
