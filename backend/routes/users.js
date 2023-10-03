@@ -5,7 +5,6 @@
 import dotenv from "dotenv";
 import express from "express";
 import { encipher, decipher } from "../encryption.js";
-import * as fs from "fs";
 import HashString from "../mongoConnect.js";
 import {
   deleteFromDB,
@@ -213,9 +212,6 @@ usersRouter.route("/login").post(async (req, res) => {
     .then((response) => {
       // destructure and decrypt data
       const user = response[0];
-
-      // decipher currency because it is the only encrypted data from the DB we're going to send back
-      const currency = decipher(user.currency);
       // check that user is not "undefined"
       if (!user) {
         res.send({
@@ -230,6 +226,8 @@ usersRouter.route("/login").post(async (req, res) => {
         encryptedUsername === user.username &&
         hashedPassword === user.password
       ) {
+        // decipher currency because it is the only encrypted data from the DB we're going to send back
+        const currency = decipher(user.currency);
         // generate token
         const token = signSessionToken(user._id);
         res.send({

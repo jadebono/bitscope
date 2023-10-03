@@ -1,11 +1,10 @@
 "use strict";
 
-// route for all interactions with subscribers to the newsletter
+// route for all interactions with subscribers to the subscriptions collection containing records of those who have subscribed to hashes
 
 import dotenv from "dotenv";
 import express from "express";
 import { encipher, decipher } from "../encryption.js";
-import * as fs from "fs";
 import HashString from "../mongoConnect.js";
 import { deleteFromDB, LoadFromDB, SaveToDB } from "../mongoConnect.js";
 import jwt from "jsonwebtoken";
