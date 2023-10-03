@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import SearchBar from "../components/SearchBar";
 import BTCAddressData from "../components/BTCAdressData";
-// Import the new TXData component
 import TXData from "../components/TXData";
 
 export default function Home() {

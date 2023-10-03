@@ -92,7 +92,8 @@ async function reqValidation(token) {
 
 // async session validation for <App/>
 export async function session() {
-  console.log(document.cookie);
+  // log the document.cookie if needed
+  // console.log(document.cookie);
   if (document.cookie && reqValidation(document.cookie.split("=")[1])) {
     const response = await sessionSignin(document.cookie.split("=")[1]);
     return response;
@@ -176,7 +177,10 @@ export async function searchBitcoinBlockchain(query) {
 
 // currency conversion API query
 export async function getBTCConversionRate(currency) {
-  const url = `https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=${currency.toLowerCase()}`;
+  // const url = `https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=${currency.toLowerCase()}`;
+  const url = `${
+    process.env.REACT_APP_COINGECKO_BASE_URL
+  }${currency.toLowerCase()}`;
   try {
     const response = await axios.get(url);
     return response.data.bitcoin[currency.toLowerCase()];
@@ -186,7 +190,7 @@ export async function getBTCConversionRate(currency) {
   }
 }
 
-//subscribe hashes requests start here =>
+//subscribe to bitcoin address hash request start here =>
 // async function to Subscribe user for changes to a specific BTC address
 export async function postAddressSubscription(address, userSliceData) {
   const userData = {
@@ -200,5 +204,15 @@ export async function postAddressSubscription(address, userSliceData) {
     .catch((err) => err);
   return response;
 }
+//<= subscribe to bitcoin address hash request end here
 
-//<= subscribe hashes requests end here
+// initiate webhook request starts here ->
+// In requests.jsx or a similar file
+export async function initiateWebhook(userData) {
+  const response = await axios
+    .post(`${SERVER}/subscribers/webhook/initiate`, { userData })
+    .then((response) => response.data)
+    .catch((err) => err);
+  return response;
+}
+// <- initiate webhook request ends here ->

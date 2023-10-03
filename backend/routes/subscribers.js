@@ -66,10 +66,10 @@ subscribersRouter.route("/btcaddress").post(async (req, res) => {
 
   if (testUserName) {
     // check if encryptedAddress does exist in the user's record
-    // !!TODO - success/error messages
     await LoadFromDB(process.env.DB_COLLECTION_SUBSCRIPTIONS, {
       username: encryptedUsername,
     }).then(async (response) => {
+      console.log(response[0]);
       const retrievedAddresses = response[0].address;
       if (retrievedAddresses.includes(encryptedAddress)) {
         res.send("You are already subscribed to: ");
@@ -103,4 +103,11 @@ subscribersRouter.route("/btcaddress").post(async (req, res) => {
         res.send("You have failed to subscribe to: ");
       });
   }
+});
+
+// calling the webhook:
+
+subscribersRouter.route("/webhook/initiate").post(async (req, res) => {
+  const userData = req.body;
+  console.log(userData);
 });

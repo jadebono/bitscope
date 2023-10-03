@@ -431,7 +431,6 @@ usersRouter.route("/updatecurrency").post(async (req, res) => {
     { currency: encryptedCurrency }
   );
   res.send("currencyUpdated");
-  console.log("currency changed!");
 });
 
 // <- update user details routes end here
