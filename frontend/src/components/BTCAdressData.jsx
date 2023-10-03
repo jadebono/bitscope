@@ -23,7 +23,7 @@ function BTCAddressData({ data }) {
   }, [user.currency]); // Depend on user.currency instead of local currency state
 
   // Since data is being retrieved in satoshis, it has to be converted to BTC first before converting it.
-  const currentValue = ((data.balance / 100000000) * conversionRate).toFixed(2);
+  const currentValue = ((data.balance / 1e8) * conversionRate).toFixed(2);
 
   const handleAddressSubscription = async () => {
     const response = await postAddressSubscription(data.address, user);
@@ -58,7 +58,7 @@ function BTCAddressData({ data }) {
             <label className="text-indigo-900 font-bold">
               Current Address Balance:
             </label>
-            <div className="rounded-md font-bold">{data.balance / 1e6} BTC</div>
+            <div className="rounded-md font-bold">{data.balance / 1e8} BTC</div>
           </div>
           <div className="flex flex-col">
             <label className="text-indigo-900 font-bold">
@@ -73,12 +73,12 @@ function BTCAddressData({ data }) {
               Total BTC Received:
             </label>
             <div className="rounded-md font-bold">
-              {data.total_received / 1e6}{" "}
+              {data.total_received / 1e8}{" "}
             </div>
           </div>
           <div className="flex flex-col">
             <label className="text-indigo-900 font-bold">Total BTC Sent:</label>
-            <div className="rounded-md font-bold">{data.total_sent / 1e6}</div>
+            <div className="rounded-md font-bold">{data.total_sent / 1e8}</div>
           </div>
         </div>
         {user.logged ? (
