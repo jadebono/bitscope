@@ -198,7 +198,6 @@ export async function postAddressSubscription(address, userSliceData) {
     .post(`${SERVER}/subscribers/btcaddress`, { address, userData })
     .then((response) => response.data)
     .catch((err) => err);
-  console.log(response);
   return response;
 }
 
