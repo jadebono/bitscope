@@ -23,10 +23,10 @@ export const usersRouter = express.Router();
 
 dotenv.config();
 
-/* async function to test if any of the user's data exists in encrypted form in the subscribers collections */
+/* async function to test if any of the user's data exists in encrypted form in the subscribers collection */
 async function testSubscribersData(key, value) {
   const obj = { [key]: value };
-  const test = await LoadFromDB("subscribers", obj)
+  const test = await LoadFromDB(process.env.DB_COLLECTION_SUBSCRIBERS, obj)
     .then((response) => {
       if (response.length) {
         const user = response[0];
@@ -42,7 +42,7 @@ async function testSubscribersData(key, value) {
 /* async function to test if any of the user's data exists in encrypted form in the users collections */
 async function testUsersData(key, value) {
   const obj = { [key]: value };
-  const test = await LoadFromDB("users", obj)
+  const test = await LoadFromDB(process.env.DB_COLLECTION_USERS, obj)
     .then((response) => {
       if (response.length) {
         const user = response[0];
@@ -69,7 +69,8 @@ usersRouter.route("/subscribe").post(async (req, res) => {
     res.send("Email is already subscribed!");
     console.log("Email is already subscribed!");
   } else {
-    await SaveToDB("subscribers", {
+    console.log(process.env.DB_COLLECTION_SUBSCRIBERS);
+    await SaveToDB(process.env.DB_COLLECTION_SUBSCRIBERS, {
       name: encipheredName,
       surname: encipheredSurname,
       email: encipheredEmail,
@@ -94,7 +95,9 @@ usersRouter.route("/unsubscribe").post(async (req, res) => {
   // if email exists delete user's record
   if (testEmail) {
     // delete record
-    await deleteFromDB("subscribers", { email: encipheredEmail })
+    await deleteFromDB(process.env.DB_COLLECTION_SUBSCRIBERS, {
+      email: encipheredEmail,
+    })
       .then(() => {
         res.send(true);
         console.log("Email successfully unsubscribed");
@@ -188,7 +191,7 @@ usersRouter.route("/register").post(async (req, res) => {
     res.send("emailTaken");
   } else {
     // register user
-    await SaveToDB("users", {
+    await SaveToDB(process.env.DB_COLLECTION_USERS, {
       name: encryptedName,
       surname: encryptedSurname,
       username: encryptedUsername,
@@ -208,7 +211,9 @@ usersRouter.route("/login").post(async (req, res) => {
   // hash password
   const hashedPassword = HashString(password);
   // search collection users for someone with this username
-  await LoadFromDB("users", { username: encryptedUsername })
+  await LoadFromDB(process.env.DB_COLLECTION_USERS, {
+    username: encryptedUsername,
+  })
     .then((response) => {
       // destructure and decrypt data
       const user = response[0];
@@ -266,7 +271,9 @@ usersRouter.route("/sessionSignin").post(async (req, res) => {
   let user = decryptSessionToken(token);
   // fetch user data
   if (user) {
-    await LoadFromDB("users", { _id: { $eq: new ObjectId(user) } })
+    await LoadFromDB(process.env.DB_COLLECTION_USERS, {
+      _id: { $eq: new ObjectId(user) },
+    })
       .then((response) => {
         const loggedUser = response.pop();
         const username = decipher(loggedUser.username);
@@ -295,7 +302,9 @@ usersRouter.route("/sessionSignin").post(async (req, res) => {
 // route to close a user's account
 usersRouter.route("/deleteUser").post(async (req, res) => {
   const user = req.body.userId;
-  await deleteFromDB("users", { _id: { $eq: new ObjectId(user) } })
+  await deleteFromDB(process.env.DB_COLLECTION_USERS, {
+    _id: { $eq: new ObjectId(user) },
+  })
     .then(() => {
       res.send(true);
       console.log("Account successfully closed!");
@@ -309,7 +318,9 @@ usersRouter.route("/deleteUser").post(async (req, res) => {
 // route to retrieve user details
 usersRouter.route("/details").post(async (req, res) => {
   const user = req.body.userId;
-  await LoadFromDB("users", { _id: { $eq: new ObjectId(user) } })
+  await LoadFromDB(process.env.DB_COLLECTION_USERS, {
+    _id: { $eq: new ObjectId(user) },
+  })
     .then((response) => {
       const loggedUser = response.pop();
       const name = decipher(loggedUser.name);
@@ -341,13 +352,13 @@ usersRouter.route("/updateusername").post(async (req, res) => {
   // encrypt username
   const encryptedUsername = encipher(username);
   // search collection users for someone with this username
-  const usernameExists = await LoadFromDB("users", {
+  const usernameExists = await LoadFromDB(process.env.DB_COLLECTION_USERS, {
     username: encryptedUsername,
   });
   // if username does NOT exist, update record
   if (usernameExists.length === 0) {
     await updateDB(
-      "users",
+      process.env.DB_COLLECTION_USERS,
       { _id: ObjectId(userId) },
       { username: encryptedUsername }
     );
@@ -366,13 +377,13 @@ usersRouter.route("/updateemail").post(async (req, res) => {
   // encrypt email
   const encryptedEmail = encipher(email);
   // search collection users for someone with this email
-  const emailExists = await LoadFromDB("users", {
+  const emailExists = await LoadFromDB(process.env.DB_COLLECTION_USERS, {
     email: encryptedEmail,
   });
   // if email does NOT exist, update record
   if (emailExists.length === 0) {
     await updateDB(
-      "users",
+      process.env.DB_COLLECTION_USERS,
       { _id: ObjectId(userId) },
       { email: encryptedEmail }
     );
@@ -393,7 +404,11 @@ usersRouter.route("/updatepwd").post(async (req, res) => {
   // update password
 
   try {
-    await updateDB("users", { _id: ObjectId(userId) }, { password: password });
+    await updateDB(
+      process.env.DB_COLLECTION_USERS,
+      { _id: ObjectId(userId) },
+      { password: password }
+    );
     res.send("passwordUpdated");
     console.log("Password changed!");
   } catch (error) {
@@ -411,7 +426,7 @@ usersRouter.route("/updatecurrency").post(async (req, res) => {
   const userId = req.body.userId;
   // Update the currency in the database
   await updateDB(
-    "users",
+    process.env.DB_COLLECTION_USERS,
     { _id: ObjectId(userId) },
     { currency: encryptedCurrency }
   );

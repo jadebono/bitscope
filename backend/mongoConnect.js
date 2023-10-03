@@ -71,6 +71,28 @@ export async function updateDB(col, filter, data) {
   }
 }
 
+// The db.collection.updateMany() method updates all documents in the collection that match the specified filter with the specified update.
+// In this case it will be used to update an array in a document
+export async function updateArrayDB(col, filter, field, value) {
+  try {
+    await db.collection(col).updateMany(filter, [
+      {
+        $set: {
+          [field]: {
+            $cond: [
+              { $isArray: `$${field}` },
+              { $concatArrays: [`$${field}`, [value]] },
+              [value],
+            ],
+          },
+        },
+      },
+    ]);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 // function to delete a document in a collection
 export async function deleteFromDB(col, item) {
   try {

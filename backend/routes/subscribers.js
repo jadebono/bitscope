@@ -6,12 +6,34 @@ import dotenv from "dotenv";
 import express from "express";
 import { encipher, decipher } from "../encryption.js";
 import HashString from "../mongoConnect.js";
-import { deleteFromDB, LoadFromDB, SaveToDB } from "../mongoConnect.js";
+import {
+  deleteFromDB,
+  LoadFromDB,
+  SaveToDB,
+  updateArrayDB,
+  updateDB,
+} from "../mongoConnect.js";
 import jwt from "jsonwebtoken";
 import { ObjectId } from "mongodb";
 export const subscribersRouter = express.Router();
 
 dotenv.config();
+
+/* async function to test if any of the user's data exists in encrypted form in the subscriptions (address and tx hashes) collection */
+async function testSubscriptionData(key, value) {
+  const obj = { [key]: value };
+  const test = await LoadFromDB(process.env.DB_COLLECTION_SUBSCRIPTIONS, obj)
+    .then((response) => {
+      if (response.length) {
+        const user = response[0];
+        return user[key] === value ? true : false;
+      } else {
+        return false;
+      }
+    })
+    .catch((error) => console.log(error));
+  return test;
+}
 
 // post route to subscribe a user to a BTC address hash
 subscribersRouter.route("/btcaddress").post(async (req, res) => {
@@ -30,7 +52,7 @@ subscribersRouter.route("/btcaddress").post(async (req, res) => {
     address: [encryptedAddress], // Store as an array to allow for multiple addresses per user
   };
 
-  /* Check if user is already subscribed to the given address:
+  /* Check if user already has a subscription:
   
   if the user is already in the subscriptions collection{
     then we simply add encryptedAddress to his address array. 
@@ -41,8 +63,44 @@ subscribersRouter.route("/btcaddress").post(async (req, res) => {
 
   */
 
-  // Save to database
-  await SaveToDB("subscriptions", subscriberData);
-  // check if successful else check the error and send it back
-  res.send("Subscription successful");
+  // Check if user already has a subscription:
+  const testUserName = await testSubscriptionData(
+    "username",
+    encryptedUsername
+  );
+
+  if (testUserName) {
+    // check if encryptedAddress does exist in the user's record
+    // !!TODO - success/error messages
+    await LoadFromDB(process.env.DB_COLLECTION_SUBSCRIPTIONS, {
+      username: encryptedUsername,
+    }).then(async (response) => {
+      const retrievedAddresses = response[0].address;
+      if (retrievedAddresses.includes(encryptedAddress)) {
+        res.send(
+          `You have already subscribed to ${decipher(encryptedAddress)}`
+        );
+      } else {
+        // if it doesn't exist, add the address to the array
+        updateArrayDB(
+          process.env.DB_COLLECTION_SUBSCRIPTIONS,
+          { username: encryptedUsername },
+          "address",
+          encryptedAddress
+        );
+      }
+    });
+  }
+
+  // if username does not exist, add subscriberData to subscriptions collection
+  if (!testUserName) {
+    console.log(process.env.DB_COLLECTION_SUBSCRIBERS);
+    await SaveToDB(process.env.DB_COLLECTION_SUBSCRIPTIONS, subscriberData)
+      .then(() => {
+        res.send("Subscription successful");
+      })
+      .catch((err) => {
+        res.send("Subscription failed!");
+      });
+  }
 });

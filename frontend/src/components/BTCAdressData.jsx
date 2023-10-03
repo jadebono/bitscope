@@ -1,6 +1,7 @@
 // BTCAddressData.jsx
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { setNotification } from "../store/NotificationsSlice";
+import { useSelector, useDispatch } from "react-redux";
 import {
   getBTCConversionRate,
   postAddressSubscription,
@@ -8,7 +9,7 @@ import {
 
 function BTCAddressData({ data }) {
   const [conversionRate, setConversionRate] = useState(1); // Default to 1 for BTC
-
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user); // This will now include the currency
 
   useEffect(() => {
@@ -27,15 +28,23 @@ function BTCAddressData({ data }) {
 
   const handleAddressSubscription = async () => {
     const response = await postAddressSubscription(data.address, user);
-    /*  Handle the response: if successful response {
-        emit succesful notification
-        else {
-            emit failed notification
-        }
+    if (response === "Subscription successful") {
+      // send notification to user that he has successfully subscribed to address hash
+      dispatch(
+        setNotification({
+          type: "success",
+          message: `You have successfully subscribed to ${data.address}`,
+        })
+      );
+    } else {
+      // send failed subscription notification
+      dispatch(
+        setNotification({
+          type: "error",
+          message: `You have failed to subscribe to ${data.address}`,
+        })
+      );
     }
-
-
-*/
   };
 
   return (
