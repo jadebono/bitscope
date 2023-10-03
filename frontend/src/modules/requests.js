@@ -153,7 +153,7 @@ export async function postUpdateCurrency(myDetails) {
 
 // Function to search the Bitcoin blockchain using BlockCypher API
 export async function searchBitcoinBlockchain(query) {
-  const baseUrl = "https://api.blockcypher.com/v1/btc/main";
+  const baseUrl = process.env.REACT_APP_BlOCKCYPHER_BASE_URL;
   let url = "";
 
   // Determine if the query is likely a transaction ID or an address based on length
@@ -198,6 +198,7 @@ export async function postAddressSubscription(address, userSliceData) {
     .post(`${SERVER}/subscribers/btcaddress`, { address, userData })
     .then((response) => response.data)
     .catch((err) => err);
+  console.log(response);
   return response;
 }
 

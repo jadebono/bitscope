@@ -81,7 +81,9 @@ export default function Notify() {
           className={`notification-item ${backGroundColour} 
          ${exit ? "exit" : ""}`}
         >
-          <p className="ml-2 text-indigo-900 font-bold">{notify.message}</p>
+          <p className="mx-2 text-indigo-900 font-bold break-words">
+            {notify.message}
+          </p>
 
           <div className={`${notify.type}`} style={{ width: `${width}%` }} />
         </div>

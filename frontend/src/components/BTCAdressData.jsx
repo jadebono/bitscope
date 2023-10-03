@@ -28,20 +28,28 @@ function BTCAddressData({ data }) {
 
   const handleAddressSubscription = async () => {
     const response = await postAddressSubscription(data.address, user);
-    if (response === "Subscription successful") {
+    if (response === "You have successfully subscribed to: ") {
       // send notification to user that he has successfully subscribed to address hash
       dispatch(
         setNotification({
           type: "success",
-          message: `You have successfully subscribed to ${data.address}`,
+          message: `${response} ${data.address}`,
         })
       );
-    } else {
+    } else if (response === "You are already subscribed to: ") {
+      // send notification to user that he has successfully subscribed to address hash
+      dispatch(
+        setNotification({
+          type: "warning",
+          message: `${response} ${data.address}`,
+        })
+      );
+    } else if (response === "You have failed to subscribe to: ") {
       // send failed subscription notification
       dispatch(
         setNotification({
           type: "error",
-          message: `You have failed to subscribe to ${data.address}`,
+          message: `${response} ${data.address}`,
         })
       );
     }

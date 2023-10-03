@@ -34,12 +34,10 @@ async function testSubscriptionData(key, value) {
     .catch((error) => console.log(error));
   return test;
 }
-
 // post route to subscribe a user to a BTC address hash
 subscribersRouter.route("/btcaddress").post(async (req, res) => {
   const { address, userData } = req.body;
   const { userId, username, currency } = userData;
-
   // Encrypt required fields
   const encryptedUsername = encipher(username);
   const encryptedCurrency = encipher(currency);
@@ -53,14 +51,11 @@ subscribersRouter.route("/btcaddress").post(async (req, res) => {
   };
 
   /* Check if user already has a subscription:
-  
   if the user is already in the subscriptions collection{
     then we simply add encryptedAddress to his address array. 
   } else {
     we create a new record for the user with his array to store his subscribed addresses
   }
-
-
   */
 
   // Check if user already has a subscription:
@@ -77,30 +72,35 @@ subscribersRouter.route("/btcaddress").post(async (req, res) => {
     }).then(async (response) => {
       const retrievedAddresses = response[0].address;
       if (retrievedAddresses.includes(encryptedAddress)) {
-        res.send(
-          `You have already subscribed to ${decipher(encryptedAddress)}`
-        );
-      } else {
-        // if it doesn't exist, add the address to the array
+        res.send("You are already subscribed to: ");
+        // if user exists BUT the address is not in his array
+      } else if (
+        testUserName &&
+        !retrievedAddresses.includes(encryptedAddress)
+      ) {
         updateArrayDB(
           process.env.DB_COLLECTION_SUBSCRIPTIONS,
           { username: encryptedUsername },
           "address",
           encryptedAddress
-        );
+        )
+          .then(() => {
+            res.send("You have successfully subscribed to: ");
+          })
+          .catch((err) => {
+            res.send("You have failed to subscribe to: ");
+          });
       }
     });
   }
-
   // if username does not exist, add subscriberData to subscriptions collection
   if (!testUserName) {
-    console.log(process.env.DB_COLLECTION_SUBSCRIBERS);
     await SaveToDB(process.env.DB_COLLECTION_SUBSCRIPTIONS, subscriberData)
       .then(() => {
-        res.send("Subscription successful");
+        res.send("You have successfully subscribed to: ");
       })
       .catch((err) => {
-        res.send("Subscription failed!");
+        res.send("You have failed to subscribe to: ");
       });
   }
 });
