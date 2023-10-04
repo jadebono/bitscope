@@ -160,6 +160,7 @@ A user can search for addresses and transaction ids, with the values expressed i
 
 ## `dependencies`
 
+1. "axios": "^1.5.1",
 1. "cookie-parser": "^1.4.6",
 1. "cors": "^2.8.5",
 1. "dotenv": "^16.0.0",
@@ -168,6 +169,26 @@ A user can search for addresses and transaction ids, with the values expressed i
 1. "mongodb": "^4.4.0",
 1. "nodemailer": "^6.7.2",
 1. "nodemon": "^2.0.15",
+
+## `Global Dependencies`
+
+Localtunnel to expose local server to the internet and receive post requests from webhook api
+
+```bash
+sudo npm install -g localtunnel
+```
+
+To use:
+
+1. Create the tunnel on the port you are running your localhost (ex: http://localhost:4000)
+
+```bash
+lt --port 4000
+```
+
+Copy the publicly accessible it gives you, and use as the base url for exeternal POST requests from a webhook api for example.
+
+A new tunnel has to be generated before every time you run the server. It may be worth to storing in an environmental variable before you run the server.
 
 ---
 

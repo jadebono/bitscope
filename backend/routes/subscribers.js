@@ -2,6 +2,7 @@
 
 // route for all interactions with subscribers to the subscriptions collection containing records of those who have subscribed to hashes
 
+import axios from "axios";
 import dotenv from "dotenv";
 import express from "express";
 import { encipher, decipher } from "../encryption.js";
@@ -18,6 +19,27 @@ import { ObjectId } from "mongodb";
 export const subscribersRouter = express.Router();
 
 dotenv.config();
+
+// the webhook to query the blockcypher api for any changes to an address:
+
+async function setupWebhook(address, callbackUrl, eventType) {
+  try {
+    const response = await axios.post(
+      `${process.env.BLOCKCYPHER_URL}/hooks?token=${process.env.BLOCKCYPHER_TOKEN}`,
+      {
+        event: eventType,
+        address: address,
+        url: callbackUrl,
+      }
+    );
+    console.log("Webhook setup successful:", response.data);
+  } catch (error) {
+    console.error(
+      "Error setting up webhook:",
+      error.response ? error.response.data : error.message
+    );
+  }
+}
 
 /* async function to test if any of the user's data exists in encrypted form in the subscriptions (address and tx hashes) collection */
 async function testSubscriptionData(key, value) {
@@ -113,7 +135,7 @@ subscribersRouter.route("/webhook/initiate").post(async (req, res) => {
   const userId = userData.userData.userId;
   await LoadFromDB(process.env.DB_COLLECTION_SUBSCRIPTIONS, {
     _id: { $eq: new ObjectId(userId) },
-  }).then((response) => {
+  }).then(async (response) => {
     // if the first item of the response array contains data (is not falsy) and the array addresses does not have length 0 (falsy), then log the addresses
     if (response[0] && response[0].address) {
       const addresses = response[0].address;
@@ -122,8 +144,40 @@ subscribersRouter.route("/webhook/initiate").post(async (req, res) => {
         decryptedArray.push(decipher(item));
       });
       console.log(decryptedArray);
+      // Now start pinging the webhook:
+      // Now start pinging the webhook for each address
+      for (let address of decryptedArray) {
+        try {
+          await setupWebhook(
+            address,
+            `${process.env.LOCALTUNNEL}/subscribers/webhook/notification`,
+            "any",
+            `${process.env.BlOCKCYPHER_TOKEN}`
+          );
+        } catch (error) {
+          console.error(
+            "Failed to set up webhook for address",
+            address,
+            ":",
+            error.message
+          );
+        }
+      }
+
+      // call the webhook
     } else {
       console.log("No addresses found");
     }
   });
+});
+
+// callback route for webhook:
+subscribersRouter.route("/webhook/notification").post(async (req, res) => {
+  const eventData = req.body; // The event data from BlockCypher will be in the request body
+
+  // Do something with the event data
+  // For example, update your database, send notifications to users, etc.
+  console.log(eventData);
+
+  res.sendStatus(200); // Send a 200 OK response to acknowledge receipt of the notification
 });

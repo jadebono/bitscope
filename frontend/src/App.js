@@ -78,7 +78,7 @@ export default function App() {
   }, [user, userSess, dispatch]);
 
   // useEffect for webhook
-  // !! Currently the webhook is initiated from here, but it might be a better idea to initiate it from the App component.
+  // !! Currently the webhook is initiated from here
   useEffect(() => {
     if (user.logged) {
       // Check if the user is logged in

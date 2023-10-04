@@ -206,8 +206,8 @@ export async function postAddressSubscription(address, userSliceData) {
 }
 //<= subscribe to bitcoin address hash request end here
 
+
 // initiate webhook request starts here ->
-// In requests.jsx or a similar file
 // !! Currently the webhook is coming from the App component to ensure that the event is happening in all routes.
 export async function initiateWebhook(userData) {
   const response = await axios
