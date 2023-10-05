@@ -2,9 +2,29 @@
 
 **Author:** Joseph Anthony Debono (code),  
 **email:** [joe@jadebono.com](joe@jadebono.com)  
-**Frontend:** [Localhost](http:localhost:3001/)  
+**Frontend:** [Localhost](http:localhost:3000/)  
 **Backend:** [Localhost](http:localhost:4000/)  
 **Date of commencement:** 29 September 2023
+
+---
+
+# Functionality
+
+1. Search for bitcoin addresses and transaction IDs. Any other search term will generate an error notification;
+1. Values are in BTC unless a user creates an account and logs in;
+1. There is a subscribe facility that enable a user to subscribe to a newsletter and unsubscribe from it;
+1. There is also a contact form that sends an email to the app;
+1. Unregistered users are free to subscribe to the newsletter and use the contact form;
+1. Users can register for added functionality;
+1. During the registration process, user registers his name, surname, username, email, password and preferred currency (BTC/EUR/USD);
+1. Once registration is successful, the user is notified to log in, which he can do by clicking on the user account roundel on the far right of the screen;
+1. Once a user logs in, the user account roundel turns bright orange and a status panel becomes visible;
+1. A logged-in user can easily change his username, email, and choice of currency. He can also easily delete his account;
+1. A logged-in user can search for addresses and transactions and get values in his preferred currency;
+1. A logged-in user can subscribe for updates to any bitcoin address he is interested in. This functionality was not extended to transactions because once the transactions are added to the blockchain they become immutable;
+1. A logged-in user can close the webpage without losing the active session, which only expires after four hours OR if the user logs out himself;
+1. Once a user logs in and subcribes to addresses, a webhook is registered with blockcypher and when notifications are forthcoming in, they appear on the frontend to notify him of changes to his subscribed addresses (not fully functional as need actual notifications to build this functionality - my test webhooks have not updated yet);
+1. The frontend is fully responsive.
 
 ---
 
@@ -26,7 +46,7 @@ npm start
 ```
 
 Runs the app in the development mode.\
-Open [http://localhost:3001](http://localhost:3001) to view it in your browser.
+Open [http://localhost:3001](http://localhost:3000) to view it in your browser.
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
@@ -41,29 +61,26 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 Builds the app for production to the `build` folder.\
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
 ### `npm run eject`
 
 **Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
 ---
 
-# `Frontend`
+# `Installing and running the Frontend`
+
+installing and running the the frontend:
+
+```bash
+cd frontend
+npm install
+npm start
+```
 
 ## `Name and Tagline`
 
 Bitscope - The Bitcoin Explorer
-Vires in Numeris
+Fides ex Numeris
 
 ## `dependencies`
 
@@ -97,19 +114,16 @@ contents of frontend/src/index.css
 @tailwind utilities;
 ```
 
-## `Particular Components`
+## `Notifications`
 
 <Notifications/>
 
-How many types of notifications? (perhaps: success, failure, warning)
-What styling and colour for each?
+Notifications types and styles
 
-so far:
 success: bar: bg-green-500, notification: bg-green-100, bar css: .success
 notify: bar: bg-blue-500, notification: bg-blue-100, bar css: .notify
 error: bar: bg-red-500, notification: bg-red-100, bar css: .error
 warning: bar: bg-orange-500, notification: bg-orange-100, bar css: .warning
-anything else: white background and no bar
 
 ### `Procedure to generate a notification`
 
@@ -120,15 +134,20 @@ To update notify state and generate a notification:
 1. if response is valid, send: message: success message, type: success/notify
 1. if response is an error, send: message: error message!, type: error/warning
 
-### `Component Properties go here`
-
-### `Component Variables and Properties`
-
 ---
 
 # `Backend`
 
-Port: 4000
+installing the backend
+
+```bash
+cd backend
+npm install
+```
+
+**Note**:
+
+The server on my localhost runs on port: 4000. If this is not available, you can choose any available port and update the environmental variable PORT
 
 ## `Running the Server`
 
@@ -137,8 +156,6 @@ In the backend/ directory, you can run:
 ```bash
 node main.js
 ```
-
-1. folder for routes
 
 **IMPORTANT**
 
@@ -156,7 +173,7 @@ document.cookie = `session=""; max-age=0`;
 
 ## `Subscription and Logging in`
 
-A user can search for addresses and transaction ids, with the values expressed in BTC. But for more functionality, the user can create an account. Account registration consists of inputting name, surname, email, and choosing a username, password and currency preference. Once the user has created an account, the user can log in by clicking on the profile icon on the extreme right of the navigation bar. Once a user is logged in, the profile icon will turn orange indicating that a session is active. Values will then be provided in the preferred currency. To terminate the session, the user will have to log out manually or else the session will expire in 4 hours.
+A user can search for addresses and transaction ids, with the values expressed in BTC. But for more functionality, the user can create an account. Account registration consists of inputting name, surname, email, and choosing a username, password and currency preference. Once the user has created an account, the user can log in by clicking on the profile roundel on the extreme right of the navigation bar. Once a user is logged in, the profile icon will turn orange indicating that a session is active. Values will then be provided in the preferred currency. To terminate the session, the user will have to log out manually or else the session will expire in 4 hours.
 
 ## `dependencies`
 
@@ -201,7 +218,7 @@ Copy the publicly accessible it gives you, and use as the base url for exeternal
 
 Database: ecom
 Database name: platform
-Collections: platform, subscribers, subscriptions, users
+Collections: platform, subscribers (for subscribers to the newsletter), subscriptions (for subscribers to bitcoin addresses), users (user account records)
 
 ---
 

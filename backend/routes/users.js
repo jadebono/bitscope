@@ -1,3 +1,5 @@
+// user.js
+
 "use strict";
 
 // route for all interactions with users
@@ -11,7 +13,6 @@ import {
   LoadFromDB,
   SaveToDB,
   updateDB,
-  LoadByIdFromDB,
 } from "../mongoConnect.js";
 import nodemailer from "nodemailer";
 import { ObjectId } from "mongodb";
@@ -153,7 +154,6 @@ usersRouter.route("/contact").post(async (req, res) => {
   });
 
   // run transport
-
   await transport
     .sendMail({
       from: email,
@@ -181,11 +181,9 @@ usersRouter.route("/contact").post(async (req, res) => {
 /*
 Name and surname do not have to be unique
 enforce unique user name & encrypt
- enforce unique email & encrypt
- send the user a confirm email link to finalise registration
- Upon registration notify user that he has been registered and request him to log in to his account
+enforce unique email & encrypt
+Upon registration notify user that he has been registered and request him to log in to his account
 */
-
 //post to register user
 usersRouter.route("/register").post(async (req, res) => {
   const { name, surname, username, email, password, currency } = req.body;
@@ -449,7 +447,6 @@ usersRouter.route("/updatepwd").post(async (req, res) => {
   const userId = req.body.userId;
 
   // update password
-
   try {
     await updateDB(
       process.env.DB_COLLECTION_USERS,

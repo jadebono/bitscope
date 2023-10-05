@@ -1,3 +1,4 @@
+// subscribers.js
 "use strict";
 
 // route for all interactions with subscribers to the subscriptions collection containing records of those who have subscribed to hashes
@@ -6,15 +7,7 @@ import axios from "axios";
 import dotenv from "dotenv";
 import express from "express";
 import { encipher, decipher } from "../encryption.js";
-import HashString from "../mongoConnect.js";
-import {
-  deleteFromDB,
-  LoadFromDB,
-  SaveToDB,
-  updateArrayDB,
-  updateDB,
-} from "../mongoConnect.js";
-import jwt from "jsonwebtoken";
+import { LoadFromDB, SaveToDB, updateArrayDB } from "../mongoConnect.js";
 import { ObjectId } from "mongodb";
 export const subscribersRouter = express.Router();
 
@@ -43,17 +36,16 @@ async function setupWebhook(address, callbackUrl, eventType) {
 
     // Now make the POST request with axios
     const response = await axios.post(
-      `${process.env.BLOCKCYPHER_URL}/hooks`,
+      `${process.env.BLOCKCYPHER_URL}/hooks?token=${process.env.BLOCKCYPHER_TOKEN}`,
       data // Send the object directly, not stringified
     );
 
-    if (response.status !== 201) {
-      // Check for the status code
+    if (response.status !== 200) {
       console.error("Unexpected status code:", response.status);
       return;
     }
-    // logging response.data for successful webhook setup for testing
-    console.log("Webhook setup successful:", response.data);
+    // Logging successful webhook setup though not response because the response is too voluminous
+    console.log("Webhook setup successful");
   } catch (error) {
     console.error(
       "Error setting up webhook:",
@@ -139,7 +131,6 @@ subscribersRouter.route("/btcaddress").post(async (req, res) => {
 });
 
 // calling the webhook:
-// This is all test code so far
 subscribersRouter.route("/webhook/initiate").post(async (req, res) => {
   const userData = req.body;
   // when the user data is received, check if the user has subscriptions
@@ -169,6 +160,7 @@ subscribersRouter.route("/webhook/initiate").post(async (req, res) => {
               `${process.env.LOCALTUNNEL}:${process.env.PORT}/subscribers/webhook/notification`,
               event
             );
+            console.log(`webhook ${event} set up for ${address}`);
           } catch (error) {
             console.error(
               "Failed to set up webhook for address",
@@ -190,15 +182,14 @@ subscribersRouter.route("/webhook/initiate").post(async (req, res) => {
 // callback route for webhook:
 subscribersRouter.route("/webhook/notification").post(async (req, res) => {
   const eventData = req.body; // The event data from BlockCypher will be in the request body
-
+  // !! Need to receive a response from the webhook to see what data it contains and then to forward it to the frontend
   // Do something with the event data
-  // For example, update your database, send notifications to users, etc.
   console.log("Received webhook notification:", eventData);
-
+  // TODO send eventData to frontend to generate a notification
   res.sendStatus(200); // Send a 200 OK response to acknowledge receipt of the notification
 });
 
-// test route to test that localtunnel is running. Use it in a browser or with curl: 146.70.126.174
+// test route to test that localtunnel is running. Use it in a browser or with curl: http://localhost:4000/subscribers/test
 subscribersRouter.get("/test", (req, res) => {
   res.send("The tunnel is working!\n");
 });

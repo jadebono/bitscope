@@ -1,10 +1,10 @@
+// main.js
 "use strict";
 
-// !!TODO ensure that when a user closes his account, his data in both the users and the subscriptions collections are deleted
 // !!TODO send notifications from webhooks to the frontend
 
 // Imports
-import cookieParser from "cookie-parser"; // * unknown if required yet
+import cookieParser from "cookie-parser"; // to parse cookies send from the frontend if needed
 import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
@@ -21,12 +21,11 @@ const app = express();
 
 // middleware
 app.use(cors({ origin: `${process.env.HOST}3000` }));
-app.use(cookieParser()); // * unknown if needed yet
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // routes
-// todo import routes here
 app.use("/users", usersRouter);
 app.use("/subscribers", subscribersRouter);
 
