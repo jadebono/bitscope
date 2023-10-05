@@ -1,8 +1,8 @@
 // App.js
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+// for notifications of address updates
 import { setNotification } from "../src/store/NotificationsSlice";
-// importing react-router
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/NavBar";
 import Header from "./components/Header";
@@ -79,7 +79,7 @@ export default function App() {
   }, [user, userSess, dispatch]);
 
   // useEffect for webhook
-  // !! Currently the webhook is initiated from here
+  // * Currently this looks place to initiate webhook as all components are assembled here
   useEffect(() => {
     // Define a function to handle the webhook initialization
     const webhookHandler = () => {

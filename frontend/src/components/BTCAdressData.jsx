@@ -10,7 +10,7 @@ import {
 function BTCAddressData({ data }) {
   const [conversionRate, setConversionRate] = useState(1); // Default to 1 for BTC
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user); // This will now include the currency
+  const user = useSelector((state) => state.user);
 
   useEffect(() => {
     // If the currency is not BTC, fetch the conversion rate
@@ -21,7 +21,7 @@ function BTCAddressData({ data }) {
     } else {
       setConversionRate(1); // Set conversionRate back to 1 if currency is BTC
     }
-  }, [user.currency]); // Depend on user.currency instead of local currency state
+  }, [user.currency]);
 
   // Since data is being retrieved in satoshis, it has to be converted to BTC first before converting it.
   const currentValue = ((data.balance / 1e8) * conversionRate).toFixed(2);

@@ -1,9 +1,10 @@
+// Status.jsx
 import React from "react";
 import { useSelector } from "react-redux";
 
 function StatusPanel() {
   const user = useSelector((state) => state.user);
-  const currency = user.currency;  // Get currency from Redux store
+  const currency = user.currency;
 
   // If user is not logged in, don't render the panel
   if (!user.logged) return null;

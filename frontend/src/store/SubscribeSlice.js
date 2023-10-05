@@ -1,3 +1,5 @@
+// SubscribeSlice.js
+// * subscriber to newsletter state
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {

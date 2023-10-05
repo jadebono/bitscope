@@ -1,3 +1,4 @@
+// Updateusername.jsx
 import React, { useState } from "react";
 import { postUpdateUsername } from "../modules/requests";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,11 +11,8 @@ Username Update policy
 (1) Username has to be unique. If it is not unique, prevent registration and inform registrant that registration has been stopped because the username has already been registered;
 (2) Username will each be encrypted with a secret key and a secret initVector to preserve registrant privacy in case of a database hack or leak.
 */
-
 export default function Updateusername() {
-  // access the user state from the store
   const user = useSelector((state) => state.user);
-
   const dispatch = useDispatch();
   const [username, setUsername] = useState({ username: "" });
 
@@ -29,11 +27,9 @@ export default function Updateusername() {
 
   // submit new username
   async function updateUsername(evt) {
-    // check if you need to prevent default behaviour
     evt.preventDefault();
     // transmit register to axios post request
     const myDetails = { userId: user.userId, username: username.username };
-
     const response = await postUpdateUsername(myDetails);
     if (response === "usernameUpdated") {
       dispatch(

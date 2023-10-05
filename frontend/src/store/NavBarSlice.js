@@ -1,3 +1,6 @@
+// NavBarSlice.js
+// *Navbar state
+
 import { createSlice } from "@reduxjs/toolkit";
 // State is set at render depending on screensize
 // to set burger and menu responsively

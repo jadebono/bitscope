@@ -1,3 +1,5 @@
+//  NotificationSlice.js
+// * Notification state
 import { createSlice } from "@reduxjs/toolkit";
 import { v4 } from "uuid";
 

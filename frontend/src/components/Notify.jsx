@@ -1,4 +1,5 @@
-// * The Notification system
+// Notify.jsx
+// * The Notification system (Toast)
 
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -55,7 +56,7 @@ export default function Notify() {
             type: "",
             message: "",
           },
-          400 // increase this to increase speed of notification timer
+          400
         )
       );
     });

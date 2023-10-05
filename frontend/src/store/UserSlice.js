@@ -1,6 +1,7 @@
+// UserSlice.js
+// * user data state
+
 import { createSlice } from "@reduxjs/toolkit";
-// userSlice here to be globally available
-// store state here at least: username, user ID from database
 
 const initialState = {
   logged: false,
@@ -30,7 +31,7 @@ export const UserSlice = createSlice({
       }); // Reset to initial state
     },
     updateCurrency(state, action) {
-      state.currency = action.payload; // Update currency
+      state.currency = action.payload;
     },
   },
 });

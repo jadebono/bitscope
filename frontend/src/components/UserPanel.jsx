@@ -1,4 +1,5 @@
-// UserPanel for <Account/> component
+// UserPanel.jsx
+// * UserPanel for <Account/> component
 
 import React, { useState, useEffect } from "react";
 import { postUpdateCurrency } from "../modules/requests";
@@ -15,14 +16,12 @@ export default function UserPanel(props) {
   const [selectedCurrency, setSelectedCurrency] = useState(""); // initialized to empty string
 
   // useEffect to change selectedCurrency when userDetails change:
-
   useEffect(() => {
     // Update selectedCurrency whenever userDetails.currency changes
     if (props.userDetails.currency) {
       setSelectedCurrency(props.userDetails.currency);
     }
   }, [props.userDetails.currency]);
-
   // Access the userId from the Redux store
   const userId = useSelector((state) => state.user.userId);
 
@@ -46,7 +45,7 @@ export default function UserPanel(props) {
         })
       );
 
-      dispatch(updateCurrency(selectedCurrency)); // Step 2: Dispatch updateCurrency action
+      dispatch(updateCurrency(selectedCurrency)); // Dispatch updateCurrency action
     } else {
       // handle currency update failure
       dispatch(
@@ -85,7 +84,6 @@ export default function UserPanel(props) {
             {userDetails.email}
           </div>
         </div>
-        {/* experimental addition of currency */}
         <div className="flex flex-row ml-2">
           <div className="text-indigo-900 font-bold">Currency:</div>
           <div className="rounded-md ml-4 w-5/6 font-bold">
@@ -108,7 +106,6 @@ export default function UserPanel(props) {
           </button>
         </div>
 
-        {/* currency div */}
         <div className="flex flex-row ml-2 mb-4 items-center">
           {" "}
           <div className="text-indigo-900 font-bold mt-5">Change currency:</div>
@@ -130,7 +127,6 @@ export default function UserPanel(props) {
             </button>
           </div>
         </div>
-        {/* currency div ends here */}
       </div>
     </React.Fragment>
   );

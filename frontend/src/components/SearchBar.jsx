@@ -1,3 +1,4 @@
+// Searchbar.jsx
 import React, { useState } from "react";
 import { searchBitcoinBlockchain } from "../modules/requests";
 import { useDispatch } from "react-redux";
@@ -27,9 +28,9 @@ export default function SearchBar({ setBlockchainData, setIsTransactionData }) {
         setBlockchainData(data);
         // Determine if the data is related to a transaction or address
         if (data && data.hash) {
-          setIsTransactionData(true); // It's transaction data
+          setIsTransactionData(true); // transaction data
         } else {
-          setIsTransactionData(false); // It's address data
+          setIsTransactionData(false); // address data
         }
       }
     });

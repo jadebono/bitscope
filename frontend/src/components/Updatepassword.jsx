@@ -1,3 +1,4 @@
+// Updatepassword.jsx
 import React, { useState } from "react";
 import { postUpdatePassword } from "../modules/requests";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,11 +11,8 @@ Registration policy
 (1) Password must contain must contain at least one uppercase character, one lowercase character, one digit, one symbol, between 16 and 128 characters and must not contain any whitespace;
 (2) Password will be hashed but not encrypted;
 */
-
 export default function Updatepassword() {
-  // access the user state from the store
   const user = useSelector((state) => state.user);
-
   const dispatch = useDispatch();
   const [password, setPassword] = useState({ password: "", passwordTwo: "" });
 
@@ -38,7 +36,6 @@ export default function Updatepassword() {
 
   // submit new password
   async function updatePassword(evt) {
-    // check if you need to prevent default behaviour
     evt.preventDefault();
     // check that passwords are the same and check that the password meets the requirements
     if (
@@ -47,7 +44,6 @@ export default function Updatepassword() {
     ) {
       // transmit register to axios post request
       const myDetails = { userId: user.userId, password: password.password };
-
       const response = await postUpdatePassword(myDetails);
       if (response === "passwordUpdated") {
         dispatch(

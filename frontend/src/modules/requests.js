@@ -1,3 +1,4 @@
+// requests.js
 import axios from "axios";
 const SERVER = `${process.env.REACT_APP_HOST}${process.env.REACT_APP_SERVER}`;
 
@@ -156,16 +157,13 @@ export async function postUpdateCurrency(myDetails) {
 export async function searchBitcoinBlockchain(query) {
   const baseUrl = process.env.REACT_APP_BlOCKCYPHER_BASE_URL;
   let url = "";
-
   // Determine if the query is likely a transaction ID or an address based on length
-
   if (query.length === 64) {
     // typical length of a transaction ID
     url = `${baseUrl}/txs/${query}?token=${process.env.REACT_APP_BlOCKCYPHER_API}`;
   } else {
     url = `${baseUrl}/addrs/${query}?token=${process.env.REACT_APP_BlOCKCYPHER_API}`;
   }
-
   try {
     const response = await axios.get(url);
     return response.data;
@@ -177,7 +175,6 @@ export async function searchBitcoinBlockchain(query) {
 
 // currency conversion API query
 export async function getBTCConversionRate(currency) {
-  // const url = `https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=${currency.toLowerCase()}`;
   const url = `${
     process.env.REACT_APP_COINGECKO_BASE_URL
   }${currency.toLowerCase()}`;
@@ -190,7 +187,7 @@ export async function getBTCConversionRate(currency) {
   }
 }
 
-//subscribe to bitcoin address hash request start here =>
+// subscribe to bitcoin address hash request start here =>
 // async function to Subscribe user for changes to a specific BTC address
 export async function postAddressSubscription(address, userSliceData) {
   const userData = {
@@ -206,9 +203,8 @@ export async function postAddressSubscription(address, userSliceData) {
 }
 //<= subscribe to bitcoin address hash request end here
 
-
 // initiate webhook request starts here ->
-// !! Currently the webhook is coming from the App component to ensure that the event is happening in all routes.
+// * Currently the webhook is coming from the App component to ensure that the event is happening in all routes.
 export async function initiateWebhook(userData) {
   const response = await axios
     .post(`${SERVER}/subscribers/webhook/initiate`, { userData })

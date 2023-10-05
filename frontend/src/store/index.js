@@ -1,3 +1,5 @@
+// Index.js 
+// * the state store
 import { configureStore } from "@reduxjs/toolkit";
 import NavBarSlice from "./NavBarSlice";
 import NotificationSlice from "./NotificationsSlice";

@@ -17,7 +17,7 @@ function TXData({ data }) {
     } else {
       setConversionRate(1); // Set conversionRate back to 1 if currency is BTC
     }
-  }, [user.currency]); // Depend on user.currency instead of local currency state
+  }, [user.currency]);
 
   const status = data.confirmations > 0 ? "Confirmed" : "Unconfirmed";
   const totalInput = data.inputs ? data.inputs.length : 0;

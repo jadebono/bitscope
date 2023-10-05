@@ -1,3 +1,4 @@
+// Updateemail.jsx
 import React, { useState } from "react";
 import { postUpdateEmail } from "../modules/requests";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,7 +12,6 @@ Email update policy
 */
 
 export default function Updateemail() {
-  // access the user state from the store
   const user = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
@@ -27,13 +27,10 @@ export default function Updateemail() {
   }
 
   // submit new email
-
   async function updateEmail(evt) {
-    // check if you need to prevent default behaviour
     evt.preventDefault();
     // transmit register to axios post request
     const myDetails = { userId: user.userId, email: email.email };
-
     const response = await postUpdateEmail(myDetails);
     if (response === "emailUpdated") {
       dispatch(

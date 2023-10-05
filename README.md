@@ -1,14 +1,17 @@
 # `Bitscope - The Bitcoin Explorer`
 
-**Author:** Joseph Anthony Debono (code),  
+**Author:** Joseph Anthony Debono,  
 **email:** [joe@jadebono.com](joe@jadebono.com)  
 **Frontend:** [Localhost](http:localhost:3000/)  
 **Backend:** [Localhost](http:localhost:4000/)  
 **Date of commencement:** 29 September 2023
+**Licence:** MIT
 
 ---
 
 # Functionality
+
+## `Implemented features`
 
 1. Search for bitcoin addresses and transaction IDs. Any other search term will generate an error notification;
 1. Values are in BTC unless a user creates an account and logs in;
@@ -17,6 +20,7 @@
 1. Unregistered users are free to subscribe to the newsletter and use the contact form;
 1. Users can register for added functionality;
 1. During the registration process, user registers his name, surname, username, email, password and preferred currency (BTC/EUR/USD);
+1. For security purposes all the user details are encrypted, except the password which is hashed, so if the database is hacked, the safety of all the data would be ensured;
 1. Once registration is successful, the user is notified to log in, which he can do by clicking on the user account roundel on the far right of the screen;
 1. Once a user logs in, the user account roundel turns bright orange and a status panel becomes visible;
 1. A logged-in user can easily change his username, email, and choice of currency. He can also easily delete his account;
@@ -25,6 +29,14 @@
 1. A logged-in user can close the webpage without losing the active session, which only expires after four hours OR if the user logs out himself;
 1. Once a user logs in and subcribes to addresses, a webhook is registered with blockcypher and when notifications are forthcoming in, they appear on the frontend to notify him of changes to his subscribed addresses (not fully functional as need actual notifications to build this functionality - my test webhooks have not updated yet);
 1. The frontend is fully responsive.
+
+## `Features implemented`
+
+1. Notification of update to subscribed address hash. Reason: The addresses I tested these with did not update in the time the tunnel lasted so eventData was forthcoming for me to examine its morphology and send it to the frontend and display the notification.
+
+## `Main Problem`
+
+- Limitations of free blockcypher API plan
 
 ---
 
@@ -154,6 +166,7 @@ The server on my localhost runs on port: 4000. If this is not available, you can
 In the backend/ directory, you can run:
 
 ```bash
+lt --port YOURPORT
 node main.js
 ```
 

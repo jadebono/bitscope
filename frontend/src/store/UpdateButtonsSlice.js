@@ -1,3 +1,5 @@
+// UpdateButtonsSlice.js
+// * state for the update username, update email and update password buttons
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
