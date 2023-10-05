@@ -216,7 +216,7 @@ To use:
 lt --port 4000
 ```
 
-Copy the publicly accessible it gives you, and use as the base url for exeternal POST requests from a webhook api for example.
+Copy the publicly accessible link it gives you, and use as the base url for exeternal POST requests from a webhook api for example.
 
 **Notes**
 
