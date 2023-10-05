@@ -2,8 +2,8 @@
 
 **Author:** Joseph Anthony Debono,  
 **email:** [joe@jadebono.com](joe@jadebono.com)  
-**Frontend:** [Localhost](http:localhost:3000/)  
-**Backend:** [Localhost](http:localhost:4000/)  
+**Frontend:** [Localhost:3000](http:localhost:3000/)  
+**Backend:** [Localhost:4000](http:localhost:4000/)  
 **Date of commencement:** 29 September 2023
 **Licence:** MIT
 
