@@ -206,7 +206,7 @@ subscribersRouter.route("/webhook/notification").post(async (req, res) => {
   res.sendStatus(200); // Send a 200 OK response to acknowledge receipt of the notification
 });
 
-// test for local tunnel
+// test route to test that localtunnel is running. Use it in a browser or with curl: 146.70.126.174
 subscribersRouter.get("/test", (req, res) => {
   res.send("The tunnel is working!\n");
 });

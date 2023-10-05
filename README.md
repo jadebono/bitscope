@@ -188,7 +188,10 @@ lt --port 4000
 
 Copy the publicly accessible it gives you, and use as the base url for exeternal POST requests from a webhook api for example.
 
-A new tunnel has to be generated before every time you run the server. It may be worth to storing in an environmental variable before you run the server.
+**Notes**
+
+1. Changes to backend/main.js (the backend server) require restarting main.js to reflect the changes.
+1. However as long as the tunnel is still running, you do not need to generate a new one.
 
 ---
 

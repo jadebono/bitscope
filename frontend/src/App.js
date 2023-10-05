@@ -90,7 +90,7 @@ export default function App() {
       webhookHandler();
 
       // Then set up the interval
-      const intervalId = setInterval(webhookHandler, 1e4); // Set interval to run every 10 minutes (10 * 60 * 1000 milliseconds = 6e5 milliseconds) which is time it takes the bitcoin blockchain to add a block. For testing keep it to 10 (1e4 milliseconds) seconds
+      const intervalId = setInterval(webhookHandler, 6e5); // Set interval to run every 10 minutes (10 * 60 * 1000 milliseconds = 6e5 milliseconds) which is time it takes the bitcoin blockchain to add a block. For testing keep it to 10 (1e4 milliseconds) seconds
 
       return () => clearInterval(intervalId); // Clear interval upon component unmount
     }
