@@ -20,14 +20,14 @@ export const subscribersRouter = express.Router();
 
 dotenv.config();
 
-// event array for webhooks
+// array of interesting events to monitor for webhook
 const events = [
-  "unconfirmed-tx",
+  // "unconfirmed-tx",
   "new-block",
   "confirmed-tx",
   "tx-confirmation",
-  "double-spend-tx",
-  "tx-confidence",
+  // "double-spend-tx",
+  // "tx-confidence",
 ];
 
 // the webhook to query the blockcypher api for any changes to an address:
@@ -52,6 +52,7 @@ async function setupWebhook(address, callbackUrl, eventType) {
       console.error("Unexpected status code:", response.status);
       return;
     }
+    // logging response.data for successful webhook setup for testing
     console.log("Webhook setup successful:", response.data);
   } catch (error) {
     console.error(
@@ -91,15 +92,6 @@ subscribersRouter.route("/btcaddress").post(async (req, res) => {
     currency: encryptedCurrency,
     address: [encryptedAddress], // Store as an array to allow for multiple addresses per user
   };
-
-  /* Check if user already has a subscription:
-  if the user is already in the subscriptions collection{
-    then we simply add encryptedAddress to his address array. 
-  } else {
-    we create a new record for the user with his array to store his subscribed addresses
-  }
-  */
-
   // Check if user already has a subscription:
   const testUserName = await testSubscriptionData(
     "username",
@@ -163,9 +155,11 @@ subscribersRouter.route("/webhook/initiate").post(async (req, res) => {
       addresses.forEach((item) => {
         decryptedArray.push(decipher(item));
       });
+      // logging the array of decrypted addresses
       console.log(decryptedArray);
-      // Now start pinging the webhook:
-      // Now start pinging the webhook for each address
+      /*
+      Now create webhooks for each address for each event
+      */
       for (let address of decryptedArray) {
         // each event from the events array
         for (let event of events) {
@@ -187,8 +181,6 @@ subscribersRouter.route("/webhook/initiate").post(async (req, res) => {
           }
         }
       }
-
-      // call the webhook
     } else {
       console.log("No addresses found");
     }

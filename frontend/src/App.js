@@ -1,5 +1,5 @@
 // App.js
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setNotification } from "../src/store/NotificationsSlice";
 // importing react-router
@@ -26,9 +26,10 @@ export default function App() {
     logged: false,
   });
   const notify = useSelector((state) => state.notification);
-
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  // Ref to track whether the webhook has been initialized during the current session
+  const webhookInitialized = useRef(false);
 
   // if there is a cookie in the browser retrieve user details and restore session
   useEffect(() => {
@@ -80,20 +81,17 @@ export default function App() {
   // useEffect for webhook
   // !! Currently the webhook is initiated from here
   useEffect(() => {
-    if (user.logged) {
-      // Check if the user is logged in
-      const webhookHandler = () => {
-        initiateWebhook(user); // Send the request to initiate the webhook
-      };
+    // Define a function to handle the webhook initialization
+    const webhookHandler = () => {
+      if (user.logged && !webhookInitialized.current) {
+        // Only initiate the webhook if the user is logged in and the webhook hasn't been initialized yet
+        initiateWebhook(user);
+        webhookInitialized.current = true; // Mark the webhook as initialized
+      }
+    };
 
-      // Call the handler immediately upon mounting
-      webhookHandler();
-
-      // Then set up the interval
-      const intervalId = setInterval(webhookHandler, 6e5); // Set interval to run every 10 minutes (10 * 60 * 1000 milliseconds = 6e5 milliseconds) which is time it takes the bitcoin blockchain to add a block. For testing keep it to 10 (1e4 milliseconds) seconds
-
-      return () => clearInterval(intervalId); // Clear interval upon component unmount
-    }
+    // Call the handler immediately upon mounting
+    webhookHandler();
   }, [user]); // Re-run this effect if the user data changes
 
   return (

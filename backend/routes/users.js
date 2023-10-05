@@ -11,6 +11,7 @@ import {
   LoadFromDB,
   SaveToDB,
   updateDB,
+  LoadByIdFromDB,
 } from "../mongoConnect.js";
 import nodemailer from "nodemailer";
 import { ObjectId } from "mongodb";
@@ -37,6 +38,27 @@ async function testSubscribersData(key, value) {
     })
     .catch((error) => console.log(error));
   return test;
+}
+
+/* async function to test if any of the user's data exists in encrypted form in the subscriptions (address and tx hashes) collection */
+async function testSubscriptionData(key, value) {
+  const obj = { [key]: value };
+  try {
+    const response = await LoadFromDB(
+      process.env.DB_COLLECTION_SUBSCRIPTIONS,
+      obj
+    );
+    if (response.length) {
+      const user = response[0];
+      return user[key] === value ? true : false;
+    } else {
+      console.log("No user found");
+      return false;
+    }
+  } catch (error) {
+    console.log("Error in testSubscriptionData:", error);
+    return false;
+  }
 }
 
 /* async function to test if any of the user's data exists in encrypted form in the users collections */
@@ -302,17 +324,42 @@ usersRouter.route("/sessionSignin").post(async (req, res) => {
 // route to close a user's account
 usersRouter.route("/deleteUser").post(async (req, res) => {
   const user = req.body.userId;
-  await deleteFromDB(process.env.DB_COLLECTION_USERS, {
-    _id: { $eq: new ObjectId(user) },
-  })
-    .then(() => {
-      res.send(true);
-      console.log("Account successfully closed!");
-    })
-    .catch((err) => {
-      res.send(false);
-      console.log("Unknown Error! Account not closed!");
+  // Check if user has subscriptions and if so delete his document in the subscriptions collection
+  try {
+    // Get user details from DB_COLLECTION_USERS
+    const response = await LoadFromDB(process.env.DB_COLLECTION_USERS, {
+      _id: { $eq: new ObjectId(user) },
     });
+    // Extract and decipher the username
+    const decipheredUsername = decipher(response[0].username);
+    // test username by ID
+    const testSubscriptions = await testSubscriptionData(
+      "username",
+      encipher(decipheredUsername)
+    );
+    if (testSubscriptions) {
+      const fieldData = encipher(decipheredUsername);
+      await deleteFromDB(process.env.DB_COLLECTION_SUBSCRIPTIONS, {
+        username: fieldData,
+      });
+      console.log("Subscription data successfully deleted");
+    } else {
+      console.log("No subscription data found to delete");
+    }
+  } catch (error) {
+    console.log("An error occurred:", error);
+  }
+  // Now delete the user's document from the users collections
+  try {
+    await deleteFromDB(process.env.DB_COLLECTION_USERS, {
+      _id: { $eq: new ObjectId(user) },
+    });
+    res.send(true);
+    console.log("Account successfully closed!");
+  } catch (err) {
+    res.send(false);
+    console.log("Error during deletion:", err);
+  }
 });
 
 // route to retrieve user details

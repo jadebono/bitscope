@@ -1,7 +1,7 @@
 "use strict";
 
 import { createHmac } from "crypto";
-import { MongoClient, ServerApiVersion } from "mongodb";
+import { MongoClient, ServerApiVersion, ObjectId } from "mongodb";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -102,16 +102,18 @@ export async function deleteFromDB(col, item) {
   }
 }
 
-// function to increment a value in a document in the logs collection
-// ? is this needed for this db?
-export async function incLog(col, filter, requests) {
+// function to retrieve a specific document by _id from a collection
+export async function LoadByIdFromDB(col, idString) {
   try {
-    await ConnectMDB();
-    await db
+    return await db
       .collection(col)
-      .updateOne(filter, { $inc: { requests: requests } });
+      .find({
+        _id: new ObjectId(idString),
+      })
+      .toArray();
   } catch (error) {
     console.log(error);
+    return null; // Return null or an appropriate value to indicate failure
   }
 }
 

@@ -1,5 +1,8 @@
 "use strict";
 
+// !!TODO ensure that when a user closes his account, his data in both the users and the subscriptions collections are deleted
+// !!TODO send notifications from webhooks to the frontend
+
 // Imports
 import cookieParser from "cookie-parser"; // * unknown if required yet
 import cors from "cors";
