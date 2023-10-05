@@ -30,7 +30,7 @@
 1. Once a user logs in and subcribes to addresses, a webhook is registered with blockcypher and when notifications are forthcoming in, they appear on the frontend to notify him of changes to his subscribed addresses (not fully functional as need actual notifications to build this functionality - my test webhooks have not updated yet);
 1. The frontend is fully responsive.
 
-## `Features implemented`
+## `Features not implemented`
 
 1. Notification of update to subscribed address hash. Reason: The addresses I tested these with did not update in the time the tunnel lasted so eventData was forthcoming for me to examine its morphology and send it to the frontend and display the notification.
 
