@@ -4,7 +4,7 @@
 **email:** [joe@jadebono.com](joe@jadebono.com)  
 **Frontend:** [Localhost:3000](http:localhost:3000/)  
 **Backend:** [Localhost:4000](http:localhost:4000/)  
-**Date of commencement:** 29 September 2023
+**Date of commencement:** 29 September 2023  
 **Licence:** MIT
 
 ---
