@@ -9,15 +9,21 @@ import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
 import { ConnectMDB, CloseMDB } from "./mongoConnect.js";
+import http from "http";
+import { createSubscribersRouter } from "./routes/subscribers.js";
 
 // importing routes
 import { usersRouter } from "./routes/users.js";
-import { subscribersRouter } from "./routes/subscribers.js";
 
 // run dotenv.config()
 dotenv.config();
 
 const app = express();
+// Create an HTTP server instance
+const httpServer = http.createServer(app);
+
+// creating the subscribersRouters using createSubscribersRouter with the httpserver as the paramter
+const subscribersRouter = createSubscribersRouter(httpServer);
 
 // middleware
 app.use(cors({ origin: `${process.env.HOST}3000` }));
@@ -39,7 +45,9 @@ process.on("uncaughtException", (error) => {
   CloseMDB();
 });
 
-// listen for connections
-app.listen(process.env.PORT, () => {
+// listen for connections using httpServer instead of app.listen because I need an httpServer instance instance for Socket.IO
+httpServer.listen(process.env.PORT, () => {
   console.log(`Listening on ${process.env.HOST}${process.env.PORT}`);
 });
+
+export { httpServer }; // Export the httpServer instance

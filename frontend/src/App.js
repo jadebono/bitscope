@@ -18,6 +18,7 @@ import Footer from "./components/Footer";
 import Notify from "./components/Notify";
 import { userDetails, initiateWebhook, session } from "./modules/requests";
 import { setUser } from "./store/UserSlice";
+import io from "socket.io-client";
 
 export default function App() {
   const [userSess, setUserSess] = useState({
@@ -30,7 +31,8 @@ export default function App() {
   const dispatch = useDispatch();
   // Ref to track whether the webhook has been initialized during the current session
   const webhookInitialized = useRef(false);
-
+  // Create a ref for the socket connection so it persists across renders
+  const socketRef = useRef(null);
   // if there is a cookie in the browser retrieve user details and restore session
   useEffect(() => {
     async function getSession(cookieExists) {
@@ -77,6 +79,34 @@ export default function App() {
     const myCookie = document.cookie.indexOf("session=");
     myCookie === 0 && getSession(myCookie);
   }, [user, userSess, dispatch]);
+
+  // useeffect for the socket connection
+  useEffect(() => {
+    // Initialize the socket connection when the component mounts
+    if (!socketRef.current) {
+      socketRef.current = io.connect(
+        `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_SERVER}`
+      );
+
+      socketRef.current.on("new-notification", (eventData) => {
+        console.log("New notification:", eventData);
+        // create a notification
+        dispatch(
+          setNotification({
+            type: "notify",
+            message: `Your subscribed address has an updated ${eventData}`,
+          })
+        );
+      });
+    }
+
+    // Cleanup the socket connection when the component unmounts
+    return () => {
+      if (socketRef.current) {
+        socketRef.current.disconnect();
+      }
+    };
+  }, []);
 
   // useEffect for webhook
   // * Currently this looks place to initiate webhook as all components are assembled here

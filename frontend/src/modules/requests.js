@@ -1,5 +1,6 @@
 // requests.js
 import axios from "axios";
+// to receive notifications emitted by the server
 const SERVER = `${process.env.REACT_APP_HOST}${process.env.REACT_APP_SERVER}`;
 
 // Route requests
