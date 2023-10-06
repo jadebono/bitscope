@@ -160,7 +160,9 @@ subscribersRouter.route("/webhook/initiate").post(async (req, res) => {
               `${process.env.LOCALTUNNEL}:${process.env.PORT}/subscribers/webhook/notification`,
               event
             );
-            console.log(`webhook ${event} set up for ${address}`);
+            console.log(
+              `webhook ${event} set up for ${address}. Expecting callbacks.`
+            );
           } catch (error) {
             console.error(
               "Failed to set up webhook for address",
@@ -182,10 +184,14 @@ subscribersRouter.route("/webhook/initiate").post(async (req, res) => {
 // callback route for webhook:
 subscribersRouter.route("/webhook/notification").post(async (req, res) => {
   const eventData = req.body; // The event data from BlockCypher will be in the request body
-  // !! Need to receive a response from the webhook to see what data it contains and then to forward it to the frontend
+  // !! Need to receive a callback from the webhook to see what data it contains and then to forward it to the frontend
+  // !! callbacks not received, using example from blockcypher documentation:  https://www.blockcypher.com/dev/?javascript#using-webhooks
   // Do something with the event data
   console.log("Received webhook notification:", eventData);
   // TODO send eventData to frontend to generate a notification
+  const event = eventData[0].event;
+  // send eventData[0].event to frontend
+
   res.sendStatus(200); // Send a 200 OK response to acknowledge receipt of the notification
 });
 

@@ -233,6 +233,10 @@ Database: ecom
 Database name: platform
 Collections: platform, subscribers (for subscribers to the newsletter), subscriptions (for subscribers to bitcoin addresses), users (user account records)
 
+## `Mailtrap`
+
+[mailtrap](https://mailtrap.io/) is an email delivery platform that receives submissions from the contact form.
+
 ---
 
 # `Policies`
