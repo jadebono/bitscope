@@ -258,3 +258,9 @@ Registration policy
 1. Name, Surname, Username, Email & Currency fields will each be encrypted with a secret key and a secret initVector to preserve registrant privacy in case of a database hack or leak.
 
 ---
+
+# `A Note on Environmental Variables`
+
+Environmental variables are disposable and do not constitute a secret. They have not been excluded so that they are available for easy testing. Users however are welcome to substitute them with their own.
+
+---
