@@ -9,6 +9,13 @@
 
 ---
 
+# `Name and Tagline`
+
+**Bitscope** - The Bitcoin Explorer  
+_Fides ex Numeris_
+
+---
+
 # Functionality
 
 ## `Implemented features`
@@ -89,11 +96,6 @@ cd frontend
 npm install
 npm start
 ```
-
-## `Name and Tagline`
-
-Bitscope - The Bitcoin Explorer
-Fides ex Numeris
 
 ## `dependencies`
 
