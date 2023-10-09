@@ -39,7 +39,7 @@ _Fides ex Numeris_
 
 ## `Features not tested`
 
-1. Notification of update to subscribed address hash. Reason: The addresses I tested these with did not update in the time the tunnel lasted so eventData was forthcoming for me to examine its morphology and send it to the frontend and display the notification.
+1. Notification of update to subscribed address hash. Reason: The addresses I tested these with did not update in the time the tunnel lasted so eventData was **not** forthcoming for me to examine its morphology and send it to the frontend and display the notification.
 1. Theoretically, the subscribers/webhook/notification route receives the webhook notification from BlockCypher and logs the event data. Then, it sends this data to the frontend using Socket.IO. In the component App.jsx, a Socket.IO client was set up to listen for events emitted by the server. Once the connection is established, an event listener was set up for "new-notification" events received from the server. If they are received a notification toast is triggered to inform the user that a subscribed address hash has been updated. **Note:** This functionality has NOT been tested since no callbacks were received.
 
 ## `Main Problem`
